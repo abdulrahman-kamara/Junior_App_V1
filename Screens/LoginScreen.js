@@ -87,48 +87,52 @@ const LoginScreen = ({ navigation }) => {
     });
   };
 
-  const submitLogin = function (email, password) {
-    props.object = JSON.stringify({
-      email: email,
-      password: password,
-    });
-
-    fetch(
-      "https://api.torea-patissier.students-laplateforme.io/authentication_token",
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: object,
-      }
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json.token);
-      });
+  const LoginHandleFunction = (email, password) => {
+    signIn(email, password);
   };
 
-  const loginHandler = (email, password) => {
-    const userAuth = Users.filter((item) => {
-      return email === item.email && password === item.password;
-    });
-    if (data.email.length == 0 || data.password.length == 0) {
-      Alert.alert("Wrong input", "email or password cannot be empty", [
-        { text: "Okey" },
-      ]);
-      return;
-    }
+  // const submitLogin = function (email, password) {
+  //   props.object = JSON.stringify({
+  //     email: email,
+  // //     password: password,
+  // //   });
 
-    if (userAuth.length == 0) {
-      Alert.alert("Invalid user", "email or password is incorrect", [
-        { text: "Okey" },
-      ]);
-      return;
-    }
-    signIn(userAuth);
-  };
+  // };
+
+  // const loginHandler = (email, password) => {
+  //   // fetch(
+  //   //   "https://api.torea-patissier.students-laplateforme.io/authentication_token",
+  //   //   {
+  //   //     method: "POST",
+  //   //     headers: {
+  //   //       Accept: "application/json",
+  //   //       "Content-Type": "application/json",
+  //   //     },
+  //   //     body: object,
+  //   //   }
+  //   // )
+  //   //   .then((response) => response.json())
+  //   //   .then((json) => {
+  //   //     console.log(json.token);
+  //   //   });
+  //   const userAuth = Users.filter((item) => {
+  //     return email === item.email && password === item.password;
+  //   });
+  //   if (data.email.length == 0 || data.password.length == 0) {
+  //     Alert.alert("Wrong input", "email or password cannot be empty", [
+  //       { text: "Okey" },
+  //     ]);
+  //     return;
+  //   }
+
+  //   if (userAuth.length == 0) {
+  //     Alert.alert("Invalid user", "email or password is incorrect", [
+  //       { text: "Okey" },
+  //     ]);
+  //     return;
+  //   }
+  //   signIn(userAuth);
+  // };
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
@@ -196,7 +200,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.signin}
             onPress={
               // () => getApi(data.email, data.password)
-              () => submitLogin(data.email, data.password)
+              () => LoginHandleFunction(data.email, data.password)
 
               // (loginHandler(data.email, data.password),
             }
