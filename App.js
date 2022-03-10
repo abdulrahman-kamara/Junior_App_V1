@@ -34,20 +34,21 @@ const fetchFonts = () => {
 
 export default function App() {
   // isLoading will check if the use is authenticate or not
-  // const [isLoading, setIsLoading] = useState(true);
-  // // userToken will validate our user
-  // const [userToken, setuserToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  // userToken will validate our user
+  const [userToken, setuserToken] = useState(null);
 
-  // we are providing this instailstate for the reduerstate
+  // we are providing this instailstate for the reduerstate by creating a reducer constant
   const initailLoginState = {
     isLoading: true,
     email: null,
     userToken: null,
   };
 
+  // we are creating a reducer function which call the previous state of and perform a action
   const LoginReducer = (prevState, action) => {
     switch (action.type) {
-      case "RETRIVE_TOKEN":
+      case "RETRIEVE_TOKEN":
         return {
           ...prevState,
           userToken: action.token,
@@ -77,6 +78,7 @@ export default function App() {
     }
   };
 
+  // We are creating a reducer now
   const [loginState, dispatch] = React.useReducer(
     LoginReducer,
     initailLoginState
@@ -88,17 +90,15 @@ export default function App() {
       signIn: async (email, password) => {
         // setuserToken("fgk");
         // setIsLoading(false);
-
         let userToken;
         userToken = null;
         if (email == "rahman" && password == "kunta") {
           try {
+            userToken = "sugbsgp";
             await AsyncStorage.setItem("userToken", userToken);
           } catch (e) {
             console.log(e);
           }
-          userToken = "fghlhjt";
-          console.log(userToken);
         }
         dispatch({ type: "LOGIN", id: email, token: userToken });
       },
@@ -114,28 +114,43 @@ export default function App() {
         dispatch({ type: "LOGOUT" });
       },
       signUp: () => {
-        setuserToken("fgk");
-        setIsLoading(false);
+        // setuserToken("fgk");
+        // setIsLoading(false);
       },
     }),
     []
   );
 
-  // the useEffect will run when our screen rerendring
   useEffect(() => {
     setTimeout(async () => {
       // setIsLoading(false);
       let userToken;
       userToken = null;
       try {
-        userToken = await AsyncStorage.setItem("userToken");
+        userToken = await AsyncStorage.getItem("userToken");
       } catch (e) {
         console.log(e);
       }
-
-      dispatch({ type: "REGISTER", token: "gdfhrhs" });
+      // console.log('user token: ', userToken);
+      dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
   }, []);
+
+  // the useEffect will run when our screen rerendring
+  // useEffect(() => {
+  //   setTimeout(async () => {
+  //     // setIsLoading(false);
+  //     let userToken;
+  //     userToken = null;
+  //     try {
+  //       userToken = await AsyncStorage.getItem("userToken");
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+
+  //     dispatch({ type: "RETRIVE_TOKEN", token: "userToken" });
+  //   }, 1000);
+  // }, []);
 
   if (loginState.isLoading) {
     return (
