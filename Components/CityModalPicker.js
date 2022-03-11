@@ -10,21 +10,21 @@ const { height } = Dimensions.get("window");
 const { width } = Dimensions.get("window");
 
 const CityModalPicker = (props) => {
-  const getApi = (cities) => {
-    axios
-      .get("https://api.torea-patissier.students-laplateforme.io/api/cities", {
-        cities,
-      })
-      .then(function (response) {
-        if (response.status === 201) {
-          console.log(response);
-        }
-        alert(JSON.stringify(response));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  // const getApi = (cities) => {
+  //   axios
+  //     .get("https://api.torea-patissier.students-laplateforme.io/api/cities", {
+  //       cities,
+  //     })
+  //     .then(function (response) {
+  //       if (response.status === 201) {
+  //         console.log(response);
+  //       }
+  //       alert(JSON.stringify(response));
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <View style={styles.modalcontainer}>
@@ -32,7 +32,6 @@ const CityModalPicker = (props) => {
         <SelectDropdown
           data={countries}
           onSelect={(selectedItem, index) => {
-            getApi();
             console.log(selectedItem, index);
           }}
           placeholder="City"

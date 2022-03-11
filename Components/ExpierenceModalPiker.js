@@ -17,7 +17,6 @@ const ExpierenceModalPiker = (props) => {
           data={K_OPTIONS}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            props.expierence(selectedItem);
           }}
           buttonStyle={{
             borderRadius: 20,
