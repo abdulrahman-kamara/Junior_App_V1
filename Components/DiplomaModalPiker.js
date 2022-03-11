@@ -17,7 +17,6 @@ const DiplomaModalPicker = (props) => {
           data={countries}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            props.diploma(selectedItem);
           }}
           buttonStyle={{
             borderRadius: 20,

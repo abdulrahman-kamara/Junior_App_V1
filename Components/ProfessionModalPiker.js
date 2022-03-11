@@ -22,7 +22,6 @@ const ProfessionModalPiker = (props) => {
           data={K_OPTIONS}
           onSelect={(selectedItem, index) => {
             console.log(selectedItem, index);
-            props.profession(selectedItem);
           }}
           buttonStyle={{
             borderRadius: 20,

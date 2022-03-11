@@ -22,16 +22,9 @@ import DiplomaModalPicker from "../Components/DiplomaModalPiker";
 import ProfessionModalPiker from "../Components/ProfessionModalPiker";
 import ImagePicker from "../Components/PickerImage";
 import TextEditor from "../Components/TextEditor";
-import axios from "axios";
 import { AuthContext } from "../Context/Context";
 
 const InscriptionScreen = ({ navigation }) => {
-  const [profession, setProfession] = useState();
-  const [expierence, setExpierence] = useState();
-  const [diploma, setDiploma] = useState();
-  const [cities, setCities] = useState();
-  const [description, setDescription] = useState();
-
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -39,8 +32,12 @@ const InscriptionScreen = ({ navigation }) => {
     lastname: "",
     telephone: "",
     description: "",
+    profession_id: "",
+    year_of_experience: "",
+    city_id: "",
+    diploma_id: "",
     avatar: "",
-    city: "",
+    role: "",
     secureTextEntry: true,
     check_textInputChange: false,
   });
@@ -75,7 +72,7 @@ const InscriptionScreen = ({ navigation }) => {
     });
   };
 
-  const getApi = (
+  const signUp = (
     email,
     password,
     firstname,
@@ -83,39 +80,71 @@ const InscriptionScreen = ({ navigation }) => {
     telephone,
     description,
     profession,
-    expierence,
-    cities,
+    yearOfExperience,
+    city,
     diploma,
     avatar
   ) => {
-    axios
-      .post(
-        "https://api.torea-patissier.students-laplateforme.io/authentication_token",
-        {
-          email,
-          password,
-          firstname,
-          lastname,
-          telephone,
-          description,
-          profession,
-          expierence,
-          cities,
-          diploma,
-          avatar,
-        }
-      )
-      .then(function (response) {
-        if (response.status === 201) {
-          console.log(response);
-        }
-        alert(JSON.stringify(response));
-      })
-      .catch(function (error) {
-        console.log(error);
+    // setuserToken("fgk");
+    // setIsLoading(false);
+    const URL =
+      "https://api.torea-patissier.students-laplateforme.io/api/users";
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: "",
+        password: "",
+        firstname: "",
+        lastname: "",
+        telephone: "",
+        description: "",
+        profession: "/api/professions/3",
+        yearOfExperience: "magenta",
+        city: "/api/cities/2",
+        diploma: "/api/diplomas/3",
+        avatar: "image/jpeg",
+      }),
+    })
+      .then((response) => response.json())
+
+      .then((json) => {
+        console.log(json);
       });
   };
-  console.log(getApi);
+
+  // const SignUpHandleFunction = (
+  //   email,
+  //   password,
+  //   firstname,
+  //   lastname,
+  //   telephone,
+  //   description,
+  //   profession_id,
+  //   year_of_experience,
+  //   city_id,
+  //   diploma_id,
+  //   avatar,
+  //   role
+  // ) => {
+  //   signUp(
+  //     email,
+  //     password,
+  //     firstname,
+  //     lastname,
+  //     telephone,
+  //     description,
+  //     profession_id,
+  //     year_of_experience,
+  //     city_id,
+  //     diploma_id,
+  //     avatar,
+  //     role
+  //   );
+  // };
 
   return (
     <View style={styles.container}>
@@ -134,26 +163,26 @@ const InscriptionScreen = ({ navigation }) => {
             <View style={styles.seclelement}>
               {/* cities select here */}
               <View style={styles.cities}>
-                <CityModalPicker cities={setCities} />
+                <CityModalPicker />
               </View>
               {/* profession here */}
               <View style={styles.profession}>
-                <ProfessionModalPiker profession={setProfession} />
+                <ProfessionModalPiker />
               </View>
             </View>
             <View style={styles.exdip}>
               {/* expierence here */}
               <View style={styles.expierence}>
-                <ExpierenceModalPiker expierence={setExpierence} />
+                <ExpierenceModalPiker />
               </View>
               {/* diploma here */}
               <View style={styles.diploma}>
-                <DiplomaModalPicker diploma={setDiploma} />
+                <DiplomaModalPicker />
               </View>
             </View>
           </View>
           <View style={styles.texteditor}>
-            <TextEditor description={setDescription} />
+            <TextEditor />
           </View>
           <View style={styles.namefiled}>
             <View style={styles.text_fname}>
@@ -162,7 +191,7 @@ const InscriptionScreen = ({ navigation }) => {
               </Text>
               <TextInput
                 style={styles.inputext}
-                placeholder="Firstname"
+                placeholder="irstname"
                 autoCapitalize="none"
                 onChangeText={(val) => {
                   textInputChange(val);
@@ -204,7 +233,7 @@ const InscriptionScreen = ({ navigation }) => {
             ) : null}
           </View>
 
-          <Text style={{ marginTop: 20, color: Colors.Primary }}>Email</Text>
+          <Text style={{ marginTop: 20, color: Colors.Primary }}>email</Text>
           <View style={styles.action}>
             <MaterialIcons name="lock" color={Colors.Primary} size={20} />
             <TextInput
@@ -244,19 +273,21 @@ const InscriptionScreen = ({ navigation }) => {
           <View style={styles.button}>
             <Pressable
               style={styles.signIn}
-              onPress={() => {
-                getApi();
-                // register(
-                //   email,
-                //   password,
-                //   firstname,
-                //   lastname,
-                //   telephone,
-                //   description,
-                //   avatar,
-                //   city
-                // );
-              }}
+              onPress={() =>
+                signUp(
+                  Object.email,
+                  Object.password,
+                  Object.firstname,
+                  Object.lastname,
+                  Object.telephone,
+                  Object.description,
+                  Object.profession,
+                  Object.yearOfExperience,
+                  Object.city,
+                  Object.diploma,
+                  Object.avatar
+                )
+              }
             >
               <Text style={styles.textSign}>CREATE</Text>
             </Pressable>
