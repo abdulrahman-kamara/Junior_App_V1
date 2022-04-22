@@ -1,9 +1,7 @@
 import React from "react";
 import ProtectedScreen from "../Screens/ProtectedScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
-import { View, Text, Button } from "react-native";
-import WelcomeScreen from "../Screens/ProtectedScreen/WelcomeScreen";
+import WelcomeScreen from "../Screens/WelcomeScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import InscriptionScreen from "../Screens/InscriptionScreen";
 import DashboardScreen from "../Screens/ProtectedScreen/DashboardScreen";
@@ -11,6 +9,10 @@ import SplashScreen from "../Screens/SplashScreen";
 import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
 import DrawerNavigation from "./DrawerNavigation";
 import RegisterScreen from "../Screens/RegisterScreen";
+import ApplyForm from "../Screens/ProtectedScreen/ApplyScreen";
+import JuniorLoginScreen from "../Screens/JuniorSignupScreen";
+import CreatOffersScreen from "../Screens/ProtectedScreen/CreatOffersScreen";
+import OffersScreen from "../Screens/ProtectedScreen/OffersScreen";
 
 const HomeStack = createNativeStackNavigator();
 
@@ -21,6 +23,9 @@ const HomeStackScreen = (navigation) => (
     <HomeStack.Screen name="Dashboard" component={DashboardScreen} />
     <HomeStack.Screen name="Profile" component={SplashScreen} />
     <HomeStack.Screen name="ProfileContent" component={ProfileContent} />
+    <HomeStack.Screen name="Apply" component={ApplyScreen} />
+    <HomeStack.Screen name="CreatOffersScreen" component={CreatOffersScreen} />
+    <HomeStack.Screen name="Offers" component={OffersScreen} />
   </HomeStack.Navigator>
 );
 
@@ -42,6 +47,10 @@ export default StackNavigation = () => {
       <Stack.Screen name="Profile" component={SplashScreen} />
       <Stack.Screen name="ProfileContent" component={ProfileContent} />
       <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="ApplyForm" component={ApplyForm} />
+      <Stack.Screen name="JuniorLoginScreen" component={JuniorLoginScreen} />
+      <Stack.Screen name="Offers" component={OffersScreen} />
+      <Stack.Screen name="CreatOffersScreen" component={CreatOffersScreen} />
     </Stack.Navigator>
   );
 };

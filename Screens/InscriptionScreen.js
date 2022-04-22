@@ -116,36 +116,6 @@ const InscriptionScreen = ({ navigation }) => {
       });
   };
 
-  // const SignUpHandleFunction = (
-  //   email,
-  //   password,
-  //   firstname,
-  //   lastname,
-  //   telephone,
-  //   description,
-  //   profession_id,
-  //   year_of_experience,
-  //   city_id,
-  //   diploma_id,
-  //   avatar,
-  //   role
-  // ) => {
-  //   signUp(
-  //     email,
-  //     password,
-  //     firstname,
-  //     lastname,
-  //     telephone,
-  //     description,
-  //     profession_id,
-  //     year_of_experience,
-  //     city_id,
-  //     diploma_id,
-  //     avatar,
-  //     role
-  //   );
-  // };
-
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
@@ -157,7 +127,7 @@ const InscriptionScreen = ({ navigation }) => {
           <View style={styles.containerOption}>
             {/* profile image */}
             <View style={styles.imageContainer}>
-              <ImagePicker style={styles.imagePicker} />
+              {/* <ImagePicker style={styles.imagePicker} /> */}
             </View>
             {/* select items here */}
             <View style={styles.seclelement}>

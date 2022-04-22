@@ -10,6 +10,7 @@ import {
   FlatList,
   TextInput,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import Colors from "../../Constants/Colors";
 import Card from "../../UI/Card";
@@ -18,10 +19,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState, useEffect } from "react";
 
 const DashboardScreen = ({ navigation }) => {
-  const [text, onChangeText] = useState("");
+  const [search, setSearch] = useState("");
   const [feed, setFeed] = useState([]);
+  const [filterData, setFilterData] = useState([]);
 
-  // we get our feed here
+  // we get our feed here with our fetch function and handle the refresh with our useeffect function
   useEffect(() => {
     const URL = "https://reqres.in/api/users?page=2";
 
@@ -29,6 +31,7 @@ const DashboardScreen = ({ navigation }) => {
       .then((res) => res.json())
       .then((res) => {
         setFeed(res.data);
+        setFilter(res.data);
         console.log(res.data);
       });
   }, []);
@@ -50,53 +53,83 @@ const DashboardScreen = ({ navigation }) => {
   //     });
   // };
 
+  const searchFilter = (text) => {
+    // if the searched is not blank
+    if (text) {
+      //Inserted text is not blank
+      // Filter the feed
+      // Update FilteredData
+      const newFilteredData = feed.filter(function (item) {
+        const itemData = item.last_name
+          ? item.last_name.toUpperCase()
+          : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) >= -1;
+      });
+      setFilterData(newFilteredData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredData with feed
+      setFilterData(feed);
+      setSearch(text);
+    }
+  };
+
+  const onPress = () => {
+    console.log("you pressed me");
+  };
+
   return (
-    <SafeAreaView style={{ height: "100%" }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.dashboard}>
         <View>
           <TextInput
             style={styles.input}
             placeholder="search job here"
-            onChangeText={onChangeText}
-            value={text}
+            onChangeText={(text) => searchFilter(text)}
+            value={search}
             color="black"
           />
         </View>
 
         <View style={styles.postJobView}>
-          {feed.length < 1 ? (
+          {filterData.length < 1 ? (
             <ActivityIndicator size="large" />
           ) : (
             <FlatList
-              data={feed}
+              data={filterData}
               keyExtractor={(item, index) => {
                 return item.id.toFixed();
               }}
               renderItem={({ item, index }) => (
-                <View style={styles.offerView}>
-                  <View style={styles.userProfile}>
-                    <View style={styles.avaterView}>
-                      <Image
-                        source={{ url: item.avatar }}
-                        style={styles.avater}
-                      />
-                      <View style={styles.titleView}>
-                        <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                          {item.first_name}
-                        </Text>
-                        <Text style={{ fontSize: 11 }}>{item.last_name}</Text>
+                <TouchableOpacity onPress={() => navigation.navigate("Offers")}>
+                  <View style={styles.offerView}>
+                    <View style={styles.userProfile}>
+                      <View style={styles.avaterView}>
+                        <Image
+                          source={{ url: item.avatar }}
+                          style={styles.avater}
+                        />
+
+                        <View style={styles.titleView}>
+                          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                            {item.first_name}
+                          </Text>
+                          <Text style={{ fontSize: 11 }}>{item.last_name}</Text>
+                        </View>
+                      </View>
+                      <View>
+                        <Ionicons name="ellipsis-vertical-outline"></Ionicons>
                       </View>
                     </View>
-                    <View>
-                      <Ionicons name="ellipsis-vertical-outline"></Ionicons>
-                    </View>
-                  </View>
 
-                  <Image
-                    source={{ url: item.avatar }}
-                    style={styles.coverAvater}
-                  />
-                </View>
+                    <Image
+                      source={{ url: item.avatar }}
+                      style={styles.coverAvater}
+                    />
+                  </View>
+                </TouchableOpacity>
               )}
             />
           )}
@@ -111,11 +144,12 @@ const DashboardScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   dashboard: {
     backgroundColor: Colors.Secondry,
-
     borderRadius: Dimensions.get("window").width * 0.05,
+    height: "100%",
   },
   postJobView: {
     width: "100%",
+    height: "100%",
   },
 
   input: {
