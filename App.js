@@ -10,17 +10,10 @@ import StackNavigation from "./Navigation/StackNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import ProtectedScreen from "./Screens/ProtectedScreen";
 import RootStackScreen from "./Navigation/RootStackScreen.js";
-import DrawerNavigation from "./Navigation/DrawerNavigation";
-import WelcomeScreen from "./Screens/ProtectedScreen/WelcomeScreen";
-import LoginScreen from "./Screens/LoginScreen";
-import InscriptionScreen from "./Screens/InscriptionScreen";
-import DashboardScreen from "./Screens/ProtectedScreen/DashboardScreen";
-import SplashScreen from "./Screens/SplashScreen";
-import ProfileContent from "./Screens/ProtectedScreen/ProfileContentScreen";
-import TextEditor from "./Components/TextEditor";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AuthContext } from "./Context/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import users from "./Model/users";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -34,7 +27,7 @@ const fetchFonts = () => {
 
 export default function App() {
   // isLoading will check if the use is authenticate or not
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   // userToken will validate our user
   const [userToken, setuserToken] = useState(null);
 
@@ -90,17 +83,33 @@ export default function App() {
       signIn: async (email, password) => {
         // setuserToken("fgk");
         // setIsLoading(false);
-        let userToken;
-        userToken = null;
-        if (email == "rahman" && password == "kunta") {
+        const URL =
+          "https://api.torea-patissier.students-laplateforme.io/authentication_token";
+        fetch(URL, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res.Object);
+          });
+
+        let UserToken;
+        if (email === Object.email && password === Object.password) {
           try {
-            userToken = "sugbsgp";
-            await AsyncStorage.setItem("userToken", userToken);
+            await AsyncStorage.setItem("userToken", UserToken);
           } catch (e) {
             console.log(e);
           }
         }
-        dispatch({ type: "LOGIN", id: email, token: userToken });
+        dispatch({ type: "LOGIN", id: email, token: UserToken });
       },
       signOut: async () => {
         // setuserToken(null);
@@ -108,19 +117,16 @@ export default function App() {
         try {
           await AsyncStorage.removeItem("userToken");
         } catch (e) {
-          console.log();
+          console.log(e);
         }
 
         dispatch({ type: "LOGOUT" });
-      },
-      signUp: () => {
-        // setuserToken("fgk");
-        // setIsLoading(false);
       },
     }),
     []
   );
 
+  // the useEffect will run when our screen rerendring
   useEffect(() => {
     setTimeout(async () => {
       // setIsLoading(false);
@@ -135,22 +141,6 @@ export default function App() {
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
   }, []);
-
-  // the useEffect will run when our screen rerendring
-  // useEffect(() => {
-  //   setTimeout(async () => {
-  //     // setIsLoading(false);
-  //     let userToken;
-  //     userToken = null;
-  //     try {
-  //       userToken = await AsyncStorage.getItem("userToken");
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-
-  //     dispatch({ type: "RETRIVE_TOKEN", token: "userToken" });
-  //   }, 1000);
-  // }, []);
 
   if (loginState.isLoading) {
     return (

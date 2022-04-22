@@ -27,6 +27,7 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProfileScreen = (props) => {
   const [text, onChangeText] = React.useState("Useless Text");
@@ -34,7 +35,7 @@ const ProfileScreen = (props) => {
   const { signOut } = React.useContext(AuthContext);
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
@@ -122,7 +123,7 @@ const ProfileScreen = (props) => {
           }}
         />
       </Drawer.Section>
-    </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

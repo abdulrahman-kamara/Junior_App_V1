@@ -27,7 +27,7 @@ const InscriptionScreenCompany = ({ navigation }) => {
         <View style={styles.container}>
           {/* profile image */}
           <View style={styles.imageContainer}>
-            <ImagePicker />
+            {/* <ImagePicker /> */}
             <Text
               style={{
                 fontSize: 25,

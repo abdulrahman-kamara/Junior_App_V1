@@ -208,7 +208,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.textSign}>Sgin in</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Inscription")}
+            onPress={() => navigation.navigate("Welcome")}
             style={[
               styles.signOut,
               {

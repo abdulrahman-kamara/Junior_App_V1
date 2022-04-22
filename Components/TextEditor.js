@@ -1,17 +1,19 @@
 import React from "react";
 import { View, TextInput } from "react-native";
+import Colors from "../Constants/Colors";
 
 const UselessTextInput = (props) => {
   return (
     <TextInput
       {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
       editable
+      maxLength={250}
     />
   );
 };
 
 const UselessTextInputMultiline = (props) => {
-  const [value, onChangeText] = React.useState("Useless Multiline Placeholder");
+  const [value, onChangeText] = React.useState("");
 
   // If you type something in the text box that is a color, the background will change to that
   // color.
@@ -21,7 +23,9 @@ const UselessTextInputMultiline = (props) => {
         backgroundColor: value,
         borderColor: "#000000",
         borderWidth: 1,
-        borderRadius: 30,
+        borderRadius: 20,
+        borderColor: Colors.Secondry,
+        height: "30%",
       }}
     >
       <UselessTextInput
