@@ -5,15 +5,15 @@ import api from "../api/api";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const register = (
+  const juniorRegistration = (
     email,
     password,
     firstname,
     lastname,
-    telephone,
-    description,
-    avatar,
-    city
+    // telephone,
+    // description,
+    // avatar,
+    // city
   ) => {
     axios
       .post(`${api}/users`, {
@@ -21,10 +21,10 @@ export const AuthProvider = ({ children }) => {
         password: "",
         firstname: "",
         lastname: "",
-        telephone: "",
-        description: "",
-        avatar: "",
-        city: "",
+        // telephone: "",
+        // description: "",
+        // avatar: "",
+        // city: "",
       })
       .then((res) => {
         let userInfo = res.data;
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ register }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ juniorRegistration }}>{children}</AuthContext.Provider>
   );
 };
 

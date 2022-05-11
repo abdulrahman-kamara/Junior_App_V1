@@ -18,12 +18,12 @@ import users from "./Model/users";
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const fetchFonts = () => {
-  return Font.loadAsync({
-    "nunito-sans-bold": require("./assets/Fonts/NunitoSans-Bold.ttf"),
-    "nunito-sans-extraBold": require("./assets/Fonts/NunitoSans-ExtraBold.ttf"),
-  });
-};
+// const fetchFonts = () => {
+//   return Font.loadAsync({
+//     "nunito-sans-bold": require("./assets/Fonts/NunitoSans-Bold.ttf"),
+//     "nunito-sans-extraBold": require("./assets/Fonts/NunitoSans-ExtraBold.ttf"),
+//   });
+// };
 
 export default function App() {
   // isLoading will check if the use is authenticate or not
@@ -34,7 +34,7 @@ export default function App() {
   // we are providing this instailstate for the reduerstate by creating a reducer constant
   const initailLoginState = {
     isLoading: true,
-    email: null,
+    email: "",
     userToken: null,
   };
 
@@ -68,7 +68,7 @@ export default function App() {
           userToken: action.token,
           isLoading: false,
         };
-    }
+    }``
   };
 
   // We are creating a reducer now
@@ -84,7 +84,7 @@ export default function App() {
         // setuserToken("fgk");
         // setIsLoading(false);
         const URL =
-          "https://api.torea-patissier.students-laplateforme.io/authentication_token";
+          "https://127.0.0.1:8000/authentication_token";
         fetch(URL, {
           method: "POST",
           headers: {
