@@ -31,7 +31,7 @@ const DashboardScreen = ({ navigation }) => {
       .then((res) => res.json())
       .then((res) => {
         setFeed(res.data);
-        setFilter(res.data);
+        setFilterData(res.data);
         console.log(res.data);
       });
   }, []);
@@ -61,9 +61,9 @@ const DashboardScreen = ({ navigation }) => {
       // Update FilteredData
       const newFilteredData = feed.filter(function (item) {
         const itemData = item.last_name
-          ? item.last_name.toUpperCase()
-          : "".toUpperCase();
-        const textData = text.toUpperCase();
+          ? item.last_name.toLowerCase()
+          : "".toLowerCase();
+        const textData = text.toLowerCase();
         return itemData.indexOf(textData) >= -1;
       });
       setFilterData(newFilteredData);

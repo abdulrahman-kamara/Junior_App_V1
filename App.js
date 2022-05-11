@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import React from "react";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
@@ -27,19 +27,17 @@ const Drawer = createDrawerNavigator();
 
 export default function App() {
   // isLoading will check if the use is authenticate or not
-  const [isLoading, setIsLoading] = useState(false);
-  // userToken will validate our user
-  const [userToken, setuserToken] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
+  // // userToken will validate our user
+  // const [userToken, setuserToken] = useState(null);
 
-  // we are providing this instailstate for the reduerstate by creating a reducer constant
-  const initailLoginState = {
+  initailLoginState = {
     isLoading: true,
-    email: "",
     userToken: null,
+    email: null,
   };
 
-  // we are creating a reducer function which call the previous state of and perform a action
-  const LoginReducer = (prevState, action) => {
+  loginReducer = (prevState, action) => {
     switch (action.type) {
       case "RETRIEVE_TOKEN":
         return {
@@ -68,48 +66,82 @@ export default function App() {
           userToken: action.token,
           isLoading: false,
         };
-    }``
+    }
   };
 
-  // We are creating a reducer now
   const [loginState, dispatch] = React.useReducer(
-    LoginReducer,
+    loginReducer,
     initailLoginState
   );
 
+  // we are providing this instailstate for the reduerstate by creating a reducer constant
+  // const initailLoginState = {
+  //   isLoading: true,
+  //   email: "",
+  //   userToken: null,
+  // };
+
+  // we are creating a reducer function which call the previous state of and perform a action
+  // const LoginReducer = (prevState, action) => {
+  //   switch (action.type) {
+  //     case "RETRIEVE_TOKEN":
+  //       return {
+  //         ...prevState,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //     case "LOGIN":
+  //       return {
+  //         ...prevState,
+  //         email: action.id,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //     case "LOGOUT":
+  //       return {
+  //         ...prevState,
+  //         email: null,
+  //         userToken: null,
+  //         isLoading: false,
+  //       };
+  //     case "REGISTER":
+  //       return {
+  //         ...prevState,
+  //         email: action.id,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //   }
+  //   ``;
+  // };
+
+  // // We are creating a reducer now
+  // const [loginState, dispatch] = React.useReducer(
+  //   LoginReducer,
+  //   initailLoginState
+  // );
+
   // usememo will use the uptimization technique to speed up the execution
-  const authContext = useMemo(
+  const authContext = React.useMemo(
     () => ({
       signIn: async (email, password) => {
-        // setuserToken("fgk");
+        // setuserToken("fghk");
         // setIsLoading(false);
-        const URL =
-          "https://127.0.0.1:8000/authentication_token";
-        fetch(URL, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            console.log(res.Object);
-          });
-
-        let UserToken;
-        if (email === Object.email && password === Object.password) {
+        let userToken;
+        userToken = null;
+        // Nomally we check if the mail and password is equal to that of the database
+        if (email === "achne" && password === "Password") {
           try {
-            await AsyncStorage.setItem("userToken", UserToken);
+            userToken = "fghk";
+            await AsyncStorage.setItem("userToken", userToken);
           } catch (e) {
             console.log(e);
           }
+
+          // normally here we have the refresh token from the backend
         }
-        dispatch({ type: "LOGIN", id: email, token: UserToken });
+        console.log("user Token:", userToken);
+        dispatch({ type: "LOGIN", id: email, token: userToken });
       },
       signOut: async () => {
         // setuserToken(null);
@@ -119,8 +151,11 @@ export default function App() {
         } catch (e) {
           console.log(e);
         }
-
         dispatch({ type: "LOGOUT" });
+      },
+      signUp: () => {
+        // setuserToken("fghk");
+        // setIsLoading(false);
       },
     }),
     []
@@ -129,15 +164,22 @@ export default function App() {
   // the useEffect will run when our screen rerendring
   useEffect(() => {
     setTimeout(async () => {
-      // setIsLoading(false);
       let userToken;
-      userToken = null;
+      userToken = "null";
       try {
         userToken = await AsyncStorage.getItem("userToken");
       } catch (e) {
         console.log(e);
       }
-      // console.log('user token: ', userToken);
+      // setIsLoading(false);
+      //   let userToken;
+      //   userToken = null;
+      //   try {
+      //     userToken = await AsyncStorage.getItem("userToken");
+      //   } catch (e) {
+      //     console.log(e);
+      //   }
+      console.log("user token: ", userToken);
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
   }, []);
@@ -178,3 +220,45 @@ const styles = StyleSheet.create({
     padding: 50,
   },
 });
+
+// signIn: async (email, password) => {
+//   // setuserToken("fgk");
+//   // setIsLoading(false);
+//   const URL = "https://127.0.0.1:8000/authentication_token";
+//   fetch(URL, {
+//     method: "POST",
+//     headers: {
+//       Accept: "application/json",
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       email,
+//       password,
+//     }),
+//   })
+//     .then((res) => res.json())
+//     .then((res) => {
+//       console.log(res.Object);
+//     });
+
+//   let UserToken;
+//   if (email === Object.email && password === Object.password) {
+//     try {
+//       await AsyncStorage.setItem("userToken", UserToken);
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+//   dispatch({ type: "LOGIN", id: email, token: UserToken });
+// },
+// signOut: async () => {
+//   // setuserToken(null);
+//   // setIsLoading(false);
+//   try {
+//     await AsyncStorage.removeItem("userToken");
+//   } catch (e) {
+//     console.log(e);
+//   }
+
+//   dispatch({ type: "LOGOUT" });
+// },
