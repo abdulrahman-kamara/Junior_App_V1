@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -17,270 +17,248 @@ import * as Animatable from "react-native-animatable";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
-import Users from "../Model/users";
-import axios from "axios";
+
 import { ScrollView } from "react-native-gesture-handler";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 const LoginScreen = ({ navigation }) => {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-    secureTextEntry: true,
-    check_textInputChange: false,
-    isValidEmail: true,
-    isValidPassword: true,
-  });
+  const [firstname, setFirstname] = useState(null);
+  const [lastname, setLastname] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
-  const { signIn } = React.useContext(AuthContext);
+  const Junior = useContext(AuthContext);
+  // const val = useContext(AuthContext);
 
-  const textInputChange = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: true,
-        isValidEmail: true,
-      });
-    } else {
-      setData({
-        ...data,
-        email: val,
-        check_textInputChange: false,
-        isValidEmail: false,
-      });
-    }
-  };
+  // const [data, setData] = useState({
+  //   // firstname: "",
+  //   // lastname: "",
+  //   // email: "",
+  //   // password: "",
+  //   secureTextEntry: true,
+  //   check_textInputChange: false,
+  //   isValidEmail: true,
+  //   isValidPassword: true,
+  // });
 
-  const handleEmailChange = (val) => {
-    if (val.trim().length >= 4) {
-      setData({
-        ...data,
-        isValidEmail: true,
-      });
-    } else {
-      setData({
-        ...data,
-        isValidEmail: false,
-      });
-    }
-  };
-
-  const handlePasswordChange = (val) => {
-    if (val.trim().length >= 8) {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: true,
-      });
-    } else {
-      setData({
-        ...data,
-        password: val,
-        isValidPassword: false,
-      });
-    }
-  };
-
-  const updatepassworwEntry = () => {
-    setData({
-      ...data,
-      secureTextEntry: !data.secureTextEntry,
-    });
-  };
-
-  const LoginHandleFunction = (email, password) => {
-    signIn(email, password);
-  };
-
-  // const submitLogin = function (email, password) {
-  //   props.object = JSON.stringify({
-  //     email: email,
-  // //     password: password,
-  // //   });
-
+  // const textInputChange = (val) => {
+  //   if (val.trim().length >= 4) {
+  //     setData({
+  //       ...data,
+  //       email: val,
+  //       check_textInputChange: true,
+  //       isValidEmail: true,
+  //       isValidPassword: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       email: val,
+  //       check_textInputChange: false,
+  //       isValidEmail: false,
+  //       isValidPassword: false,
+  //     });
+  //   }
   // };
 
-  // const loginHandler = (email, password) => {
-  //   // fetch(
-  //   //   "https://api.torea-patissier.students-laplateforme.io/authentication_token",
-  //   //   {
-  //   //     method: "POST",
-  //   //     headers: {
-  //   //       Accept: "application/json",
-  //   //       "Content-Type": "application/json",
-  //   //     },
-  //   //     body: object,
-  //   //   }
-  //   // )
-  //   //   .then((response) => response.json())
-  //   //   .then((json) => {
-  //   //     console.log(json.token);
-  //   //   });
-  //   const userAuth = Users.filter((item) => {
-  //     return email === item.email && password === item.password;
+  // const handleEmailChange = (val) => {
+  //   if (val.trim().length >= 4) {
+  //     setData({
+  //       ...data,
+  //       isValidEmail: true,
+  //       isValidPassword: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       isValidEmail: false,
+  //       isValidPassword: false,
+  //     });
+  //   }
+  // };
+
+  // const handlePasswordChange = (val) => {
+  //   if (val.trim().length >= 8) {
+  //     setData({
+  //       ...data,
+  //       password: val,
+  //       isValidPassword: true,
+  //     });
+  //   } else {
+  //     setData({
+  //       ...data,
+  //       password: val,
+  //       isValidPassword: false,
+  //     });
+  //   }
+  // };
+
+  // const updatepassworwEntry = () => {
+  //   setData({
+  //     ...data,
+  //     secureTextEntry: !data.secureTextEntry,
   //   });
-  //   if (data.email.length == 0 || data.password.length == 0) {
-  //     Alert.alert("Wrong input", "email or password cannot be empty", [
-  //       { text: "Okey" },
-  //     ]);
-  //     return;
-  //   }
-
-  //   if (userAuth.length == 0) {
-  //     Alert.alert("Invalid user", "email or password is incorrect", [
-  //       { text: "Okey" },
-  //     ]);
-  //     return;
-  //   }
-  //   signIn(userAuth);
   // };
+
+  // const { signUp } = useContext(AuthContext);
+
+  // const LoginHandleFunction = (email, password, firstname, lastname) => {
+  //   juniorRegistration(email, password, firstname, lastname);
+  // };
+
   return (
     <View style={styles.container}>
+      {/* <Spinner visible={isLoading} /> */}
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>Join Us !</Text>
       </View>
       <ScrollView>
+        {/* <Text>{val}</Text> */}
+
         <Animatable.View style={styles.footer} animation="flipInY">
           <Text style={styles.text_footer}>FirstName</Text>
           <View style={styles.action}>
             <MaterialIcons name="lock" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.textInput}
-              placeholder="email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              onChangeText={(val) => {
-                textInputChange(val);
-              }}
-              onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
+              placeholder="firstname"
+              value={firstname}
+              onChangeText={(text) => setFirstname(text)}
+
+              // onChangeText={(val) => {
+              //   textInputChange(val);
+              // }}
+              // onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
             />
-            {data.check_textInputChange ? (
+            {/* {data.check_textInputChange ? (
               <Animatable.View animation="flipInY">
                 <Feather name="check-circle" color={Colors.Primary} size={20} />
               </Animatable.View>
-            ) : null}
+            ) : null} */}
           </View>
-          {data.isValidEmail ? null : (
+          {/* {data.isValidEmail ? null : (
             <Animatable.View animation="flipInY" duration={500}>
               <Text style={styles.errorMsg}>
                 the mail should have a format email
               </Text>
             </Animatable.View>
-          )}
-          <Text style={styles.text_footer}>Email</Text>
-          <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Firstname"
-              autoCapitalize="none"
-              onChangeText={(val) => {
-                textInputChange(val);
-              }}
-              onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
-            />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="flipInY">
-                <Feather name="check-circle" color={Colors.Primary} size={20} />
-              </Animatable.View>
-            ) : null}
-          </View>
-          {data.isValidEmail ? null : (
+          )} */}
+          {/* {data.isValidEmail ? null : (
             <Animatable.View animation="flipInY" duration={500}>
               <Text style={styles.errorMsg}>this filed is required</Text>
             </Animatable.View>
-          )}
+          )} */}
           <Text style={styles.text_footer}>Lastname</Text>
           <View style={styles.action}>
             <MaterialIcons name="lock" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.textInput}
               placeholder="Lastname"
+              value={lastname}
               autoCapitalize="none"
-              onChangeText={(val) => {
-                textInputChange(val);
-              }}
-              onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
+              onChangeText={(text) => setLastname(text)}
+              // onChangeText={(text) => {
+              //   setLastname(text);
+              // }}
+              // onChangeText={(val) => {
+              //   textInputChange(val);
+              // }}
+              // onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
             />
-            {data.check_textInputChange ? (
+            {/* {data.check_textInputChange ? (
               <Animatable.View animation="flipInY">
                 <Feather name="check-circle" color={Colors.Primary} size={20} />
               </Animatable.View>
-            ) : null}
+            ) : null} */}
           </View>
-          {data.isValidEmail ? null : (
+          {/* {data.isValidEmail ? null : (
             <Animatable.View animation="flipInY" duration={500}>
               <Text style={styles.errorMsg}>this filed is required</Text>
             </Animatable.View>
-          )}
+          )} */}
+
+          <Text style={styles.text_footer}>Email</Text>
+          <View style={styles.action}>
+            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter email address"
+              onChangeText={(text) => setEmail(text)}
+              keyboardType="email-address"
+              value={email}
+            />
+
+            {/* {data.check_textInputChange ? (
+              <Animatable.View animation="flipInY">
+                <Feather name="check-circle" color={Colors.Primary} size={20} />
+              </Animatable.View>
+            ) : null} */}
+          </View>
 
           <Text style={{ marginTop: 35 }}>Password</Text>
           <View style={styles.action}>
             <MaterialIcons name="lock" color={Colors.Primary} size={20} />
             <TextInput
-              style={styles.textInput}
-              secureTextEntry={data.secureTextEntry ? true : false}
-              placeholder="Password"
-              autoCapitalize="none"
-              onChangeText={(val) => {
-                handlePasswordChange(val);
-              }}
+              style={styles.input}
+              placeholder="Enter password "
+              onChangeText={(text) => setPassword(text)}
+              value={password}
             />
-            <TouchableOpacity onPress={updatepassworwEntry}>
-              {data.secureTextEntry ? (
+
+            {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
+            {/* {data.secureTextEntry ? (
                 <Feather name="eye-off" color="gray" size={20} />
               ) : (
                 <Feather name="eye" color="gray" size={20} />
-              )}
-            </TouchableOpacity>
+              )} */}
+            {/* </TouchableOpacity> */}
           </View>
-          {data.isValidPassword ? null : (
+          {/* {data.isValidPassword ? null : (
             <Animatable.View animation="flipInY" duration={500}>
               <Text style={styles.errorMsg}>
                 the password should have atleast 8 characters{" "}
               </Text>
             </Animatable.View>
-          )}
-          <Text style={{ marginTop: 35 }}>ConfirmePassword</Text>
-          <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+          )} */}
+          {/* <Text style={{ marginTop: 35 }}>ConfirmePassword</Text> */}
+          {/* <View style={styles.action}> */}
+          {/* <MaterialIcons name="lock" color={Colors.Primary} size={20} />
             <TextInput
-              style={styles.textInput}
-              secureTextEntry={data.secureTextEntry ? true : false}
-              placeholder="Password"
-              autoCapitalize="none"
-              onChangeText={(val) => {
-                handlePasswordChange(val);
-              }}
-            />
-            <TouchableOpacity onPress={updatepassworwEntry}>
-              {data.secureTextEntry ? (
+              style={styles.input}
+              placeholder="Enter password "
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+            /> */}
+
+          {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
+          {/* {data.secureTextEntry ? (
                 <Feather name="eye-off" color="gray" size={20} />
               ) : (
                 <Feather name="eye" color="gray" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-          {data.isValidPassword ? null : (
+              )} */}
+          {/* </TouchableOpacity> */}
+          {/* </View> */}
+          {/* {data.isValidPassword ? null : (
             <Animatable.View animation="flipInY" duration={500}>
               <Text style={styles.errorMsg}>
                 the password should have atleast 8 characters{" "}
               </Text>
             </Animatable.View>
-          )}
+          )} */}
 
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.signin}
               onPress={
-                // () => getApi(data.email, data.password)
-                () => LoginHandleFunction(data.email, data.password)
+                () => {
+                  Junior(firstname, lastname, email, password);
+                }
 
                 // (loginHandler(data.email, data.password),
               }
             >
-              <Text style={styles.textSign}>Sgin in</Text>
+              <Text style={styles.textSign}>signUp</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity
             onPress={() => navigation.navigate("Welcome")}

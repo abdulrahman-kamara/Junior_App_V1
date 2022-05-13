@@ -20,7 +20,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
 import Users from "../Model/users";
 import axios from "axios";
-import api from "../api/api";
+// import api from "../api/api";
 import { useEffect } from "react-native";
 
 const RegisterScreen = ({ navigation }) => {
