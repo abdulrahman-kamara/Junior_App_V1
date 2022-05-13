@@ -12,6 +12,7 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
+import Spinner from "react-native-loading-spinner-overlay/lib";
 import Colors from "../Constants/Colors";
 import * as Animatable from "react-native-animatable";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -19,98 +20,29 @@ import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
 
 import { ScrollView } from "react-native-gesture-handler";
-import Spinner from "react-native-loading-spinner-overlay/lib";
+import { ActivityIndicator } from "react-native-paper";
 
-const LoginScreen = ({ navigation }) => {
+const Juniorsignup = ({ navigation }) => {
   const [firstname, setFirstname] = useState(null);
   const [lastname, setLastname] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const Junior = useContext(AuthContext);
-  // const val = useContext(AuthContext);
+  const { isLoading, Junior } = useContext(AuthContext);
+  console.log(Junior);
 
-  // const [data, setData] = useState({
-  //   // firstname: "",
-  //   // lastname: "",
-  //   // email: "",
-  //   // password: "",
-  //   secureTextEntry: true,
-  //   check_textInputChange: false,
-  //   isValidEmail: true,
-  //   isValidPassword: true,
-  // });
-
-  // const textInputChange = (val) => {
-  //   if (val.trim().length >= 4) {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: true,
-  //       isValidEmail: true,
-  //       isValidPassword: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: false,
-  //       isValidEmail: false,
-  //       isValidPassword: false,
-  //     });
-  //   }
-  // };
-
-  // const handleEmailChange = (val) => {
-  //   if (val.trim().length >= 4) {
-  //     setData({
-  //       ...data,
-  //       isValidEmail: true,
-  //       isValidPassword: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       isValidEmail: false,
-  //       isValidPassword: false,
-  //     });
-  //   }
-  // };
-
-  // const handlePasswordChange = (val) => {
-  //   if (val.trim().length >= 8) {
-  //     setData({
-  //       ...data,
-  //       password: val,
-  //       isValidPassword: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       password: val,
-  //       isValidPassword: false,
-  //     });
-  //   }
-  // };
-
-  // const updatepassworwEntry = () => {
-  //   setData({
-  //     ...data,
-  //     secureTextEntry: !data.secureTextEntry,
-  //   });
-  // };
-
-  // const { signUp } = useContext(AuthContext);
-
-  // const LoginHandleFunction = (email, password, firstname, lastname) => {
-  //   juniorRegistration(email, password, firstname, lastname);
-  // };
-
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
-      {/* <Spinner visible={isLoading} /> */}
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
       <View style={styles.header}>
+        {/* <Spinner visible={isLoading} /> */}
         <Text style={styles.text_header}>Join Us !</Text>
       </View>
       <ScrollView>
@@ -363,4 +295,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default Juniorsignup;

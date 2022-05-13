@@ -6,15 +6,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  // userToken will validate our user
+  const [userInfo, setUserInfo] = useState({});
   // isLoading will check if the use is authenticate or not
   const [isLoading, setIsLoading] = useState(false);
-  // // userToken will validate our user
-  const [userInfo, setUserInfo] = useState({});
 
   const Junior = (firstname, lastname, email, password) => {
     console.log(firstname, lastname, email, password);
     console.log("api", api);
-    // setIsLoading(true);
+    setIsLoading(true);
     axios
       .post(`${api}/users`, {
         firstname,
@@ -24,68 +24,75 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        // setUserInfo(userInfo);
-        // console.log(userInfo);
-        // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        // setIsLoading(true);
+        setUserInfo(userInfo);
+        console.log(userInfo);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        setIsLoading(false);
         console.log("userInfo", userInfo);
-        alert(JSON.stringify(res.data));
       })
       .catch((e) => {
         console.log(`registration fail ${e}`);
-        // setIsLoading(false);
+        setIsLoading(false);
       });
   };
 
-  // const JuniorRegistration = (email, password, firstname, lastname) => {
-  //   axios
-  //     .post(`${api}/users`, {
-  //       email: "",
-  //       password: "",
-  //       firstname: "",
-  //       lastname: "",
-  //     })
-  //     .then((res) => {
-  //       let userInfo = res.data;
-  //       console.log(userInfo);
-  //     })
-  //     .catch((e) => {
-  //       console.log(`register error ${e}`);
-  //     });
-  // };
+  const Enterprise = (name, email, password) => {
+    console.log(name, email, password);
+    console.log("api", api);
+    setIsLoading(true);
+    axios
+      .post(`${api}/entreprises`, {
+        name,
+        email,
+        password,
+      })
+      .then((res) => {
+        let userInfo = res.data;
+        setUserInfo(userInfo);
+        console.log(userInfo);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        setIsLoading(false);
+        console.log("userInfo", userInfo);
+      })
+      .catch((e) => {
+        console.log(`registration fail ${e}`);
+        setIsLoading(false);
+      });
+  };
 
-  // const CompanyRegistration = (email, password, name) => {
-  //   axios
-  //     .post(`${api}/entreprises`, {
-  //       email: "",
-  //       password: "",
-  //       name: "",
-  //     })
-  //     .then((res) => {
-  //       let userInfo = res.data;
-  //       console.log(userInfo);
-  //     })
-  //     .catch((e) => {
-  //       console.log(`register error ${e}`);
-  //     });
-  // };
+  const login = (email, password) => {
+    console.log(email, password);
+    console.log("api", api);
+    setIsLoading(true);
+    axios
+      .post(
+        "https://api.torea-patissier.students-laplateforme.io/authentication_token",
+        {
+          email,
+          password,
+        }
+      )
+      .then((res) => {
+        let userInfo = res.data;
+        setUserInfo(userInfo);
+        console.log(userInfo);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        setIsLoading(false);
+        console.log("userInfo", userInfo);
+      })
+      .catch((e) => {
+        console.log(`registration fail ${e}`);
+        setIsLoading(false);
+      });
+  };
 
-  // const signIn = (email, password) => {
-  //   axios
-  //     .post(`${api}/users`, {
-  //       email: "",
-  //       password: "",
-  //     })
-  //     .then((res) => {
-  //       let userInfo = res.data;
-  //       console.log(userInfo);
-  //     })
-  //     .catch((e) => {
-  //       console.log(`register error ${e}`);
-  //     });
-  // };
-
-  return <AuthContext.Provider value={Junior}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ userInfo, isLoading, Junior, Enterprise, login }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 // juniorRegistration, CompanyRegistration, signIn

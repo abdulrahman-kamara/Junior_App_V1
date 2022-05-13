@@ -17,11 +17,12 @@ import * as Animatable from "react-native-animatable";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
+import { ActivityIndicator } from "react-native-paper";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const val = useContext(AuthContext);
+  // const val = useContext(AuthContext);
 
   // const [data, setData] = useState({
   //   email: "",
@@ -93,13 +94,23 @@ const LoginScreen = ({ navigation }) => {
   //   signIn(email, password);
   // };
 
+  const { isLoading, login } = useContext(AuthContext);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>Welcome to Junior !</Text>
       </View>
-      <Text>{val}</Text>
+      {/* <Text>{val}</Text> */}
       <Animatable.View style={styles.footer} animation="flipInY">
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
@@ -169,7 +180,7 @@ const LoginScreen = ({ navigation }) => {
             style={styles.signin}
             onPress={
               // () => getApi(data.email, data.password)
-              () => loginHandler(data.email, data.password)
+              () => login(email, password)
 
               // (loginHandler(data.email, data.password),
             }
