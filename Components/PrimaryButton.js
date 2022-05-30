@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   button: {
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.Primary,
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,

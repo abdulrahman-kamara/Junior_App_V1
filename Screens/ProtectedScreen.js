@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Colors from "../Constants/Colors";
 import OffersScreen from "./ProtectedScreen/OffersScreen";
 import DashboardScreen from "../Screens/ProtectedScreen/DashboardScreen";
@@ -11,6 +11,7 @@ import CreatOffersScreen from "../Screens/ProtectedScreen/CreatOffersScreen";
 import ApplyScreen from "../Screens/ProtectedScreen/ApplyScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
+import CreateProfileModal from "../Screens/CreateProfileModal";
 
 const HomeTab = createMaterialBottomTabNavigator();
 
@@ -45,8 +46,8 @@ const HomeTapScreen = () => {
       />
 
       <HomeTab.Screen
-        name="CreatOffersScreen"
-        component={CreatOffersScreen}
+        name="CreateProfileModal"
+        component={CreateProfileModal}
         options={{
           tabBarLabel: "Create",
           tabBarIcon: ({ color }) => (
@@ -62,11 +63,26 @@ const HomeStack = createNativeStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
-const ProtectedScreen = () => {
+const ProtectedScreen = ({ navigation }) => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={HomeTapScreen} />
-      <HomeStack.Screen name="ProfileContent" component={ProfileContent} />
+      <HomeStack.Screen
+        name="ProfileContent"
+        component={ProfileContent}
+        options={{
+          headerRight: () => (
+            <View style={{ marginRight: 10 }}>
+              <MaterialCommunityIcons.Button
+                name="account-edit"
+                color={Colors.Secondry}
+                size={25}
+                onPress={() => navigation.navigate("CreateProfileModal")}
+              />
+            </View>
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
