@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const Junior = (firstname, lastname, email, password) => {
-    console.log(firstname, lastname, email, password);
+    console.log(email, password);
     console.log("api", api);
     setIsLoading(true);
     axios
@@ -65,17 +65,15 @@ export const AuthProvider = ({ children }) => {
     console.log("api", api);
     setIsLoading(true);
     axios
-      .post(
-        "https://api.torea-patissier.students-laplateforme.io/authentication_token",
-        {
-          email,
-          password,
-        }
-      )
+      .post(`${api}/authentication_token`, {
+        email,
+        password,
+      })
       .then((res) => {
         let userInfo = res.data;
         setUserInfo(userInfo);
         console.log(userInfo);
+
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         setIsLoading(false);
         console.log("userInfo", userInfo);

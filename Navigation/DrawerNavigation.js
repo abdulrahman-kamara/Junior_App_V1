@@ -1,4 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import CreatProfile from "../Screens/CreateProfileModal";
 import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
 
 const Drawer = createDrawerNavigator();

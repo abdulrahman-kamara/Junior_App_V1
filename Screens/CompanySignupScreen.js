@@ -34,7 +34,8 @@ const LoginScreen = ({ navigation }) => {
   //   isValidPassword: true,
   // });
 
-  const { Enterprise, isLoading } = React.useContext(AuthContext);
+  const { Enterprise } = React.useContext(AuthContext);
+  const isLoading = React.useContext(AuthContext);
 
   // const textInputChange = (val) => {
   //   if (val.trim().length >= 4) {
@@ -139,13 +140,13 @@ const LoginScreen = ({ navigation }) => {
 
   // };
 
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   );
+  // }
 
   return (
     <View style={styles.container}>

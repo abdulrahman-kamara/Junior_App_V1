@@ -94,15 +94,20 @@ const LoginScreen = ({ navigation }) => {
   //   signIn(email, password);
   // };
 
-  const { isLoading, login } = useContext(AuthContext);
+  // const isLoading = useContext(AuthContext);
+  const { login, isLoading } = useContext(AuthContext);
 
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  setTimeout(() => {
+    if (isLoading) {
+      return (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+  }, 100);
 
   return (
     <View style={styles.container}>
@@ -111,7 +116,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Welcome to Junior !</Text>
       </View>
       {/* <Text>{val}</Text> */}
-      <Animatable.View style={styles.footer} animation="flipInY">
+      <Animatable.View style={styles.footer} animation="flipInX">
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <MaterialIcons name="lock" color={Colors.Primary} size={20} />
@@ -178,12 +183,9 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.signin}
-            onPress={
-              // () => getApi(data.email, data.password)
-              () => login(email, password)
-
-              // (loginHandler(data.email, data.password),
-            }
+            onPress={() => {
+              login(email, password);
+            }}
           >
             <Text style={styles.textSign}>Login</Text>
           </TouchableOpacity>

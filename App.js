@@ -1,24 +1,16 @@
 import "react-native-gesture-handler";
 import React from "react";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import StackNavigation from "./Navigation/StackNavigation";
+
 import { NavigationContainer } from "@react-navigation/native";
 import ProtectedScreen from "./Screens/ProtectedScreen";
 import RootStackScreen from "./Navigation/RootStackScreen.js";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AuthProvider } from "./Context/Context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import users from "./Model/users";
 
-// const Stack = createNativeStackNavigator();
-// const Drawer = createDrawerNavigator();
-
-// const { juniorRegistration } = useContext(AuthContext);
+import { AuthContext, AuthProvider } from "./Context/Context";
 
 // const fetchFonts = () => {
 //   return Font.loadAsync({
@@ -28,13 +20,14 @@ import users from "./Model/users";
 // };
 
 export default function App() {
+  const userInfo = useContext(AuthContext);
+
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        {/* <ProtectedScreen />  */}
-        <RootStackScreen />
-      </NavigationContainer>
-    </AuthProvider>
+    <NavigationContainer>
+      <AuthProvider>
+        {userInfo ? <ProtectedScreen /> : <RootStackScreen />}
+      </AuthProvider>
+    </NavigationContainer>
   );
 }
 

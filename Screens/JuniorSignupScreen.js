@@ -28,21 +28,27 @@ const Juniorsignup = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const { isLoading, Junior } = useContext(AuthContext);
+  const isLoading = useContext(AuthContext);
+  const { Junior } = useContext(AuthContext);
   console.log(Junior);
 
-  if (isLoading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  // setTimeout(() => {
+  //   if (isLoading) {
+  //     return (
+  //       <View
+  //         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+  //       >
+  //         <ActivityIndicator size="large" />
+  //       </View>
+  //     );
+  //   }
+  // }, 3000);
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
       <View style={styles.header}>
-        {/* <Spinner visible={isLoading} /> */}
+        <Spinner visible={isLoading} />
         <Text style={styles.text_header}>Join Us !</Text>
       </View>
       <ScrollView>
