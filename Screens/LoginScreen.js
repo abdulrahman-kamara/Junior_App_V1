@@ -214,7 +214,7 @@ const LoginScreen = ({ navigation }) => {
               },
             ]}
           >
-            <Text style={styles.textOut}>Sigin Up</Text>
+            <Text style={styles.textOut}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </Animatable.View>
