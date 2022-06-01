@@ -1,22 +1,26 @@
 import "react-native-gesture-handler";
 import React from "react";
 
-import { useState, useEffect } from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { useState, useEffect, useContext } from "react";
+import { StyleSheet, Text, View, ActivityIndicator, Alert } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import StackNavigation from "./Navigation/StackNavigation";
-import { NavigationContainer } from "@react-navigation/native";
+import axios from "axios";
+import {
+  Provider as PaperProvider,
+  DefaultTheme as PaperDefaultTheme,
+  DarkTheme as PaperDarkTheme,
+} from "react-native-paper";
+import {
+  NavigationContainer,
+  DefaultTheme as NavigationDefaultTheme,
+  DarkTheme as NavigationDarkTheme,
+} from "@react-navigation/native";
 import ProtectedScreen from "./Screens/ProtectedScreen";
 import RootStackScreen from "./Navigation/RootStackScreen.js";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { AuthContext } from "./Context/Context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import users from "./Model/users";
-
-const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
+import { AuthContext, AuthProvider } from "./Context/Context";
+import api from "./config/api";
 
 // const fetchFonts = () => {
 //   return Font.loadAsync({
@@ -26,18 +30,40 @@ const Drawer = createDrawerNavigator();
 // };
 
 export default function App() {
-  // isLoading will check if the use is authenticate or not
-  // const [isLoading, setIsLoading] = useState(false);
-  // // userToken will validate our user
-  // const [userToken, setuserToken] = useState(null);
+  const [isDarkTheme, setIsDarkTheme] = React.useState(false);
 
-  initailLoginState = {
-    isLoading: true,
-    userToken: null,
-    email: null,
+  const CustomDefaultTheme = {
+    ...NavigationDefaultTheme,
+    ...PaperDefaultTheme,
+    colors: {
+      ...NavigationDefaultTheme.colors,
+      ...PaperDefaultTheme.colors,
+      background: "#ffffff",
+      text: "#333333",
+    },
   };
 
-  loginReducer = (prevState, action) => {
+  const CustomDarkTheme = {
+    ...NavigationDarkTheme,
+    ...PaperDarkTheme,
+    colors: {
+      ...NavigationDarkTheme.colors,
+      ...PaperDarkTheme.colors,
+      background: "#333333",
+      text: "#ffffff",
+    },
+  };
+
+  const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
+
+  const initialLoginState = {
+    isLoading: true,
+    email: null,
+
+    userToken: null,
+  };
+
+  const loginReducer = (prevState, action) => {
     switch (action.type) {
       case "RETRIEVE_TOKEN":
         return {
@@ -62,90 +88,52 @@ export default function App() {
       case "REGISTER":
         return {
           ...prevState,
-          email: action.id,
+          userName: action.id,
           userToken: action.token,
           isLoading: false,
         };
     }
   };
-
   const [loginState, dispatch] = React.useReducer(
     loginReducer,
-    initailLoginState
+    initialLoginState
   );
 
-  // we are providing this instailstate for the reduerstate by creating a reducer constant
-  // const initailLoginState = {
-  //   isLoading: true,
-  //   email: "",
-  //   userToken: null,
-  // };
-
-  // we are creating a reducer function which call the previous state of and perform a action
-  // const LoginReducer = (prevState, action) => {
-  //   switch (action.type) {
-  //     case "RETRIEVE_TOKEN":
-  //       return {
-  //         ...prevState,
-  //         userToken: action.token,
-  //         isLoading: false,
-  //       };
-  //     case "LOGIN":
-  //       return {
-  //         ...prevState,
-  //         email: action.id,
-  //         userToken: action.token,
-  //         isLoading: false,
-  //       };
-  //     case "LOGOUT":
-  //       return {
-  //         ...prevState,
-  //         email: null,
-  //         userToken: null,
-  //         isLoading: false,
-  //       };
-  //     case "REGISTER":
-  //       return {
-  //         ...prevState,
-  //         email: action.id,
-  //         userToken: action.token,
-  //         isLoading: false,
-  //       };
-  //   }
-  //   ``;
-  // };
-
-  // // We are creating a reducer now
-  // const [loginState, dispatch] = React.useReducer(
-  //   LoginReducer,
-  //   initailLoginState
-  // );
-
-  // usememo will use the uptimization technique to speed up the execution
   const authContext = React.useMemo(
     () => ({
       signIn: async (email, password) => {
-        // setuserToken("fghk");
-        // setIsLoading(false);
         let userToken;
-        userToken = null;
-        // Nomally we check if the mail and password is equal to that of the database
-        if (email === "achne" && password === "Password") {
-          try {
-            userToken = "fghk";
-            await AsyncStorage.setItem("userToken", userToken);
-          } catch (e) {
-            console.log(e);
-          }
 
-          // normally here we have the refresh token from the backend
-        }
-        console.log("user Token:", userToken);
+        await axios
+          .post(`${api}/authentication_token`, {
+            email,
+            password,
+          })
+
+          .then((res) => {
+            let userToken = res.data;
+
+            if (email === email && password === password) {
+              try {
+                userToken = AsyncStorage.setItem("userToken", userToken);
+              } catch (e) {
+                // saving error
+                console.log(`login error ${e}`);
+              }
+            }
+
+            // setIsLoading(false);
+          })
+          .catch((e) => {
+            console.log(`registration fail ${e}`);
+          });
+
         dispatch({ type: "LOGIN", id: email, token: userToken });
       },
+
+      // console.log('user token: ', userToken);
+
       signOut: async () => {
-        // setuserToken(null);
-        // setIsLoading(false);
         try {
           await AsyncStorage.removeItem("userToken");
         } catch (e) {
@@ -153,33 +141,67 @@ export default function App() {
         }
         dispatch({ type: "LOGOUT" });
       },
-      signUp: () => {
-        // setuserToken("fghk");
-        // setIsLoading(false);
+      Enterprise: async (name, email, password) => {
+        console.log(name, email, password);
+        console.log("api", api);
+
+        axios
+          .post(`${api}/api/entreprises`, {
+            name,
+            email,
+            password,
+          })
+          .then((res) => {
+            let userToken = res.data;
+            setuserToken(userToken);
+
+            AsyncStorage.setItem("userToken", JSON.stringify(userToken));
+          })
+          .catch((e) => {
+            console.log(`registration fail ${e}`);
+          });
+      },
+      Junior: async (firstname, lastname, email, password) => {
+        console.log(email, password);
+        console.log("api", api);
+
+        axios
+          .post(`${api}/api/users`, {
+            firstname,
+            lastname,
+            email,
+            password,
+          })
+          .then((res) => {
+            user$;
+            userToken: null;
+            let userToken = res.data;
+            setuserToken(userToken);
+
+            AsyncStorage.setItem("userToken", JSON.stringify(userToken));
+          })
+          .catch((e) => {
+            console.log(`registration fail ${e}`);
+          });
+      },
+
+      toggleTheme: () => {
+        setIsDarkTheme((isDarkTheme) => !isDarkTheme);
       },
     }),
     []
   );
 
-  // the useEffect will run when our screen rerendring
   useEffect(() => {
     setTimeout(async () => {
       let userToken;
-      userToken = "null";
+      userToken = null;
       try {
         userToken = await AsyncStorage.getItem("userToken");
       } catch (e) {
         console.log(e);
       }
-      // setIsLoading(false);
-      //   let userToken;
-      //   userToken = null;
-      //   try {
-      //     userToken = await AsyncStorage.getItem("userToken");
-      //   } catch (e) {
-      //     console.log(e);
-      //   }
-      console.log("user token: ", userToken);
+      // console.log('user token: ', userToken);
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
   }, []);
@@ -193,15 +215,21 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {loginState.userToken !== null ? (
-          <ProtectedScreen />
-        ) : (
-          <RootStackScreen />
-        )}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <PaperProvider theme={theme}>
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer theme={theme}>
+          {loginState.userToken !== null ? (
+            <>
+              <ProtectedScreen />
+            </>
+          ) : (
+            <>
+              <RootStackScreen />
+            </>
+          )}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </PaperProvider>
   );
 }
 
@@ -262,3 +290,168 @@ const styles = StyleSheet.create({
 
 //   dispatch({ type: "LOGOUT" });
 // },
+
+// we are providing this instailstate for the reduerstate by creating a reducer constant
+// const initailLoginState = {
+//   isLoading: true,
+//   email: "",
+//   userToken: null,
+// };
+
+// we are creating a reducer function which call the previous state of and perform a action
+// const LoginReducer = (prevState, action) => {
+//   switch (action.type) {
+//     case "RETRIEVE_TOKEN":
+//       return {
+//         ...prevState,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+//     case "LOGIN":
+//       return {
+//         ...prevState,
+//         email: action.id,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+//     case "LOGOUT":
+//       return {
+//         ...prevState,
+//         email: null,
+//         userToken: null,
+//         isLoading: false,
+//       };
+//     case "REGISTER":
+//       return {
+//         ...prevState,
+//         email: action.id,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+//   }
+//   ``;
+// };
+
+// // We are creating a reducer now
+// const [loginState, dispatch] = React.useReducer(
+//   LoginReducer,
+//   initailLoginState
+// );
+
+// isLoading will check if the use is authenticate or not
+// const [isLoading, setIsLoading] = useState(true);
+// // userToken will validate our user
+// const [userToken, setuserToken] = useState(null);
+
+// initailLoginState = {
+//   isLoading: true,
+//   userToken: null,
+//   email: null,
+// };
+
+// loginReducer = (prevState, action) => {
+//   switch (action.type) {
+//     case "RETRIEVE_TOKEN":
+//       return {
+//         ...prevState,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+//     case "LOGIN":
+//       return {
+//         ...prevState,
+//         email: action.id,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+//     case "LOGOUT":
+//       return {
+//         ...prevState,
+//         email: null,
+//         userToken: null,
+//         isLoading: false,
+//       };
+//     case "REGISTER":
+//       return {
+//         ...prevState,
+//         email: action.id,
+//         userToken: action.token,
+//         isLoading: false,
+//       };
+//   }
+// };
+
+// const [loginState, dispatch] = React.useReducer(
+//   loginReducer,
+//   initailLoginState
+// );
+
+// usememo will use the uptimization technique to speed up the execution
+// const authContext = React.useMemo(
+//   () => ({
+//     signIn: async (email, password) => {
+//       // setuserToken("fghk");
+//       // setIsLoading(false);
+//       let userToken;
+//       userToken = null;
+//       userToken = "fghk";
+//       // Nomally we check if the mail and password is equal to that of the database
+//       if (email === "achne" && password === "Password") {
+//         alert("thanks for login");
+
+//         // normally here we have the refresh token from the backend
+//       }
+//       console.log("user Token:", userToken);
+//       dispatch({ type: "LOGIN", id: email, token: userToken });
+//     },
+//     signOut: async () => {
+//       // setuserToken(null);
+//       // setIsLoading(false);
+//       try {
+//         await AsyncStorage.removeItem("userToken");
+//       } catch (e) {
+//         console.log(e);
+//       }
+//       dispatch({ type: "LOGOUT" });
+//     },
+
+//     // signUp: (firstname, lastname, email, password) => {
+//     //   console.log("LoginHandleFunction", juniorRegistration);
+//     //   juniorRegistration(firstname, lastname, email, password);
+//     //   // setuserToken("fghk");
+//     //   // setIsLoading(false);
+//     // },
+//   }),
+//   []
+// );
+
+//the useEffect will run when our screen rerendring
+// useEffect(() => {
+//   setTimeout(() => {
+//     let userToken;
+//     userToken = "null";
+//     // try {
+//     //   userToken = await AsyncStorage.getItem("userToken");
+//     // } catch (e) {
+//     //   console.log(e);
+//     // }
+//     // setIsLoading(false);
+//     //   let userToken;
+//     //   userToken = null;
+//     //   try {
+//     //     userToken = await AsyncStorage.getItem("userToken");
+//     //   } catch (e) {
+//     //     console.log(e);
+//     //   }
+//     // console.log("user token: ", userToken);
+//     // dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
+//   }, 1000);
+// }, []);
+
+// if (isLoading) {
+//   return (
+//     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+//       <ActivityIndicator size="large" />
+//     </View>
+//   );
+// }

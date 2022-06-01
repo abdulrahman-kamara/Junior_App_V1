@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Colors from "../Constants/Colors";
 import OffersScreen from "./ProtectedScreen/OffersScreen";
 import DashboardScreen from "../Screens/ProtectedScreen/DashboardScreen";
@@ -11,6 +11,8 @@ import CreatOffersScreen from "../Screens/ProtectedScreen/CreatOffersScreen";
 import ApplyScreen from "../Screens/ProtectedScreen/ApplyScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
+import CreateProfileModal from "../Screens/CreateProfileModal";
+import CreatProfileScreen from "../Screens/CreateProfileModal";
 
 const HomeTab = createMaterialBottomTabNavigator();
 
@@ -46,7 +48,7 @@ const HomeTapScreen = () => {
 
       <HomeTab.Screen
         name="CreatOffersScreen"
-        component={CreatOffersScreen}
+        component={CreateProfileModal}
         options={{
           tabBarLabel: "Create",
           tabBarIcon: ({ color }) => (
@@ -60,13 +62,38 @@ const HomeTapScreen = () => {
 
 const HomeStack = createNativeStackNavigator();
 
+const HomeStackScreen = () => {
+  <HomeTab.Navigator
+    initialRouteName="DrawerNavigation"
+    screenOptions={{ headerShown: false }}
+    activeColor={Colors.Primary}
+    barStyle={{ backgroundColor: "white" }}
+  ></HomeTab.Navigator>;
+};
+
 const Drawer = createDrawerNavigator();
 
-const ProtectedScreen = () => {
+const ProtectedScreen = ({ navigation }) => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={HomeTapScreen} />
-      <HomeStack.Screen name="ProfileContent" component={ProfileContent} />
+      <HomeStack.Screen
+        name="ProfileContent"
+        component={ProfileContent}
+        options={{
+          headerRight: () => (
+            <View style={{ marginRight: 10 }}>
+              <MaterialCommunityIcons.Button
+                name="account-edit"
+                color={Colors.Secondry}
+                size={25}
+                onPress={() => navigation.navigate("CreatProfile")}
+              />
+            </View>
+          ),
+        }}
+      />
+      <Drawer.Screen name="CreatProfile" component={CreatProfileScreen} />
     </Drawer.Navigator>
   );
 };
