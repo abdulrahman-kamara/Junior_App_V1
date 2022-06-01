@@ -29,10 +29,10 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ProfileScreen = (props) => {
+const ProfileScreen = ({ navigation }) => {
   const [text, onChangeText] = React.useState("");
 
-  const signOut = React.useContext(AuthContext);
+  const { signOut } = React.useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>

@@ -12,6 +12,7 @@ import ApplyScreen from "../Screens/ProtectedScreen/ApplyScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
 import CreateProfileModal from "../Screens/CreateProfileModal";
+import CreatProfileScreen from "../Screens/CreateProfileModal";
 
 const HomeTab = createMaterialBottomTabNavigator();
 
@@ -46,7 +47,7 @@ const HomeTapScreen = () => {
       />
 
       <HomeTab.Screen
-        name="CreateProfileModal"
+        name="CreatOffersScreen"
         component={CreateProfileModal}
         options={{
           tabBarLabel: "Create",
@@ -60,6 +61,15 @@ const HomeTapScreen = () => {
 };
 
 const HomeStack = createNativeStackNavigator();
+
+const HomeStackScreen = () => {
+  <HomeTab.Navigator
+    initialRouteName="DrawerNavigation"
+    screenOptions={{ headerShown: false }}
+    activeColor={Colors.Primary}
+    barStyle={{ backgroundColor: "white" }}
+  ></HomeTab.Navigator>;
+};
 
 const Drawer = createDrawerNavigator();
 
@@ -77,12 +87,13 @@ const ProtectedScreen = ({ navigation }) => {
                 name="account-edit"
                 color={Colors.Secondry}
                 size={25}
-                onPress={() => navigation.navigate("CreateProfileModal")}
+                onPress={() => navigation.navigate("CreatProfile")}
               />
             </View>
           ),
         }}
       />
+      <Drawer.Screen name="CreatProfile" component={CreatProfileScreen} />
     </Drawer.Navigator>
   );
 };

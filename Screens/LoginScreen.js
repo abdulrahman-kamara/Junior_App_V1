@@ -12,12 +12,14 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
+import { useTheme } from "react-native-paper";
 import Colors from "../Constants/Colors";
 import * as Animatable from "react-native-animatable";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
 import { ActivityIndicator } from "react-native-paper";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState(null);
@@ -90,28 +92,23 @@ const LoginScreen = ({ navigation }) => {
   //   });
   // };
 
-  // const loginHandler = (email, password) => {
-  //   signIn(email, password);
-  // };
+  const { signIn } = useContext(AuthContext);
+  const loginHandler = (email, password) => {
+    signIn(email, password);
+  };
 
-  // const isLoading = useContext(AuthContext);
-  const { login, isLoading } = useContext(AuthContext);
-
-  setTimeout(() => {
-    if (isLoading) {
-      return (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <ActivityIndicator size="large" />
-        </View>
-      );
-    }
-  }, 100);
+  // if (isLoading) {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+  //       <ActivityIndicator size="large" />
+  //     </View>
+  //   );
+  // }
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
+
       <View style={styles.header}>
         <Text style={styles.text_header}>Welcome to Junior !</Text>
       </View>
@@ -184,7 +181,7 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.signin}
             onPress={() => {
-              login(email, password);
+              loginHandler(email, password);
             }}
           >
             <Text style={styles.textSign}>Login</Text>

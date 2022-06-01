@@ -25,6 +25,7 @@ const LoginScreen = ({ navigation }) => {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [confirmpassword, setConfirmPassword] = useState(null);
   // const [data, setData] = useState({
   //   email: "",
   //   password: "",
@@ -33,9 +34,6 @@ const LoginScreen = ({ navigation }) => {
   //   isValidEmail: true,
   //   isValidPassword: true,
   // });
-
-  const { Enterprise } = React.useContext(AuthContext);
-  const isLoading = React.useContext(AuthContext);
 
   // const textInputChange = (val) => {
   //   if (val.trim().length >= 4) {
@@ -139,14 +137,16 @@ const LoginScreen = ({ navigation }) => {
   //   signIn(userAuth);
 
   // };
+  const { Enterprise } = React.useContext(AuthContext);
+  const { isLoading } = React.useContext(AuthContext);
 
-  // if (isLoading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <ActivityIndicator size="large" />
-  //     </View>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -248,9 +248,9 @@ const LoginScreen = ({ navigation }) => {
               // secureTextEntry={data.secureTextEntry ? true : false}
               placeholder="Password"
               autoCapitalize="none"
-              value={password}
+              value={confirmpassword}
               onChangeText={(text) => {
-                setPassword(text);
+                setConfirmPassword(text);
               }}
             />
             {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
