@@ -19,7 +19,7 @@ import Animated from "react-native-reanimated";
 
 const image = "../assets/Image/logo.png";
 
-const CreateProfileModal = () => {
+const CreateProfileModal = (props) => {
   const { colors } = useTheme();
 
   const renderInner = () => (
@@ -89,40 +89,41 @@ const CreateProfileModal = () => {
         }}
       >
         <View style={{ alignItems: "center" }}>
-          <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+          {/* <TouchableOpacity> */}
+          <View
+            style={{
+              height: 100,
+              width: 100,
+              borderWidth: 1,
+              borderRadius: 15,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <PickerImage onPress={() => bs.current.snapTo(2)} />
             <View
               style={{
-                height: 100,
-                width: 100,
-                borderRadius: 15,
+                flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <PickerImage />
-              <View
+              <Icon
+                name="camera"
+                size={35}
+                colors={colors.text}
                 style={{
-                  flex: 1,
-                  justifyContent: "center",
+                  opacity: 0.7,
                   alignItems: "center",
+                  justifyContent: "center",
+                  borderWidth: 1,
+                  borderColor: Colors.Primary,
+                  borderRadius: 10,
                 }}
-              >
-                <Icon
-                  name="camera"
-                  size={35}
-                  colors={colors.text}
-                  style={{
-                    opacity: 0.7,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderWidth: 1,
-                    borderColor: Colors.Primary,
-                    borderRadius: 10,
-                  }}
-                />
-              </View>
+              />
             </View>
-          </TouchableOpacity>
+          </View>
+          {/* </TouchableOpacity> */}
           <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
             John Doe
           </Text>

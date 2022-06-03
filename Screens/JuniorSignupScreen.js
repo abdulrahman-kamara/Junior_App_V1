@@ -12,15 +12,15 @@ import {
   StatusBar,
   Alert,
 } from "react-native";
-import Spinner from "react-native-loading-spinner-overlay/lib";
+
 import Colors from "../Constants/Colors";
 import * as Animatable from "react-native-animatable";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
-
 import { ScrollView } from "react-native-gesture-handler";
 import { ActivityIndicator } from "react-native-paper";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const Juniorsignup = ({ navigation }) => {
   const [firstname, setFirstname] = useState(null);
@@ -28,21 +28,17 @@ const Juniorsignup = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const isLoading = useContext(AuthContext);
   const { Junior } = useContext(AuthContext);
+  const { isLoading } = useContext(AuthContext);
   console.log(Junior);
 
-  // setTimeout(() => {
-  //   if (isLoading) {
-  //     return (
-  //       <View
-  //         style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-  //       >
-  //         <ActivityIndicator size="large" />
-  //       </View>
-  //     );
-  //   }
-  // }, 3000);
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

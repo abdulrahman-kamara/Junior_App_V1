@@ -9,14 +9,15 @@ import {
   SafeAreaView,
   FlatList,
   TextInput,
-  ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 import Colors from "../../Constants/Colors";
 import Card from "../../UI/Card";
 import Header from "../../Components/Header";
 import { Ionicons } from "@expo/vector-icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ActivityIndicator } from "react-native-paper";
+import { AuthContext } from "../../Context/Context";
 
 const DashboardScreen = ({ navigation }) => {
   const [search, setSearch] = useState("");
@@ -79,6 +80,15 @@ const DashboardScreen = ({ navigation }) => {
   const onPress = () => {
     console.log("you pressed me");
   };
+
+  const { userInfo, isLoading, logout } = useContext(AuthContext);
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
