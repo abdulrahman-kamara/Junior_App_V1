@@ -1,5 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 import { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View, ActivityIndicator, Alert } from "react-native";
@@ -59,7 +60,6 @@ export default function App() {
   const initialLoginState = {
     isLoading: true,
     email: null,
-
     userToken: null,
   };
 
@@ -101,6 +101,8 @@ export default function App() {
 
   const authContext = React.useMemo(
     () => ({
+      /* signIn: fonction qui permet de se connecter */
+
       signIn: async (email, password) => {
         let userToken;
 
@@ -113,13 +115,11 @@ export default function App() {
           .then((res) => {
             let userToken = res.data;
 
-            if (email === email && password === password) {
-              try {
-                userToken = AsyncStorage.setItem("userToken", userToken);
-              } catch (e) {
-                // saving error
-                console.log(`login error ${e}`);
-              }
+            try {
+              userToken = AsyncStorage.setItem("userToken", userToken);
+            } catch (e) {
+              // saving error
+              Alert.alert(`login error ${e}`);
             }
 
             // setIsLoading(false);
@@ -130,8 +130,6 @@ export default function App() {
 
         dispatch({ type: "LOGIN", id: email, token: userToken });
       },
-
-      // console.log('user token: ', userToken);
 
       signOut: async () => {
         try {
@@ -195,7 +193,7 @@ export default function App() {
   useEffect(() => {
     setTimeout(async () => {
       let userToken;
-      userToken = null;
+
       try {
         userToken = await AsyncStorage.getItem("userToken");
       } catch (e) {
@@ -215,21 +213,23 @@ export default function App() {
   }
 
   return (
-    <PaperProvider theme={theme}>
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer theme={theme}>
-          {loginState.userToken !== null ? (
-            <>
-              <ProtectedScreen />
-            </>
-          ) : (
-            <>
-              <RootStackScreen />
-            </>
-          )}
-        </NavigationContainer>
-      </AuthContext.Provider>
-    </PaperProvider>
+    <ActionSheetProvider>
+      <PaperProvider theme={theme}>
+        <AuthContext.Provider value={authContext}>
+          <NavigationContainer theme={theme}>
+            {loginState.userToken !== null ? (
+              <>
+                <ProtectedScreen />
+              </>
+            ) : (
+              <>
+                <RootStackScreen />
+              </>
+            )}
+          </NavigationContainer>
+        </AuthContext.Provider>
+      </PaperProvider>
+    </ActionSheetProvider>
   );
 }
 

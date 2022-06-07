@@ -26,6 +26,7 @@ const HomeStackScreen = (navigation) => (
     <HomeStack.Screen name="Apply" component={ApplyScreen} />
     <HomeStack.Screen name="CreatOffersScreen" component={CreatOffersScreen} />
     <HomeStack.Screen name="Offers" component={OffersScreen} />
+    <HomeStack.Screen name="SplashScreen" component={SplashScreen} />
     <Stack.Screen name="CreateProfileModal" component={CreateProfileModal} />
   </HomeStack.Navigator>
 );
