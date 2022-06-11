@@ -32,7 +32,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const ProfileScreen = ({ navigation }) => {
   const [text, onChangeText] = React.useState("");
 
-  const { signOut } = React.useContext(AuthContext);
+  const { logout } = React.useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -141,7 +141,7 @@ const ProfileScreen = ({ navigation }) => {
           )}
           label="Sign out"
           onPress={() => {
-            signOut();
+            logout();
           }}
         />
       </Drawer.Section>

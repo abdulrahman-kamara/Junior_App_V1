@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
   Platform,
   StatusBar,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useTheme } from "react-native-paper";
 import Colors from "../Constants/Colors";
@@ -18,13 +19,17 @@ import * as Animatable from "react-native-animatable";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
-import { ActivityIndicator } from "react-native-paper";
-import Spinner from "react-native-loading-spinner-overlay";
+
+import axios from "axios";
+import { api } from "../config/api";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  // const val = useContext(AuthContext);
+
+  // const [isLoading, setIsLoading] = useState(null);
+
+  const { login } = useContext(AuthContext);
 
   const [data, setData] = useState({
     secureTextEntry: true,
@@ -88,19 +93,6 @@ const LoginScreen = ({ navigation }) => {
     });
   };
 
-  const { signIn } = useContext(AuthContext);
-  const loginHandler = (email, password) => {
-    signIn(email, password);
-  };
-
-  // if (isLoading) {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //       <ActivityIndicator size="large" />
-  //     </View>
-  //   );
-  // }
-
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
@@ -119,9 +111,7 @@ const LoginScreen = ({ navigation }) => {
             keyboardType="email-address"
             autoCapitalize="none"
             value={email}
-            onChangeText={(text) => {
-              setEmail(text);
-            }}
+            onChangeText={(text) => setEmail(text)}
             onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
           />
           {data.check_textInputChange ? (
@@ -147,9 +137,7 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Password"
             autoCapitalize="none"
             value={password}
-            onChangeText={(text) => {
-              setPassword(text);
-            }}
+            onChangeText={(text) => setPassword(text)}
           />
           <TouchableOpacity onPress={updatepassworwEntry}>
             {data.secureTextEntry ? (
@@ -171,7 +159,7 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.signin}
             onPress={() => {
-              loginHandler(email, password);
+              login(email, password);
             }}
           >
             <Text style={styles.textSign}>Login</Text>

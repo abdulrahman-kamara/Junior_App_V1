@@ -42,11 +42,12 @@ export default function ImagePickerExample() {
           justifyContent: "center",
           flex: 0,
           alignItems: "center",
-          borderRadius: 100,
+          borderRadius: 15,
           borderColor: Colors.Primary,
-          borderWidth: 1,
-          width: 100,
-          height: 100,
+
+          width: 330,
+          height: 150,
+          marginBottom: 10,
         }}
       >
         {/* <Icon name="camera" size={20} /> */}
@@ -54,9 +55,9 @@ export default function ImagePickerExample() {
           <Image
             source={{ uri: image }}
             style={{
-              width: 150,
+              width: 330,
               height: 150,
-              borderRadius: 100,
+              borderRadius: 15,
               marginLeft: 0,
             }}
           />

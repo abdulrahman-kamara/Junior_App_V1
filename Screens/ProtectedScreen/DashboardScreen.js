@@ -33,7 +33,7 @@ const DashboardScreen = ({ navigation }) => {
       .then((res) => {
         setFeed(res.data);
         setFilterData(res.data);
-        console.log(res.data);
+        console.log("res.data", filterData);
       });
   }, []);
 
@@ -61,6 +61,7 @@ const DashboardScreen = ({ navigation }) => {
       // Filter the feed
       // Update FilteredData
       const newFilteredData = feed.filter(function (item) {
+        // console.log("feed", feed);
         const itemData = item.last_name
           ? item.last_name.toLowerCase()
           : "".toLowerCase();
@@ -90,6 +91,34 @@ const DashboardScreen = ({ navigation }) => {
     );
   }
 
+  const resderItem = ({ item }) => {
+    return (
+      <View>
+        <TouchableOpacity onPress={() => navigation.navigate("Offers", item)}>
+          <View style={styles.offerView}>
+            <View style={styles.userProfile}>
+              <View style={styles.avaterView}>
+                <Image source={{ url: item.avatar }} style={styles.avater} />
+
+                <View style={styles.titleView}>
+                  <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                    {item.first_name}
+                  </Text>
+                  <Text style={{ fontSize: 11 }}>{item.last_name}</Text>
+                </View>
+              </View>
+              <View>
+                <Ionicons name="ellipsis-vertical-outline"></Ionicons>
+              </View>
+            </View>
+
+            <Image source={{ url: item.avatar }} style={styles.coverAvater} />
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.dashboard}>
@@ -112,35 +141,7 @@ const DashboardScreen = ({ navigation }) => {
               keyExtractor={(item, index) => {
                 return item.id.toFixed();
               }}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity onPress={() => navigation.navigate("Offers")}>
-                  <View style={styles.offerView}>
-                    <View style={styles.userProfile}>
-                      <View style={styles.avaterView}>
-                        <Image
-                          source={{ url: item.avatar }}
-                          style={styles.avater}
-                        />
-
-                        <View style={styles.titleView}>
-                          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                            {item.first_name}
-                          </Text>
-                          <Text style={{ fontSize: 11 }}>{item.last_name}</Text>
-                        </View>
-                      </View>
-                      <View>
-                        <Ionicons name="ellipsis-vertical-outline"></Ionicons>
-                      </View>
-                    </View>
-
-                    <Image
-                      source={{ url: item.avatar }}
-                      style={styles.coverAvater}
-                    />
-                  </View>
-                </TouchableOpacity>
-              )}
+              renderItem={resderItem}
             />
           )}
         </View>

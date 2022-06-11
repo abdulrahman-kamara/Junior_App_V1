@@ -4,9 +4,9 @@ import SplashScreen from "../Screens/SplashScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import RegisterScreen from "../Screens/RegisterScreen";
 import WelcomeScreen from "../Screens/WelcomeScreen";
-import JuniorLoginScreen from "../Screens/JuniorSignupScreen";
+import JuniorSignupScreen from "../Screens/JuniorSignupScreen";
 import CompanySignupScreen from "../Screens/CompanySignupScreen";
-import DashboardScreen from "../Screens/ProtectedScreen/DashboardScreen";
+import CreateProfileJunior from "../Screens/CreateProfileJunior";
 
 const RootStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
@@ -17,8 +17,15 @@ const RootStackScreen = ({ navigation }) => (
     <RootStack.Screen name="Login" component={LoginScreen} />
     <RootStack.Screen name="Register" component={RegisterScreen} />
     <RootStack.Screen name="Welcome" component={WelcomeScreen} />
-    <RootStack.Screen name="JuniorLoginScreen" component={JuniorLoginScreen} />
-    <Stack.Screen name="Dashboard" component={DashboardScreen} />
+    <RootStack.Screen
+      name="CreateProfileJunior"
+      component={CreateProfileJunior}
+    />
+    <RootStack.Screen
+      name="JuniorSignupScreen"
+      component={JuniorSignupScreen}
+    />
+
     <RootStack.Screen
       name="CompanySignupScreen"
       component={CompanySignupScreen}

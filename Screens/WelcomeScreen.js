@@ -37,7 +37,7 @@ const WelcomeScreen = ({ navigation }) => {
                 title="JUNIOR"
                 color={Colors.Primary}
                 onPress={() => {
-                  navigation.navigate("JuniorLoginScreen");
+                  navigation.navigate("JuniorSignupScreen");
                 }}
               />
             </View>

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import Colors from "../Constants/Colors";
 import OffersScreen from "./ProtectedScreen/OffersScreen";
 import DashboardScreen from "../Screens/ProtectedScreen/DashboardScreen";
@@ -11,8 +11,17 @@ import CreatOffersScreen from "../Screens/ProtectedScreen/CreatOffersScreen";
 import ApplyScreen from "../Screens/ProtectedScreen/ApplyScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
-import CreateProfileModal from "../Screens/CreateProfileModal";
-import CreatProfileScreen from "../Screens/CreateProfileModal";
+import CreateProfileJunior from "../Screens/CreateProfileJunior";
+import CreateProfileEnterprise from "../Screens/CreateProfileEnterprise";
+import CreateOffers from "../Screens/CreateOffers";
+
+const StackFeed = createNativeStackNavigator();
+
+const FeedStackScreen = () => {
+  <StackFeed.Navigator headerMode="none">
+    <StackFeed.Screen name="Offers" component={OffersScreen}></StackFeed.Screen>
+  </StackFeed.Navigator>;
+};
 
 const HomeTab = createMaterialBottomTabNavigator();
 
@@ -34,6 +43,16 @@ const HomeTapScreen = () => {
           ),
         }}
       />
+      <HomeTab.Screen
+        name="Offers"
+        component={OffersScreen}
+        options={{
+          tabBarLabel: "Dashboard",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
 
       <HomeTab.Screen
         name="Apply"
@@ -48,9 +67,29 @@ const HomeTapScreen = () => {
 
       <HomeTab.Screen
         name="CreatOffersScreen"
-        component={CreateProfileModal}
+        component={CreateProfileJunior}
         options={{
           tabBarLabel: "Create",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+      <HomeTab.Screen
+        name="CreatOffers"
+        component={CreateProfileEnterprise}
+        options={{
+          tabBarLabel: "CreateE",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          ),
+        }}
+      />
+      <HomeTab.Screen
+        name="CreateOffer"
+        component={CreateOffers}
+        options={{
+          tabBarLabel: "Offer",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
@@ -62,38 +101,34 @@ const HomeTapScreen = () => {
 
 const HomeStack = createNativeStackNavigator();
 
-const HomeStackScreen = () => {
-  <HomeTab.Navigator
-    initialRouteName="DrawerNavigation"
-    screenOptions={{ headerShown: false }}
-    activeColor={Colors.Primary}
-    barStyle={{ backgroundColor: "white" }}
-  ></HomeTab.Navigator>;
-};
-
 const Drawer = createDrawerNavigator();
 
 const ProtectedScreen = ({ navigation }) => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={HomeTapScreen} />
+      <Drawer.Screen name="FeedStack" component={FeedStackScreen} />
+
       <HomeStack.Screen
         name="ProfileContent"
         component={ProfileContent}
-        options={{
+        options={({ navigation }) => ({
           headerRight: () => (
             <View style={{ marginRight: 10 }}>
               <MaterialCommunityIcons.Button
                 name="account-edit"
                 color={Colors.Secondry}
                 size={25}
-                onPress={() => navigation.navigate("CreatProfile")}
+                onPress={() => navigation.navigate("CreateProfileJunior")}
               />
             </View>
           ),
-        }}
+        })}
       />
-      <Drawer.Screen name="CreatProfile" component={CreatProfileScreen} />
+      <Drawer.Screen
+        name="CreateProfileJunior"
+        component={CreateProfileJunior}
+      />
     </Drawer.Navigator>
   );
 };

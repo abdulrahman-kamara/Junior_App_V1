@@ -21,7 +21,7 @@ import { AuthContext } from "../Context/Context";
 import { ScrollView } from "react-native-gesture-handler";
 import { ActivityIndicator } from "react-native-paper";
 
-const LoginScreen = ({ navigation }) => {
+const COmpanySignup = ({ navigation }) => {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
@@ -372,4 +372,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default COmpanySignup;

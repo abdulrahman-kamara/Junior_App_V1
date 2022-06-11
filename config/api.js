@@ -1,1 +1,1 @@
-export const api = "https://api.torea-patissier.students-laplateforme.io";
+export const BASE_URL = "https://api.torea-patissier.students-laplateforme.io";

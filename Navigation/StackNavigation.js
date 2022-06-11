@@ -14,38 +14,18 @@ import CreatOffersScreen from "../Screens/ProtectedScreen/CreatOffersScreen";
 import OffersScreen from "../Screens/ProtectedScreen/OffersScreen";
 import CreateProfileModal from "../Screens/CreateProfileModal";
 
-const HomeStack = createNativeStackNavigator();
-
-const HomeStackScreen = (navigation) => (
-  <HomeStack.Navigator headerinside={false}>
-    <HomeStack.Screen name="Welcome" component={WelcomeScreen} />
-    <HomeStack.Screen name="Protected" component={ProtectedScreen} />
-    <HomeStack.Screen name="Dashboard" component={DashboardScreen} />
-    <HomeStack.Screen name="Profile" component={SplashScreen} />
-    <HomeStack.Screen name="ProfileContent" component={ProfileContent} />
-    <HomeStack.Screen name="Apply" component={ApplyScreen} />
-    <HomeStack.Screen name="CreatOffersScreen" component={CreatOffersScreen} />
-    <HomeStack.Screen name="Offers" component={OffersScreen} />
-    <HomeStack.Screen name="SplashScreen" component={SplashScreen} />
-    <Stack.Screen name="CreateProfileModal" component={CreateProfileModal} />
-  </HomeStack.Navigator>
-);
-
 const Stack = createNativeStackNavigator();
 
 export default StackNavigation = () => {
   return (
     <Stack.Navigator headerinside={false}>
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
-      <Stack.Screen name="Protected" component={ProtectedScreen} />
       <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Dashboard" component={DashboardScreen} />
       <Stack.Screen name="Profile" component={SplashScreen} />
       <Stack.Screen name="ProfileContent" component={ProfileContent} />
-
       <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="ApplyForm" component={ApplyForm} />
       <Stack.Screen name="JuniorLoginScreen" component={JuniorLoginScreen} />
     </Stack.Navigator>
+    // <Stack.Screen name="Dashboard" component={DashboardScreen} />
   );
 };
