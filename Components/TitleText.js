@@ -9,7 +9,7 @@ const TitleText = (props) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontFamily: "NunitoSans-Bold",
+    // fontFamily: "NunitoSans-Bold",
   },
 });
 

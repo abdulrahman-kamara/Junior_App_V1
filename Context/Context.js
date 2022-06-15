@@ -9,59 +9,101 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
-  // userToken will validate our user
-  //   const [userInfo, setUserInfo] = useState({});
-  //   // isLoading will check if the use is authenticate or not
-  //   const [isLoading, setIsLoading] = useState(false);
 
-  //   const Junior = (firstname, lastname, email, password) => {
-  //     console.log(email, password);
-  //     console.log("api", api);
-  //     setIsLoading(true);
-  //     axios
-  //       .post(`${api}/api/users`, {
-  //         firstname,
-  //         lastname,
-  //         email,
-  //         password,
-  //       })
-  //       .then((res) => {
-  //         let userInfo = res.data;
-  //         setUserInfo(userInfo);
-  //         console.log(userInfo);
-  //         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-  //         setIsLoading(false);
-  //         console.log("userInfo", userInfo);
-  //       })
-  //       .catch((e) => {
-  //         console.log(`registration fail ${e}`);
-  //         setIsLoading(false);
-  //       });
-  //   };
+  const Junior = async (firstname, lastname, email, password, navigation) => {
+    setIsLoading(true);
+    axios
+      .post("http://10.0.6.226:8000/api/register_user", {
+        firstname,
+        lastname,
+        email,
+        password,
+      })
 
-  //   const Enterprise = (name, email, password) => {
-  //     console.log(name, email, password);
-  //     console.log("api", api);
-  //     setIsLoading(true);
-  //     axios
-  //       .post(`${api}/api/entreprises`, {
-  //         name,
-  //         email,
-  //         password,
-  //       })
-  //       .then((res) => {
-  //         let userInfo = res.data;
-  //         setUserInfo(userInfo);
-  //         console.log(userInfo);
-  //         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-  //         setIsLoading(false);
-  //         console.log("userInfo", userInfo);
-  //       })
-  //       .catch((e) => {
-  //         console.log(`registration fail ${e}`);
-  //         setIsLoading(false);
-  //       });
-  //   };
+      .then((res) => {
+        let userInfo = res.data;
+        console.log("res", res);
+
+        // setUserInfo(userInfo);
+        // setUserToken(userInfo.token);
+        // console.log(userInfo);
+        // console.log("user Token" + userInfo.token);
+        // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        // AsyncStorage.setItem("userToken", userInfo.token);
+        if (res.status == 201) {
+          fetch("http://10.0.6.226:8000/authentication_token", {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+          })
+            .then((response) => {
+              return response.json();
+            })
+            .then((response) => {
+              let userInfo = response;
+              navigation.navigate("CreateProfileJunior", {
+                firstname,
+                lastname,
+                token,
+              });
+            })
+            .catch((err) => {
+              console.log(`login err ${err}`);
+            });
+
+          setIsLoading(false);
+
+          //   .then((res) => {
+          //     return res.json();
+          //   })
+          //   .then((res) => {
+          //     let userInfo = res;
+
+          //     console.log(userInfo);
+          //     console.log("user" + userInfo);
+          //     navigation.navigate("CreateProfileJunior", {
+          //       firstname,
+          //       lastname,
+          //       userInfo,
+          //     });
+          //   })
+          //   .catch((err) => {
+          //     console.log(`login err ${err}`);
+          //   });
+
+          // setIsLoading(false);
+        }
+      })
+
+      .catch((err) => {
+        console.log(`login test ${err}`);
+      });
+
+    setIsLoading(false);
+  };
+
+  const Enterprise = async (name, email, password) => {
+    setIsLoading(true);
+    axios
+      .post(`${BASE_URL}/api/entreprises`, {
+        name,
+        email,
+        password,
+      })
+      .then((res) => {
+        let userInfo = res.data;
+        setUserInfo(userInfo);
+        setUserToken(userInfo.token);
+        console.log(userInfo);
+        console.log("user Token" + userInfo.token);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        AsyncStorage.setItem("userToken", userInfo.token);
+      })
+      .catch((err) => {
+        console.log(`login erro ${err}`);
+      });
+
+    setIsLoading(false);
+  };
 
   const login = async (email, password, navigation) => {
     setIsLoading(true);
@@ -82,35 +124,85 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => {
         console.log(`login erro ${err}`);
       });
-    // setUserToken("diovgvhfviofv");
 
     setIsLoading(false);
-    //   console.log(email, password);
-    //   console.log("api", api);
-    //   console.log("nav", navigation);
+  };
+  const ProfileJunior = async (
+    firstname,
+    lastname,
+    phone,
+    city,
+    description,
+    profession,
+    diplom,
+    expierrence,
+    image,
+    userInfo
+  ) => {
+    const formdata = new FormData();
 
-    //   setIsLoading(true);
-    //   axios
-    //     .post(`${api}/authentication_token`, {
-    //       email,
-    //       password,
-    //     })
-    //     .then((res) => {
-    //       let userInfo = res.data;
-    //       // console.log("res", res.data);
-    //       setUserInfo(userInfo);
-    //       // console.log("this is info", userInfo);
+    formdata.append("telephone", phone ?? "");
+    formdata.append("city", city ?? "");
+    formdata.append("firstname", firstname ?? "");
+    formdata.append("lastname", lastname ?? "");
+    formdata.append("description", description ?? "");
+    formdata.append("diploma", diplom ?? "");
+    formdata.append("year_of_experience", expierrence ?? "");
+    formdata.append("profession", profession ?? "");
+    formdata.append("photoFile", {
+      type: "image/jpeg",
+      uri: image,
+      name: "image.jpg",
+    });
+    console.log("form", formdata);
+    console.log("image", image);
 
-    //       AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-    //       setIsLoading(false);
+    setIsLoading(true);
 
-    //       return userInfo;
-    //     })
+    fetch("http://10.0.6.226:8000/api/users/81", {
+      method: "POST",
+      body: formdata,
+      headers: {
+        authorization: `Bearer ${userInfo}`,
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((userInfo) => {
+        setUserInfo(userInfo);
+        setUserToken(userInfo);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        AsyncStorage.setItem("userToken", userInfo);
+      });
 
-    //     .catch((e) => {
-    //       console.log(`registration fail ${e}`);
-    //       setIsLoading(false);
-    //     });
+    // axios
+    //   .post("http://10.0.6.226:8000/api/users/63", {
+    //     data: formdata,
+    //     headers: {
+    //       authorization:
+    //         "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2NTUyOTU1NDksImV4cCI6MTY1NTI5OTE0OSwicm9sZXMiOlsiUlVMRV9VU0VSIiwiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiYWxleEBnbWFpbC5jb20ifQ.CpLZ4Ztrl1GqnBUIkeB3lI_-Fw2OopDfxmurUs3btCbik0m2RggcoevWoVFbUsQ5dFPWOVciTcSAm4RvmS1_2B8J506ugPJ6uMlXRosVuKp719gNta2I4cBd4F1W-wwMUpRDuP2y02qbp8gXEefj-eG1uf5pS_uuWdz8woFNzC1B0pfK3XbnSDwg1BNJN7Bn-2gfdDdqg3nJ0ZPj1_GlTVaedDhysLSois3xxs3T9mAdUrR2BjQf0S0npIPMDWbE87Jlhx775qxsLvw-4JW-bf2tkAdPmmz73SmAnrkZ5WKjYdPqRqCvfuDJUoXhmftPU18aVCkeHlaJLNO7varLgHrMUHISthFlUtacsSptpfYYB9zmnYn9OuHkLl2b2fssIrKIeWsCAagmOejH2sYPyxUe4fVPZeq_MpN-wp24qXW5pgjypexOrbhaASyYr4f3O6Vx_wIlFel5l14VHn3KdmBPk0tenEdjZKlg9nAi0lcT4GdAjt1swMT2RJQiGm_7KtkWxLIYYrej_ECdkdFOlgRN6dQ4sZO6iBRb25qH9SOp9DCU-wvy492_YXKHoVCbrAymjymvJdZCSV5MbxSdo73L_J7p8FSXqnGTtD1bcqnYlmSoqY3mwn9-Fd4-DM-B4nROSFjrPShWiBfaltpvraTECPJRJLvpn4wbB1VQruw",
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     let userInfo = res;
+    //     console.log(userInfo);
+    //     // setUserInfo(userInfo);
+    //     // setUserToken(userInfo);
+
+    //     // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+    //     // AsyncStorage.setItem("userToken", userInfo.token);
+    //     // if (res.status == 201) {
+    //     //   navigation.navigate("CreateProfileJunior", { firstname, lastname });
+    //     // }
+    //   })
+
+    //   .catch((err) => {
+    //     console.log(`login error ${err}`);
+    //   });
+
+    setIsLoading(false);
   };
 
   const logout = () => {
@@ -119,11 +211,6 @@ export const AuthProvider = ({ children }) => {
     AsyncStorage.removeItem("userInfo");
     AsyncStorage.removeItem("userToken");
     setIsLoading(false);
-
-    //   AsyncStorage.removeItem("userInfo");
-    //   setUserInfo({});
-    //   setIsLoading(false);
-    //   navigation.navigate("Login");
   };
 
   const isLoggedIn = async () => {
@@ -150,8 +237,43 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>
+    <AuthContext.Provider
+      value={{
+        login,
+        logout,
+        isLoading,
+        userToken,
+        Junior,
+        Enterprise,
+        ProfileJunior,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
+
+//   const Junior = (firstname, lastname, email, password) => {
+//     console.log(email, password);
+//     console.log("api", api);
+//     setIsLoading(true);
+//     axios
+//       .post(`${api}/api/users`, {
+//         firstname,
+//         lastname,
+//         email,
+//         password,
+//       })
+//       .then((res) => {
+//         let userInfo = res.data;
+//         setUserInfo(userInfo);
+//         console.log(userInfo);
+//         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+//         setIsLoading(false);
+//         console.log("userInfo", userInfo);
+//       })
+//       .catch((e) => {
+//         console.log(`registration fail ${e}`);
+//         setIsLoading(false);
+//       });
+//   };

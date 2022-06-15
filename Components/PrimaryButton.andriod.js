@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontFamily: "NunitoSans-Bold",
+    // fontFamily: "NunitoSans-Bold",
     fontSize: 18,
   },
 });

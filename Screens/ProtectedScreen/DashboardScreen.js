@@ -37,36 +37,19 @@ const DashboardScreen = ({ navigation }) => {
       });
   }, []);
 
-  // const getApi = () => {
-  //   axios
-  //     .get(
-  //       "https://api.torea-patissier.students-laplateforme.io/api/users",
-  //       data
-  //     )
-  //     .then(function (response) {
-  //       if (response.status === 201) {
-  //         console.log(response);
-  //       }
-  //       alert(JSON.stringify(response));
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // };
-
   const searchFilter = (text) => {
     // if the searched is not blank
     if (text) {
       //Inserted text is not blank
       // Filter the feed
       // Update FilteredData
-      const newFilteredData = feed.filter(function (item) {
+      const newFilteredData = feed.filter((item) => {
         // console.log("feed", feed);
         const itemData = item.last_name
           ? item.last_name.toLowerCase()
           : "".toLowerCase();
         const textData = text.toLowerCase();
-        return itemData.indexOf(textData) >= -1;
+        return itemData.indexOf(textData) !== -1;
       });
       setFilterData(newFilteredData);
       setSearch(text);
@@ -78,11 +61,7 @@ const DashboardScreen = ({ navigation }) => {
     }
   };
 
-  const onPress = () => {
-    console.log("you pressed me");
-  };
-
-  const { userInfo, isLoading, logout } = useContext(AuthContext);
+  const { isLoading } = useContext(AuthContext);
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

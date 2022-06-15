@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   titleText: {
     color: Colors.Primary,
     fontSize: 20,
-    fontFamily: "nunito-sans-bold",
+    // fontFamily: "nunito-sans-bold",
   },
 });
 

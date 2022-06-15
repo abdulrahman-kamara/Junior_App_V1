@@ -20,9 +20,6 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { AuthContext } from "../Context/Context";
 
-import axios from "axios";
-import { api } from "../config/api";
-
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);

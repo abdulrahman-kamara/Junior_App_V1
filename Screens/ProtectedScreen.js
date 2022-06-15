@@ -15,12 +15,27 @@ import CreateProfileJunior from "../Screens/CreateProfileJunior";
 import CreateProfileEnterprise from "../Screens/CreateProfileEnterprise";
 import CreateOffers from "../Screens/CreateOffers";
 
-const StackFeed = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
-const FeedStackScreen = () => {
-  <StackFeed.Navigator headerMode="none">
-    <StackFeed.Screen name="Offers" component={OffersScreen}></StackFeed.Screen>
-  </StackFeed.Navigator>;
+const StackScreen = () => {
+  <Stack.Navigator headerMode="none">
+    <Stack.Screen
+      name="Offers"
+      component={OffersScreen}
+      options={{ headerShown: false }}
+    ></Stack.Screen>
+
+    <Stack.Screen
+      name="Junior"
+      component={CreateProfileJunior}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen
+      name="Enterprise"
+      component={CreateProfileEnterprise}
+      options={{ headerShown: false }}
+    />
+  </Stack.Navigator>;
 };
 
 const HomeTab = createMaterialBottomTabNavigator();
@@ -107,7 +122,6 @@ const ProtectedScreen = ({ navigation }) => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={HomeTapScreen} />
-      <Drawer.Screen name="FeedStack" component={FeedStackScreen} />
 
       <HomeStack.Screen
         name="ProfileContent"
@@ -125,10 +139,7 @@ const ProtectedScreen = ({ navigation }) => {
           ),
         })}
       />
-      <Drawer.Screen
-        name="CreateProfileJunior"
-        component={CreateProfileJunior}
-      />
+      <Drawer.Screen name="stack" component={StackScreen} />
     </Drawer.Navigator>
   );
 };

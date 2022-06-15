@@ -6,8 +6,7 @@ import Colors from "../Constants/Colors";
 import { useTheme } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export default function ImagePickerExample() {
-  const [image, setImage] = useState(null);
+export default function ImagePickerExample({ setImage, image }) {
   const { colors } = useTheme();
 
   const pickImage = async () => {

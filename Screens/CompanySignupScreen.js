@@ -137,8 +137,7 @@ const COmpanySignup = ({ navigation }) => {
   //   signIn(userAuth);
 
   // };
-  const { Enterprise } = React.useContext(AuthContext);
-  const { isLoading } = React.useContext(AuthContext);
+  const { Enterprise, isLoading } = React.useContext(AuthContext);
 
   if (isLoading) {
     return (
@@ -220,6 +219,7 @@ const COmpanySignup = ({ navigation }) => {
               // secureTextEntry={data.secureTextEntry ? true : false}
               placeholder="Password"
               autoCapitalize="none"
+              secureTextEntry
               value={password}
               onChangeText={(text) => {
                 setPassword(text);
@@ -248,6 +248,7 @@ const COmpanySignup = ({ navigation }) => {
               // secureTextEntry={data.secureTextEntry ? true : false}
               placeholder="Password"
               autoCapitalize="none"
+              secureTextEntry
               value={confirmpassword}
               onChangeText={(text) => {
                 setConfirmPassword(text);

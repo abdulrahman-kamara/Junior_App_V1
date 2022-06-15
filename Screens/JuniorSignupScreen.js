@@ -28,9 +28,7 @@ const Juniorsignup = ({ navigation }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const { Junior } = useContext(AuthContext);
-  const { isLoading } = useContext(AuthContext);
-  console.log(Junior);
+  const { Junior, isLoading } = useContext(AuthContext);
 
   if (isLoading) {
     return (
@@ -44,7 +42,6 @@ const Juniorsignup = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
       <View style={styles.header}>
-        <Spinner visible={isLoading} />
         <Text style={styles.text_header}>Join Us !</Text>
       </View>
       <ScrollView>
@@ -121,6 +118,7 @@ const Juniorsignup = ({ navigation }) => {
               onChangeText={(text) => setEmail(text)}
               keyboardType="email-address"
               value={email}
+              autoCapitalize="none"
             />
 
             {/* {data.check_textInputChange ? (
@@ -186,7 +184,7 @@ const Juniorsignup = ({ navigation }) => {
               style={styles.signin}
               onPress={
                 () => {
-                  Junior(firstname, lastname, email, password);
+                  Junior(firstname, lastname, email, password, navigation);
                 }
 
                 // (loginHandler(data.email, data.password),

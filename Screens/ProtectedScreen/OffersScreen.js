@@ -40,7 +40,7 @@ const OffersScreen = ({ navigation, route }) => {
 
   return (
     <View>
-      <Text>{route.params.last_name}</Text>
+      <Text>{route.params.first_name}</Text>
     </View>
   );
 };
