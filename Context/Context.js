@@ -20,64 +20,27 @@ export const AuthProvider = ({ children }) => {
         password,
       })
 
+      // setUserInfo(userInfo);
+      // setUserToken(userInfo.token);
+      // console.log(userInfo);
+      // console.log("user Token" + userInfo.token);
+      // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+      // AsyncStorage.setItem("userToken", userInfo.token);
+
       .then((res) => {
         let userInfo = res.data;
-        console.log("res", res);
 
-        // setUserInfo(userInfo);
-        // setUserToken(userInfo.token);
-        // console.log(userInfo);
-        // console.log("user Token" + userInfo.token);
-        // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        // AsyncStorage.setItem("userToken", userInfo.token);
-        if (res.status == 201) {
-          setIsLoading(true);
-          fetch("http://10.0.1.194:8000/authentication_token", {
-            method: "POST",
-            body: JSON.stringify({ email, password }),
-          })
-            .then((response) => {
-              return response.json();
-              console.log(response);
-            })
-            .then((response) => {
-              let userInfo = response;
-              navigation.navigate("CreateProfileJunior", {
-                firstname,
-                lastname,
-                userInfo,
-              });
-            })
-            .catch((err) => {
-              console.log(`login err ${err}`);
-            });
+        console.log("userInfo.id", userInfo.id);
 
-          setIsLoading(false);
-
-          //   .then((res) => {
-          //     return res.json();
-          //   })
-          //   .then((res) => {
-          //     let userInfo = res;
-
-          //     console.log(userInfo);
-          //     console.log("user" + userInfo);
-          //     navigation.navigate("CreateProfileJunior", {
-          //       firstname,
-          //       lastname,
-          //       userInfo,
-          //     });
-          //   })
-          //   .catch((err) => {
-          //     console.log(`login err ${err}`);
-          //   });
-
-          // setIsLoading(false);
-        }
+        navigation.navigate("CreateProfileJunior", {
+          firstname,
+          lastname,
+          JwtToken: userInfo.JwtToken,
+          id: userInfo.id,
+        });
       })
-
       .catch((err) => {
-        console.log(`login test ${err}`);
+        console.log(`login err ${err}`);
       });
 
     setIsLoading(false);
@@ -139,7 +102,8 @@ export const AuthProvider = ({ children }) => {
     diplom,
     expierrence,
     image,
-    userInfo
+    JwtToken,
+    id
   ) => {
     const formdata = new FormData();
 
@@ -151,31 +115,34 @@ export const AuthProvider = ({ children }) => {
     formdata.append("diploma", diplom ?? "");
     formdata.append("year_of_experience", expierrence ?? "");
     formdata.append("profession", profession ?? "");
-    formdata.append("photoFile", {
-      type: "image/jpeg",
-      uri: image,
-      name: "image.jpg",
-    });
-    console.log("form", formdata);
-    console.log("image", image);
-
+    if (image) {
+      formdata.append("photoFile", {
+        type: "image/jpeg",
+        uri: image,
+        name: "image.jpg",
+      });
+    }
     setIsLoading(true);
-
-    fetch("http://10.0.6.226:8000/api/users/81", {
+    console.log("token.id", id);
+    fetch(`http://10.0.1.194:8000/api/users/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
-        authorization: `Bearer ${userInfo}`,
+        authorization: `Bearer ${JwtToken}`,
       },
     })
       .then((res) => {
         return res.json();
       })
       .then((userInfo) => {
+        console.log("userInfo", userInfo);
         setUserInfo(userInfo);
         setUserToken(userInfo);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken", userInfo);
+        AsyncStorage.setItem("userToken", JwtToken);
+      })
+      .catch((error) => {
+        console.log("error", error);
       });
 
     // axios

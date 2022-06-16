@@ -264,7 +264,6 @@ const CreateProfileModal = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.commandButton}
             onPress={() => {
-              console.log("token", token);
               ProfileJunior(
                 firstname,
                 lastname,
@@ -275,7 +274,8 @@ const CreateProfileModal = ({ navigation, route }) => {
                 diplom,
                 expierrence,
                 image,
-                route.params.token
+                route.params.JwtToken,
+                route.params.id
               );
             }}
           >
