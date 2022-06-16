@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const Junior = async (firstname, lastname, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.6.226:8000/api/register_user", {
+      .post("http://10.0.1.194:8000/api/register_user", {
         firstname,
         lastname,
         email,
@@ -31,19 +31,21 @@ export const AuthProvider = ({ children }) => {
         // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         // AsyncStorage.setItem("userToken", userInfo.token);
         if (res.status == 201) {
-          fetch("http://10.0.6.226:8000/authentication_token", {
+          setIsLoading(true);
+          fetch("http://10.0.1.194:8000/authentication_token", {
             method: "POST",
             body: JSON.stringify({ email, password }),
           })
             .then((response) => {
               return response.json();
+              console.log(response);
             })
             .then((response) => {
               let userInfo = response;
               navigation.navigate("CreateProfileJunior", {
                 firstname,
                 lastname,
-                token,
+                userInfo,
               });
             })
             .catch((err) => {
@@ -108,7 +110,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post(`${BASE_URL}/authentication_token`, {
+      .post("http://10.0.1.194:8000/authentication_token", {
         email,
         password,
       })
