@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -137,7 +137,7 @@ const COmpanySignup = ({ navigation }) => {
   //   signIn(userAuth);
 
   // };
-  const { Enterprise, isLoading } = React.useContext(AuthContext);
+  const { Enterprise, isLoading } = useContext(AuthContext);
 
   if (isLoading) {
     return (
@@ -240,10 +240,10 @@ const COmpanySignup = ({ navigation }) => {
               </Text>
             </Animatable.View>
           )} */}
-          <Text style={{ marginTop: 35 }}>ConfirmPassword</Text>
-          <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
-            <TextInput
+          {/* <Text style={{ marginTop: 35 }}>ConfirmPassword</Text> */}
+          {/* <View style={styles.action}> */}
+          {/* <MaterialIcons name="lock" color={Colors.Primary} size={20} /> */}
+          {/* <TextInput
               style={styles.textInput}
               // secureTextEntry={data.secureTextEntry ? true : false}
               placeholder="Password"
@@ -253,15 +253,15 @@ const COmpanySignup = ({ navigation }) => {
               onChangeText={(text) => {
                 setConfirmPassword(text);
               }}
-            />
-            {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
-            {/* {data.secureTextEntry ? (
+            /> */}
+          {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
+          {/* {data.secureTextEntry ? (
                 <Feather name="eye-off" color="gray" size={20} />
               ) : (
                 <Feather name="eye" color="gray" size={20} />
               )} */}
-            {/* </TouchableOpacity> */}
-          </View>
+          {/* </TouchableOpacity> */}
+          {/* </View> */}
           {/* {data.isValidPassword ? null : (
             <Animatable.View animation="flipInY" duration={500}>
               <Text style={styles.errorMsg}>
@@ -275,7 +275,7 @@ const COmpanySignup = ({ navigation }) => {
               style={styles.signin}
               onPress={
                 // () => getApi(data.email, data.password)
-                () => Enterprise(name, email, password)
+                () => Enterprise(name, email, password, navigation)
 
                 // (loginHandler(data.email, data.password),
               }

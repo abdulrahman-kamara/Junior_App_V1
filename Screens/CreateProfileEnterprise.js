@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -18,17 +18,17 @@ import PickerImage from "../Components/PickerImage";
 import { useTheme } from "react-native-paper";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 const { width, height } = Dimensions.get("window");
+import { AuthContext } from "../Context/Context";
 
-const CreateProfileModal = (props) => {
+const CreateProfileEnterprise = ({ navigation, route }) => {
+  const { ProfileEnterprise } = useContext(AuthContext);
+
   // my hooks with useState
-  const [diplom, setDiplom] = useState("Diplom");
-  const [profession, setProfession] = useState("Profession");
-  const [expierrence, setExpierrence] = useState("Expierrence");
-  const [name, setName] = useState();
-  const [phone, setPhone] = useState();
-  const [Adress, setAdress] = useState();
+  const [name, setName] = useState(route.params.name);
+  const [city, setCity] = useState();
+  const [address, setAddress] = useState();
   const [description, setDescription] = useState();
-
+  const [image, setImage] = useState();
   // My ActionBotoom Sheet with its options and its fuction
 
   // Options Profession
@@ -109,32 +109,6 @@ const CreateProfileModal = (props) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { colors } = useTheme();
 
-  // A call to the api
-  // const getUser = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       "https://api.torea-patissier.students-laplateforme.io/api/users",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           Accept: "application/json",
-  //           "Content-Type": "application/json",
-  //           Authorization: `Token ${token}`,
-  //         },
-  //       }
-  //     );
-  //     const json = await response.json();
-  //     console.log("json", json);
-  //     setData(json.users);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
-
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
@@ -143,52 +117,32 @@ const CreateProfileModal = (props) => {
             margin: 20,
           }}
         >
-          <View style={{}}>
-            <View
-              style={{
-                borderWidth: "1px",
-                width: "100%",
-                height: 150,
-                borderColor: Colors.Primary,
-                borderRadius: 15,
-              }}
-            >
-              <View
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  marginTop: 60,
-                }}
-              >
-                <PickerImage />
-                <View style={styles.actionTitle}>
-                  <TextInput
-                    style={[styles.textInput, { color: Colors.Secondry }]}
-                    autoCorrect={false}
-                    placeholder="Title"
-                    keyboardType="number-pad"
-                    value={phone}
-                    onChangeText={(text) => setPhone(text)}
-                  />
-                </View>
+          <View
+            style={{
+              borderWidth: "1px",
+              width: "100%",
+              height: 150,
+              borderColor: Colors.Primary,
+              borderRadius: 15,
+            }}
+          >
+            <View style={{ alignItems: "center" }}>
+              <View>
+                <PickerImage setImage={setImage} image={image} />
               </View>
             </View>
           </View>
         </View>
         <View style={styles.mainContainer}>
           <View style={styles.action}>
-            <FontAwesome name="phone" size={20} color={Colors.Primary} />
+            <FontAwesome name="home" size={20} color={Colors.Primary} />
             <TextInput
               style={[styles.textInput, { color: colors.text }]}
               autoCorrect={false}
-              placeholder="Phone"
+              placeholder="city"
               keyboardType="number-pad"
-              value={phone}
-              onChangeText={(text) => setPhone(text)}
+              value={city}
+              onChangeText={(text) => setCity(text)}
             />
           </View>
 
@@ -208,8 +162,8 @@ const CreateProfileModal = (props) => {
               style={[styles.textInput, { color: colors.text }]}
               autoCorrect={false}
               placeholder="Adress"
-              value={Adress}
-              onChangeText={(text) => setAdress(text)}
+              value={address}
+              onChangeText={(text) => setAddress(text)}
             />
           </View>
         </View>
@@ -245,7 +199,21 @@ const CreateProfileModal = (props) => {
         </View>
 
         <View style={styles.button}>
-          <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.commandButton}
+            onPress={() => {
+              console.log("route.params.id", route.params.id);
+              ProfileEnterprise(
+                address,
+                city,
+                name,
+                description,
+                image,
+                route.params.JwtToken,
+                route.params.id
+              );
+            }}
+          >
             <Text style={{ color: Colors.Secondry }}>Create</Text>
           </TouchableOpacity>
         </View>
@@ -311,4 +279,4 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
-export default CreateProfileModal;
+export default CreateProfileEnterprise;

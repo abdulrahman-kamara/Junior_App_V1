@@ -139,7 +139,11 @@ const ProtectedScreen = ({ navigation }) => {
           ),
         })}
       />
-      <Drawer.Screen name="stack" component={StackScreen} />
+
+      <Drawer.Screen
+        name="CreateProfileEnterprise"
+        component={CreateProfileEnterprise}
+      />
     </Drawer.Navigator>
   );
 };

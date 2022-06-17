@@ -9,6 +9,7 @@ import WelcomeScreen from "../Screens/WelcomeScreen";
 import JuniorSignupScreen from "../Screens/JuniorSignupScreen";
 import CompanySignupScreen from "../Screens/CompanySignupScreen";
 import CreateProfileJunior from "../Screens/CreateProfileJunior";
+import CreateProfileEnterprise from "../Screens/CreateProfileEnterprise";
 
 const RootStack = createNativeStackNavigator();
 
@@ -25,6 +26,10 @@ const RootStackScreen = ({ navigation }) => {
       <RootStack.Screen
         name="CreateProfileJunior"
         component={CreateProfileJunior}
+      />
+      <RootStack.Screen
+        name="CreateProfileEnterprise"
+        component={CreateProfileEnterprise}
       />
 
       <RootStack.Screen
