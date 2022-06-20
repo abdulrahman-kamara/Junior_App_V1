@@ -202,7 +202,6 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
           <TouchableOpacity
             style={styles.commandButton}
             onPress={() => {
-              console.log("route.params.id", route.params.id);
               ProfileEnterprise(
                 address,
                 city,

@@ -25,7 +25,7 @@ const COmpanySignup = ({ navigation }) => {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [confirmpassword, setConfirmPassword] = useState(null);
+  // const [confirmpassword, setConfirmPassword] = useState(null);
   // const [data, setData] = useState({
   //   email: "",
   //   password: "",

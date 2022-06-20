@@ -110,6 +110,18 @@ const HomeTapScreen = () => {
           ),
         }}
       />
+
+      {/* <ComponentTest>
+        userInfo.roles == 'ROLE_USER' ? (
+        <ComponentForRoleUser>
+          <ScreenHomePageUser></ScreenHomePageUser>
+          <AnnoncePerId></AnnoncePerId>
+        </ComponentForRoleUser>)
+        :
+        (<ComponentForRoleEntreprise>
+          <ScreenHomePageEntreprise></ScreenHomePageEntreprise>
+        </ComponentForRoleEntreprise>)
+      </ComponentTest> */}
     </HomeTab.Navigator>
   );
 };
@@ -122,7 +134,6 @@ const ProtectedScreen = ({ navigation }) => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={HomeTapScreen} />
-
       <HomeStack.Screen
         name="ProfileContent"
         component={ProfileContent}
