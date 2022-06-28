@@ -133,7 +133,7 @@ const DashboardScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   dashboard: {
-    backgroundColor: Colors.Secondry,
+    backgroundColor: Colors.Primary,
     borderRadius: Dimensions.get("window").width * 0.05,
     height: "100%",
   },

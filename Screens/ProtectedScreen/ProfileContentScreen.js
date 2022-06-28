@@ -5,6 +5,7 @@ import {
   Dimensions,
   TextInput,
   Pressable,
+  ScrollView,
 } from "react-native";
 import Colors from "../../Constants/Colors";
 import Divider from "react-native-divider";
@@ -35,117 +36,120 @@ const ProfileScreen = ({ navigation }) => {
   const { logout } = React.useContext(AuthContext);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.drawerContent}>
-        <View style={styles.userInfoSection}>
-          <View
-            style={{
-              flexDirection: "row",
-              marginLeft: 15,
-            }}
-          >
-            <Avatar.Image
-              source={require("../../assets/Image/logo.png")}
-              size={80}
-            />
-            <View style={{ marginLeft: 20 }}>
-              <Title style={styles.title}>Kunta Kante</Title>
-              <Caption style={styles.caption}>Developper web</Caption>
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.drawerContent}>
+          <View style={styles.userInfoSection}>
+            <View
+              style={{
+                flexDirection: "row",
+                marginLeft: 15,
+              }}
+            >
+              <Avatar.Image
+                source={require("../../assets/Image/logo.png")}
+                size={80}
+              />
+              <View style={{ marginLeft: 20 }}>
+                <Title style={styles.title}>Kunta Kante</Title>
+                <Caption style={styles.caption}>Developper web</Caption>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={styles.userInfoSection}>
-          <View style={styles.row}>
-            <Icon name="map-marker-radius" color={Colors.Primary} size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>
-              Freetown, Sierra Leone
+          <View style={styles.userInfoSection}>
+            <View style={styles.row}>
+              <Icon name="map-marker-radius" color={Colors.Primary} size={20} />
+              <Text style={{ color: "#777777", marginLeft: 20 }}>
+                Freetown, Sierra Leone
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="phone" color={Colors.Primary} size={20} />
+              <Text style={{ color: "#777777", marginLeft: 20 }}>
+                +3367804656
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="email" color={Colors.Primary} size={20} />
+              <Text style={{ color: "#777777", marginLeft: 20 }}>
+                rahmanraynkunta@gmail.com
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Icon name="linkedin" color={Colors.Primary} size={20} />
+              <Text style={{ color: "#777777", marginLeft: 20 }}>
+                Freetown, Sierra Leone
+              </Text>
+            </View>
+          </View>
+          <View style={styles.infoBoxWrapper}>
+            <View
+              style={[
+                styles.infoBox,
+                {
+                  borderRightColor: "#dddddd",
+                  borderRightWidth: 1,
+                },
+              ]}
+            >
+              <Title>40.50</Title>
+              <Caption>Job Posted</Caption>
+            </View>
+            <View style={styles.infoBox}>
+              <Title>12</Title>
+              <Caption>Job</Caption>
+            </View>
+          </View>
+          <View style={styles.infoBoxWrapper}>
+            <View
+              style={[
+                styles.infoBox,
+                {
+                  borderRightColor: "#dddddd",
+                  borderRightWidth: 1,
+                },
+              ]}
+            >
+              <Icon name="school-outline" color="#FF6347" size={25} />
+              <Title>Bac+3</Title>
+              <Caption>Concepteur Déveloper</Caption>
+            </View>
+            <View style={styles.infoBox}>
+              <Icon name="book-outline" color="#FF6347" size={25} />
+              <Title>2 years</Title>
+              <Caption>Experience</Caption>
+            </View>
+          </View>
+
+          <View style={styles.menuWrapper}>
+            <Text>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
             </Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="phone" color={Colors.Primary} size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>
-              +3367804656
-            </Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="email" color={Colors.Primary} size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>
-              rahmanraynkunta@gmail.com
-            </Text>
-          </View>
-          <View style={styles.row}>
-            <Icon name="linkedin" color={Colors.Primary} size={20} />
-            <Text style={{ color: "#777777", marginLeft: 20 }}>
-              Freetown, Sierra Leone
-            </Text>
-          </View>
-        </View>
-        <View style={styles.infoBoxWrapper}>
-          <View
-            style={[
-              styles.infoBox,
-              {
-                borderRightColor: "#dddddd",
-                borderRightWidth: 1,
-              },
-            ]}
-          >
-            <Title>40.50</Title>
-            <Caption>Job Posted</Caption>
-          </View>
-          <View style={styles.infoBox}>
-            <Title>12</Title>
-            <Caption>Job</Caption>
-          </View>
-        </View>
-        <View style={styles.infoBoxWrapper}>
-          <View
-            style={[
-              styles.infoBox,
-              {
-                borderRightColor: "#dddddd",
-                borderRightWidth: 1,
-              },
-            ]}
-          >
-            <Icon name="school-outline" color="#FF6347" size={25} />
-            <Title>Bac+3</Title>
-            <Caption>Concepteur Déveloper</Caption>
-          </View>
-          <View style={styles.infoBox}>
-            <Icon name="book-outline" color="#FF6347" size={25} />
-            <Title>2 years</Title>
-            <Caption>Experience</Caption>
           </View>
         </View>
 
-        <View style={styles.menuWrapper}>
-          <Text>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
-          </Text>
-        </View>
-      </View>
-
-      <Drawer.Section style={styles.bottomDrawerSection}>
-        <DrawerItem
-          icon={({ color, size }) => (
-            <Icon name="exit-to-app" color={color} size={size} />
-          )}
-          label="Sign out"
-          onPress={() => {
-            logout();
-          }}
-        />
-      </Drawer.Section>
-    </SafeAreaView>
+        <Drawer.Section style={styles.bottomDrawerSection}>
+          <DrawerItem
+            icon={({ color, size }) => (
+              <Icon name="exit-to-app" color={color} size={size} />
+            )}
+            label="Sign out"
+            onPress={() => {
+              logout();
+            }}
+          />
+        </Drawer.Section>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
