@@ -13,34 +13,27 @@ export const AuthProvider = ({ children }) => {
   const Junior = async (firstname, lastname, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.7.97:8000/api/register_user", {
+      .post("http://10.0.7.20:8000/api/register_user", {
         firstname,
         lastname,
         email,
         password,
       })
-
-      // setUserInfo(userInfo);
-      // setUserToken(userInfo.token);
-      // console.log(userInfo);
-      // console.log("user Token" + userInfo.token);
-      // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-      // AsyncStorage.setItem("userToken", userInfo.token);
-
       .then((res) => {
         let userInfo = res.data;
-
-        console.log("userInfo.id", userInfo.id);
-
+        console.log("TOUTES LES INFOS ICI ", userInfo);
+        // console.log("Mon USER INFO ID ICI ", userInfo.id);
+        // console.log("Mon USER INFO TOKEN ICI ", userInfo.JwtToken);
         navigation.navigate("CreateProfileJunior", {
           firstname,
           lastname,
           JwtToken: userInfo.JwtToken,
           id: userInfo.id,
+          userInfo
         });
       })
       .catch((err) => {
-        console.log(`login err ${err}`);
+        console.log(`REGISTER JR ERROR ${err}`);
       });
 
     setIsLoading(false);
@@ -56,8 +49,7 @@ export const AuthProvider = ({ children }) => {
     diplom,
     expierrence,
     image,
-    role,
-    JwtToken,
+    Token,
     id
   ) => {
     const formdata = new FormData();
@@ -78,16 +70,20 @@ export const AuthProvider = ({ children }) => {
       });
     }
     setIsLoading(true);
-    console.log("token.id", id);
-    fetch(`http://10.0.7.97:8000/api/users/${id}`, {
+    console.log("MON TOKEN CREATE PROFIL", userInfo);
+    console.log("jwt", Token);
+    fetch(`http://10.0.7.20:8000/api/users/${id}`, {
+      
       method: "POST",
       body: formdata,
-      headers: {
-        authorization: `Bearer ${JwtToken}`,
+      headers: {        
+        authorization: `Bearer ${Token}`,
       },
     })
+   
       .then((res) => {
         return res.json();
+        
       })
       .then((userInfo) => {
         console.log("userInfo", userInfo);
@@ -107,7 +103,7 @@ export const AuthProvider = ({ children }) => {
   const Enterprise = async (name, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.7.97:8000/api/register_company", {
+      .post("http://10.0.7.20:8000/api/register_company", {
         name,
         email,
         password,
@@ -142,11 +138,10 @@ export const AuthProvider = ({ children }) => {
     city,
     description,
     image,
-    role,
-    JwtToken,
+    Token,
     id
   ) => {
-    console.log("test", JwtToken);
+    console.log("TOKEN COMPANY", Token);
     const formdata = new FormData();
     formdata.append("city", city ?? "");
     formdata.append("name", name ?? "");
@@ -162,11 +157,11 @@ export const AuthProvider = ({ children }) => {
     }
     setIsLoading(true);
     console.log("formdata", formdata);
-    fetch(`http://10.0.7.97:8000/api/entreprises/${id}`, {
+    fetch(`http://10.0.7.20:8000/api/entreprises/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
-        authorization: `Bearer ${JwtToken}`,
+        authorization: `Bearer ${Token}`,
         "Content-Type": "multipart/form-data",
       },
     })
@@ -179,7 +174,7 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(userInfo);
         setUserToken(userInfo);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken", JwtToken);
+        AsyncStorage.setItem("userToken", Token);
       })
       .catch((error) => {
         console.log("error", error);
@@ -191,7 +186,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.7.97:8000/authentication_token", {
+      .post("http://10.0.7.20:8000/authentication_token", {
         email,
         password,
       })

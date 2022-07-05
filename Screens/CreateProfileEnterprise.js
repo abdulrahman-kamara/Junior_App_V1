@@ -23,6 +23,8 @@ import { AuthContext } from "../Context/Context";
 const CreateProfileEnterprise = ({ navigation, route }) => {
   const { ProfileEnterprise } = useContext(AuthContext);
 
+  const Token = route.params.JwtToken;
+  const id = route.params.id;
   // my hooks with useState
   const [name, setName] = useState();
   const [city, setCity] = useState();
@@ -208,8 +210,10 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
                 name,
                 description,
                 image,
-                route.params.JwtToken,
-                route.params.id
+                Token,
+                id
+                // route.params.JwtToken,
+                // route.params.id
               );
             }}
           >
