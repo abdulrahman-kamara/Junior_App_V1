@@ -73,7 +73,7 @@ const DashboardScreen = ({ navigation }) => {
   const resderItem = ({ item }) => {
     return (
       <View>
-        <TouchableOpacity onPress={() => navigation.navigate("Offers", item)}>
+        <TouchableOpacity onPress={() => navigation.push("Detail", item)}>
           <View style={styles.offerView}>
             <View style={styles.userProfile}>
               <View style={styles.avaterView}>

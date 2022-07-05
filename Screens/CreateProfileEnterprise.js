@@ -24,7 +24,7 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
   const { ProfileEnterprise } = useContext(AuthContext);
 
   // my hooks with useState
-  const [name, setName] = useState(route.params.name);
+  const [name, setName] = useState();
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
   const [description, setDescription] = useState();

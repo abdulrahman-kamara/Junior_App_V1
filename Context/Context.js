@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const Junior = async (firstname, lastname, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.0.146:8000/api/register_user", {
+      .post("http://10.0.7.97:8000/api/register_user", {
         firstname,
         lastname,
         email,
@@ -56,6 +56,7 @@ export const AuthProvider = ({ children }) => {
     diplom,
     expierrence,
     image,
+    role,
     JwtToken,
     id
   ) => {
@@ -78,7 +79,7 @@ export const AuthProvider = ({ children }) => {
     }
     setIsLoading(true);
     console.log("token.id", id);
-    fetch(`http://10.0.0.146:8000/api/users/${id}`, {
+    fetch(`http://10.0.7.97:8000/api/users/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
@@ -106,7 +107,7 @@ export const AuthProvider = ({ children }) => {
   const Enterprise = async (name, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.0.146:8000/api/register_company", {
+      .post("http://10.0.7.97:8000/api/register_company", {
         name,
         email,
         password,
@@ -141,6 +142,7 @@ export const AuthProvider = ({ children }) => {
     city,
     description,
     image,
+    role,
     JwtToken,
     id
   ) => {
@@ -160,7 +162,7 @@ export const AuthProvider = ({ children }) => {
     }
     setIsLoading(true);
     console.log("formdata", formdata);
-    fetch(`http://10.0.0.146:8000/api/entreprises/${id}`, {
+    fetch(`http://10.0.7.97:8000/api/entreprises/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
@@ -189,7 +191,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.0.146:8000/authentication_token", {
+      .post("http://10.0.7.97:8000/authentication_token", {
         email,
         password,
       })
@@ -197,8 +199,7 @@ export const AuthProvider = ({ children }) => {
         let userInfo = res.data;
         setUserInfo(userInfo);
         setUserToken(userInfo.token);
-        console.log(userInfo);
-        console.log("user Token" + userInfo.token);
+        console.log("userInfo", userInfo);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userInfo.token);
       })

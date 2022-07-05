@@ -3,6 +3,7 @@ import ProtectedScreen from "../Screens/ProtectedScreen";
 import RootStackScreen from "./RootStackScreen";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { NavigationContainer } from "@react-navigation/native";
+import StackNavigation from "../Navigation/StackNavigation";
 
 import { AuthContext } from "../Context/Context";
 import { View, ActivityIndicator } from "react-native";
@@ -19,7 +20,7 @@ const AuthNav = () => {
   return (
     <ActionSheetProvider>
       <NavigationContainer>
-        {userToken !== null ? <ProtectedScreen /> : <RootStackScreen />}
+        {userToken !== null ? <StackNavigation /> : <RootStackScreen />}
       </NavigationContainer>
     </ActionSheetProvider>
   );

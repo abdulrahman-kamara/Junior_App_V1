@@ -34,14 +34,89 @@ const MissonTextInput = (props) => {
   );
 };
 
-const OffersScreen = ({ navigation, route }) => {
+const OffersScreen = ({ props, navigation }) => {
   const [value, onChangeText] = useState("About Job");
   const [mission, onChangeMission] = useState("Misson");
-
   return (
-    <View>
-      <Text>{route.params.first_name}</Text>
-    </View>
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.container}>
+          {/* profile image */}
+
+          <View style={styles.imageContainer}>
+            <PickerImage />
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ fontSize: 25, color: Colors.Primary }}>
+                Developper Web
+              </Text>
+            </View>
+            <View style={styles.imagetext}>
+              <Feather name="book" color={Colors.Primary} size={20} />
+              <Text>CDI</Text>
+              <Feather name="map-pin" color={Colors.Primary} size={20} />
+              <Text>Paris</Text>
+              <Ionicons
+                name="school-outline"
+                size={20}
+                color={Colors.Primary}
+              />
+              <Text>Bac+3</Text>
+              <Ionicons
+                name="school-outline"
+                size={20}
+                color={Colors.Primary}
+              />
+              <Text>1 an</Text>
+            </View>
+          </View>
+
+          <View style={styles.aboutJob}>
+            <AboutTextInput
+              multiline
+              numberOfLines={10}
+              onChangeText={(text) => onChangeText(text)}
+              value={value}
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                fontSize: 20,
+                color: Colors.Primary,
+              }}
+            />
+          </View>
+          {/* select items here */}
+          <View style={styles.titleContainer}>{/* cities select here */}</View>
+
+          <View style={styles.aboutMission}>
+            <MissonTextInput
+              multiline
+              numberOfLines={10}
+              onChangeText={(text) => onChangeMission(text)}
+              value={mission}
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                fontSize: 20,
+                color: Colors.Primary,
+              }}
+            />
+          </View>
+          <View style={styles.loginButton}>
+            <Button
+              style={styles.logintext}
+              title="APPLY"
+              onPress={() => navigation.navigate("Apply")}
+            />
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

@@ -21,15 +21,15 @@ import { AuthContext } from "../Context/Context";
 
 const { width, height } = Dimensions.get("window");
 
-const CreateProfileModal = ({ navigation, route }) => {
+const CreateProfileJunior = ({ navigation, route }) => {
   const { ProfileJunior } = useContext(AuthContext);
 
   // my hooks with useState
   const [diplom, setDiplom] = useState("Diplom");
   const [profession, setProfession] = useState("Profession");
   const [expierrence, setExpierrence] = useState("Expierrence");
-  const [firstname, setFirstname] = useState(route.params.firstname);
-  const [lastname, setLastname] = useState(route.params.lastname);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [city, setCity] = useState();
   const [phone, setPhone] = useState();
   const [description, setDescription] = useState();
@@ -343,4 +343,4 @@ const styles = StyleSheet.create({
     height: 40,
   },
 });
-export default CreateProfileModal;
+export default CreateProfileJunior;

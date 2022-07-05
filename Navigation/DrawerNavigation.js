@@ -1,16 +1,16 @@
-// import { createDrawerNavigator } from "@react-navigation/drawer";
-// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-// import CreatProfile from "../Screens/CreateProfileModal";
-// import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
-// const Drawer = createDrawerNavigator();
+import DashboardScreen from "../Screens/ProtectedScreen/DashboardScreen";
+import ProfileContent from "../Screens/ProtectedScreen/ProfileContentScreen";
 
-// const DrawerNavigation = () => {
-//   return (
-//     <Drawer.Navigator>
-//       <Drawer.Screen name="ProfileContent" component={ProfileContent} />
-//       <Drawer.Screen name="Dashboard" component={HomeTapScreen} />
-//     </Drawer.Navigator>
-//   );
-// };
-// export default DrawerNavigation;
+const Drawer = createDrawerNavigator();
+
+const DrawerNavigation = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="ProfileContent" component={ProfileContent} />
+      <Drawer.Screen name="Home" component={DashboardScreen} />
+    </Drawer.Navigator>
+  );
+};
+export default DrawerNavigation;
