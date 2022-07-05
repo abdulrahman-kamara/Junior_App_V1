@@ -138,11 +138,10 @@ export const AuthProvider = ({ children }) => {
     city,
     description,
     image,
-    role,
-    JwtToken,
+    Token,
     id
   ) => {
-    console.log("test", JwtToken);
+    console.log("TOKEN COMPANY", Token);
     const formdata = new FormData();
     formdata.append("city", city ?? "");
     formdata.append("name", name ?? "");
@@ -162,7 +161,7 @@ export const AuthProvider = ({ children }) => {
       method: "POST",
       body: formdata,
       headers: {
-        authorization: `Bearer ${JwtToken}`,
+        authorization: `Bearer ${Token}`,
         "Content-Type": "multipart/form-data",
       },
     })
@@ -175,7 +174,7 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(userInfo);
         setUserToken(userInfo);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken", JwtToken);
+        AsyncStorage.setItem("userToken", Token);
       })
       .catch((error) => {
         console.log("error", error);
