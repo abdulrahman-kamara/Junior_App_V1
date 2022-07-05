@@ -43,7 +43,7 @@ const WelcomeScreen = ({ navigation }) => {
             </View>
             <View style={styles.buttonText}>
               <Button
-                title="COMPNAY"
+                title="COMPANY"
                 color={Colors.Primary}
                 onPress={() => {
                   navigation.navigate("CompanySignupScreen");

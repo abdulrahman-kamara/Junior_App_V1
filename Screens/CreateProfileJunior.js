@@ -21,18 +21,22 @@ import { AuthContext } from "../Context/Context";
 
 const { width, height } = Dimensions.get("window");
 
-const CreateProfileJunior = ({ navigation, route }) => {
+const CreateProfileJunior = ({ navigation, route}) => {
   const { ProfileJunior } = useContext(AuthContext);
+  console.log('CREATE PROFIL JR ',route.params.JwtToken);
+  const Token = route.params.JwtToken;
+  const id = route.params.id;
+
 
   // my hooks with useState
-  const [diplom, setDiplom] = useState("Diplom");
-  const [profession, setProfession] = useState("Profession");
-  const [expierrence, setExpierrence] = useState("Expierrence");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [city, setCity] = useState();
   const [phone, setPhone] = useState();
+  const [city, setCity] = useState();
   const [description, setDescription] = useState();
+  const [profession, setProfession] = useState("Profession");
+  const [diplom, setDiplom] = useState("Diploma");
+  const [expierrence, setExpierrence] = useState("Experience");
   const [image, setImage] = useState(null);
 
   // My ActionBotoom Sheet with its options and its fuction
@@ -144,7 +148,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 marginTop: 30,
               }}
             >
-              John Doe
+              {route.params.firstname} {route.params.lastname}
             </Text>
           </View>
         </View>
@@ -274,8 +278,10 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 diplom,
                 expierrence,
                 image,
-                route.params.JwtToken,
-                route.params.id
+                Token,
+                id
+                // route.params.JwtToken,
+                // route.params.id
               );
             }}
           >
