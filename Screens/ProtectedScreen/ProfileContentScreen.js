@@ -31,7 +31,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = ({ navigation, route }) => {
   const [text, onChangeText] = React.useState("");
 
   const { logout } = React.useContext(AuthContext);

@@ -22,17 +22,8 @@ const FeedStack = createNativeStackNavigator();
 const ProfileStackScreen = () => {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen
-        name="Profile"
-        component={ProfileContent}
-        options={{
-          tabBarLabel: "Profile",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      {}
+      <ProfileStack.Screen name="Profile" component={ProfileContent} />
+
       <ProfileStack.Screen
         name="Junior"
         component={CreateProfileJunior}
@@ -49,16 +40,7 @@ const ProfileStackScreen = () => {
 const FeedStackScreen = () => {
   return (
     <FeedStack.Navigator>
-      <FeedStack.Screen
-        name="Dashboard"
-        component={DashboardScreen}
-        options={{
-          tabBarLabel: "Dashboard",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
+      <FeedStack.Screen name="Dashboard" component={DashboardScreen} />
       <FeedStack.Screen
         name="Detail"
         component={OffersScreen}

@@ -21,12 +21,11 @@ import { AuthContext } from "../Context/Context";
 
 const { width, height } = Dimensions.get("window");
 
-const CreateProfileJunior = ({ navigation, route}) => {
+const CreateProfileJunior = ({ navigation, route }) => {
   const { ProfileJunior } = useContext(AuthContext);
-  console.log('CREATE PROFIL JR ',route.params.JwtToken);
-  const Token = route.params.JwtToken;
-  const id = route.params.id;
-
+  // console.log("CREATE PROFIL JR ", route.params.JwtToken);
+  // const Token = route.params.JwtToken;
+  // const id = route.params.id;
 
   // my hooks with useState
   const [firstname, setFirstname] = useState("");
@@ -278,10 +277,8 @@ const CreateProfileJunior = ({ navigation, route}) => {
                 diplom,
                 expierrence,
                 image,
-                Token,
-                id
-                // route.params.JwtToken,
-                // route.params.id
+                route.params.JwtToken,
+                route.params.id
               );
             }}
           >
