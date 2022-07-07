@@ -26,7 +26,7 @@ const SplashScreen = (props) => {
           duraton="1500"
           source={require("../assets/Image/logo.png")}
           style={styles.logo}
-          resizeMode="stretch"
+          resizeMode="contain"
         />
       </View>
       <Animatable.View

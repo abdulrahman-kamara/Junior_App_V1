@@ -156,7 +156,7 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.signin}
             onPress={() => {
-              login(email, password);
+              login(email, password, navigation);
             }}
           >
             <Text style={styles.textSign}>Login</Text>

@@ -48,7 +48,7 @@ const ProfileScreen = ({ navigation, route }) => {
                   marginLeft: 15,
                 }}
               >
-                <TouchableOpacity onPress={() => navigation.push("Enterprise")}>
+                <TouchableOpacity onPress={() => navigation.navigate("Junior")}>
                   <Avatar.Image
                     source={require("../../assets/Image/logo.png")}
                     size={80}

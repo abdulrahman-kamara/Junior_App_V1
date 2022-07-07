@@ -147,7 +147,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 marginTop: 30,
               }}
             >
-              {route.params.firstname} {route.params.lastname}
+              {/* {route.params.firstname} {route.params.lastname} */}
             </Text>
           </View>
         </View>

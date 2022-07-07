@@ -23,7 +23,6 @@ import { AuthContext } from "../Context/Context";
 const CreateProfileEnterprise = ({ navigation, route }) => {
   const { ProfileEnterprise } = useContext(AuthContext);
 
-  console.log("id", route.params.id);
   // const Token = route.params.JwtToken;
   // const id = route.params.id;
   // my hooks with useState

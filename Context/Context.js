@@ -1,7 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "../config/api";
+import { BASE_URL, getUser, setAccessToken } from "../config/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwt_decode from "jwt-decode";
 
 export const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const Junior = async (firstname, lastname, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.6.200:8000/api/register_user", {
+      .post("http://10.0.7.107:8000/api/register_user", {
         firstname,
         lastname,
         email,
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
+        console.log("my userinfo", userInfo);
 
         navigation.navigate("CreateProfileJunior", {
           roles: userInfo.roles,
@@ -70,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     }
     setIsLoading(true);
     console.log("token.id", id);
-    fetch(`http://10.0.6.200:8000/api/users/${id}`, {
+    fetch(`http://10.0.7.107:8000/api/users/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
@@ -87,8 +89,8 @@ export const AuthProvider = ({ children }) => {
         setUserInfo(userInfo);
         setUserToken(userInfo);
 
-        // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        // AsyncStorage.setItem("userToken");
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        AsyncStorage.setItem("userToken");
       })
       .catch((error) => {
         console.log("error", error);
@@ -100,7 +102,7 @@ export const AuthProvider = ({ children }) => {
   const Enterprise = async (name, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.6.200:8000/api/register_company", {
+      .post("http://10.0.7.107:8000/api/register_company", {
         name,
         email,
         password,
@@ -108,7 +110,7 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        console.log("objects", userInfo);
+        console.log("my userinfo", userInfo);
 
         navigation.navigate("CreateProfileEnterprise", {
           roles: userInfo.roles,
@@ -154,7 +156,7 @@ export const AuthProvider = ({ children }) => {
     }
     setIsLoading(true);
 
-    fetch(`http://10.0.6.200:8000/api/entreprises/${id}`, {
+    fetch(`http://10.0.7.107:8000/api/entreprises/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
@@ -170,8 +172,8 @@ export const AuthProvider = ({ children }) => {
 
         setUserInfo(userInfo);
         setUserToken(userInfo);
-        // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        // AsyncStorage.setItem("userToken", JSON.stringify(userInfo.JwtToken));
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        AsyncStorage.setItem("userToken");
       })
       .catch((error) => {
         console.log("error", error);
@@ -180,18 +182,43 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const login = async (email, password) => {
+  const login = async (email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.6.200:8000/authentication_token", {
+      .post("http://10.0.7.107:8000/authentication_token", {
         email,
         password,
       })
-      .then((res) => {
+      .then(async (res) => {
         let userInfo = res.data;
+
+        let decoded = jwt_decode(userInfo.token);
+        console.log("decoded", decoded);
+        userInfo.roles = decoded.roles;
+
         console.log(userInfo);
         setUserInfo(userInfo);
         setUserToken(userInfo.token);
+
+        // const UserResult = await fetch("http://10.0.7.107:8000/api/me", {
+        //   headers: {
+        //     authorization: `Bearer ${userInfo.token}`,
+        //     "Content-Type": "application/json",
+        //   },
+        // });
+        // const user = await UserResult.json();
+
+        // if (userInfo) {
+        //   console.log("User", user.roles);
+        //   await setAccessToken(userInfo.token, user);
+
+        //   console.log(user);
+        //   if (user && user.roles[0] == "ROLE_USER") {
+        //     console.log(userInfo);
+        //     setUserInfo(userInfo);
+        //     setUserToken(userInfo.token);
+        //   }
+        // }
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken");
@@ -241,6 +268,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         isLoading,
         userToken,
+        userInfo,
         Junior,
         Enterprise,
         ProfileJunior,
