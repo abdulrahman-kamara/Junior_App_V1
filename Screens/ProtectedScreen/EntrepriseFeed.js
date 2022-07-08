@@ -33,7 +33,7 @@ const DashboardScreen = ({ navigation }) => {
       .then((res) => {
         setFeed(res.data);
         setFilterData(res.data);
-        console.log("res.data", filterData);
+        // console.log("res.data", filterData);
       });
   }, []);
 

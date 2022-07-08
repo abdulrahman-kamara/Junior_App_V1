@@ -21,8 +21,11 @@ import { AuthContext } from "../Context/Context";
 
 const { width, height } = Dimensions.get("window");
 
+
 const CreateProfileJunior = ({ navigation, route }) => {
-  const { ProfileJunior } = useContext(AuthContext);
+  const { ProfileJunior, userInfo, userToken } = useContext(AuthContext);
+  console.log("CREATE PROFILE JUNIOR", userInfo);
+  console.log("ROUTE PA", route.params);
   // console.log("CREATE PROFIL JR ", route.params.JwtToken);
   // const Token = route.params.JwtToken;
   // const id = route.params.id;
@@ -277,9 +280,11 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 diplom,
                 expierrence,
                 image,
-                route.params.JwtToken,
-                route.params.id
-              );
+                userInfo.token ?? route.params.JwtToken,
+                userToken.roles ?? route.params.roles,
+                userToken.id ?? route.params.id
+                
+              ),navigation.pop();
             }}
           >
             <Text style={{ color: Colors.Secondry }}>Create</Text>

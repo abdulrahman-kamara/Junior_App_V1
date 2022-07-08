@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const Junior = async (firstname, lastname, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.7.107:8000/api/register_user", {
+      .post(`${BASE_URL}/api/register_user`, {
         firstname,
         lastname,
         email,
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
           roles: userInfo.roles,
           firstname,
           lastname,
-          JwtToken: userInfo.token,
+          JwtToken: userInfo.JwtToken,
           id: userInfo.id,
         });
       })
@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
     expierrence,
     image,
     JwtToken,
+    roles,
     id
   ) => {
     const formdata = new FormData();
@@ -70,9 +71,13 @@ export const AuthProvider = ({ children }) => {
         name: "image.jpg",
       });
     }
+    console.log("IMAGE", image);
+
     setIsLoading(true);
-    console.log("token.id", id);
-    fetch(`http://10.0.7.107:8000/api/users/${id}`, {
+    // console.log("token.id", id);
+    // console.log("role", roles);
+    console.error(JwtToken);
+    fetch(`${BASE_URL}/api/users/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
@@ -84,13 +89,14 @@ export const AuthProvider = ({ children }) => {
         return res.json();
       })
       .then((userInfo) => {
-        console.log("userInfo", id);
+        console.log("USER INFO POST", userInfo);
+        userInfo.token = JwtToken;
 
         setUserInfo(userInfo);
         setUserToken(userInfo);
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken");
+        AsyncStorage.setItem("userToken", JwtToken);
       })
       .catch((error) => {
         console.log("error", error);
@@ -102,7 +108,7 @@ export const AuthProvider = ({ children }) => {
   const Enterprise = async (name, email, password, navigation) => {
     setIsLoading(true);
     axios
-      .post("http://10.0.7.107:8000/api/register_company", {
+      .post(`${BASE_URL}/api/register_company`, {
         name,
         email,
         password,
@@ -110,7 +116,7 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        console.log("my userinfo", userInfo);
+        // console.log("my userinfo", userInfo);
 
         navigation.navigate("CreateProfileEnterprise", {
           roles: userInfo.roles,
@@ -139,6 +145,7 @@ export const AuthProvider = ({ children }) => {
     description,
     image,
     JwtToken,
+    roles,
     id
   ) => {
     const formdata = new FormData();
@@ -156,7 +163,7 @@ export const AuthProvider = ({ children }) => {
     }
     setIsLoading(true);
 
-    fetch(`http://10.0.7.107:8000/api/entreprises/${id}`, {
+    fetch(`${BASE_URL}/api/entreprises/${id}`, {
       method: "POST",
       body: formdata,
       headers: {
@@ -169,6 +176,7 @@ export const AuthProvider = ({ children }) => {
       })
       .then((userInfo) => {
         console.log("userInfo", id);
+        console.log("Role", roles);
 
         setUserInfo(userInfo);
         setUserToken(userInfo);
@@ -184,23 +192,27 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password, navigation) => {
     setIsLoading(true);
+    console.log(email, password);
+    
     axios
-      .post("http://10.0.7.107:8000/authentication_token", {
+      .post(`${BASE_URL}/authentication_token`, {
         email,
         password,
       })
       .then(async (res) => {
         let userInfo = res.data;
-
+        console.log("USER INFO", userInfo);
+        
         let decoded = jwt_decode(userInfo.token);
-        console.log("decoded", decoded);
+        //console.log("decoded", decoded);
         userInfo.roles = decoded.roles;
-
-        console.log(userInfo);
+        
+        // console.log(userInfo);
         setUserInfo(userInfo);
         setUserToken(userInfo.token);
+        console.log("USER TOKEN", userToken);
 
-        // const UserResult = await fetch("http://10.0.7.107:8000/api/me", {
+        // const UserResult = await fetch("${BASE_URL}/api/me", {
         //   headers: {
         //     authorization: `Bearer ${userInfo.token}`,
         //     "Content-Type": "application/json",
@@ -221,7 +233,7 @@ export const AuthProvider = ({ children }) => {
         // }
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken");
+        AsyncStorage.setItem("userToken", userInfo.token);
       })
       .catch((err) => {
         console.log(`login erro ${err}`);
@@ -234,7 +246,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(true);
     setUserToken(null);
     AsyncStorage.removeItem("userInfo");
-    // AsyncStorage.removeItem("userToken");
+    AsyncStorage.removeItem("userToken");
     setIsLoading(false);
   };
 
@@ -243,11 +255,12 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       let userInfo = await AsyncStorage.getItem("userInfo");
       let userToken = await AsyncStorage.getItem("userToken");
+      console.log(userInfo);
       userInfo = JSON.parse(userInfo);
 
       if (userInfo) {
-        setUserToken(userToken);
         setUserInfo(userInfo);
+        setUserToken(userToken);
       }
 
       setUserToken(userToken);
@@ -269,6 +282,7 @@ export const AuthProvider = ({ children }) => {
         isLoading,
         userToken,
         userInfo,
+        setUserInfo,
         Junior,
         Enterprise,
         ProfileJunior,
