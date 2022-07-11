@@ -25,16 +25,18 @@ const FeedStack = createNativeStackNavigator();
 const ProfileStackScreen = () => {
   const { userInfo } = useContext(AuthContext);
 
-  console.log("role", userInfo.roles);
+  //console.log("role", userInfo);
   return (
     <ProfileStack.Navigator>
+      
       {userInfo.roles == "ROLE_USER" ? (
         <ProfileStack.Screen name="ProfileJunior" component={ProfileJunior} />
       ) : (
         <ProfileStack.Screen
           name="ProfileEntreprise"
           component={ProfileEntreprise}
-        />
+          />
+          
       )}
 
       {userInfo.roles == "ROLE_USER" ? (
@@ -50,6 +52,7 @@ const ProfileStackScreen = () => {
           options={{ headerShown: true }}
         />
       )}
+      
     </ProfileStack.Navigator>
   );
 };
@@ -82,6 +85,8 @@ const FeedStackScreen = () => {
 const HomeTab = createMaterialBottomTabNavigator();
 
 const HomeTapScreen = () => {
+  const { userInfo } = useContext(AuthContext);
+
   return (
     <HomeTab.Navigator
       activeColor={Colors.Primary}
@@ -106,7 +111,17 @@ const HomeTapScreen = () => {
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
         }}
-      />
+        />
+        {userInfo.roles == 'ROLE_ENTREPRISE' && <HomeTab.Screen
+        name="Offer"
+        component={CreatOffersScreen}
+        options={{
+          tabBarLabel: "Offer",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+        /> }
     </HomeTab.Navigator>
   );
 };

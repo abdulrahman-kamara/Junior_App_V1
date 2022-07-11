@@ -24,7 +24,7 @@ export default function ApplyScreen(props) {
   const pickDocument = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
     alert(result.uri);
-    console.log(result);
+    //console.log(result);
   };
 
   return (

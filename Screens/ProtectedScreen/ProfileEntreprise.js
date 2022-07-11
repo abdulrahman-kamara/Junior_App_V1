@@ -154,7 +154,7 @@ const ProfileScreen = ({ navigation, route }) => {
               )}
               label="Sign out"
               onPress={() => {
-                logout(console.log("message", logout));
+                logout();
               }}
             />
           </Drawer.Section>
