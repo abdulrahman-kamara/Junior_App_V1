@@ -146,13 +146,12 @@ export const AuthProvider = ({ children }) => {
     description,
     image,
     JwtToken,
-    roles,
     id
   ) => {
     const formdata = new FormData();
-    formdata.append("city", city ?? "");
     formdata.append("name", name ?? "");
     formdata.append("address", address ?? "");
+    formdata.append("city", city ?? "");
     formdata.append("description", description ?? "");
     formdata.append("offers", []);
     if (image) {

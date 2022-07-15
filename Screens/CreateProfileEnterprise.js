@@ -26,6 +26,7 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
   // const Token = route.params.JwtToken;
   // const id = route.params.id;
   // my hooks with useState
+  console.log('TEST CREATEPROFILEENTREPRISE USERINFO',userInfo);
   const [name, setName] = useState("");
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
@@ -210,9 +211,11 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
                 city,
                 description,
                 image,
-                userInfo.token ?? route.params.JwtToken,
-                userToken.roles ?? route.params.roles,
-                userToken.id ?? route.params.id,
+                route.params.JwtToken,
+                route.params.id,
+                // userInfo.token ?? route.params.JwtToken,
+                // userToken.roles ?? route.params.roles,
+                // userToken.id ?? route.params.id,
                 // route.params.JwtToken,
                 // route.params.id
               ), navigation.pop();
