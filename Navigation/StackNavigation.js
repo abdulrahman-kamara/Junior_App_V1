@@ -18,7 +18,7 @@ import CreateOffers from "../Screens/CreateOffers";
 import OffersScreen from "../Screens/ProtectedScreen/OffersScreen";
 import DrawerNavigation from "../Navigation/DrawerNavigation";
 import { AuthContext } from "../Context/Context";
-// import jwt_decode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 
 
 const ProfileStack = createNativeStackNavigator();
@@ -26,9 +26,9 @@ const FeedStack = createNativeStackNavigator();
 
 const ProfileStackScreen = () => {
   const { userInfo } = useContext(AuthContext);
-  // let myTokenCrypted = userInfo.token;
-  // let myTokenDecrypted = jwt_decode(myTokenCrypted);
-  // let myRole = myTokenDecrypted.roles;
+  let myTokenCrypted = userInfo.token;
+  let myTokenDecrypted = jwt_decode(myTokenCrypted);
+  let myRole = myTokenDecrypted.roles;
   //console.log("role", userInfo);
   return (
     <ProfileStack.Navigator>
@@ -62,9 +62,9 @@ const ProfileStackScreen = () => {
 };
 const FeedStackScreen = () => {
   const { userInfo } = useContext(AuthContext);
-  // let myTokenCrypted = userInfo.token;
-  // let myTokenDecrypted = jwt_decode(myTokenCrypted);
-  // let myRole = myTokenDecrypted.roles;
+  let myTokenCrypted = userInfo.token;
+  let myTokenDecrypted = jwt_decode(myTokenCrypted);
+  let myRole = myTokenDecrypted.roles;
 
   //console.log("role", myRole);
   return (
@@ -93,9 +93,9 @@ const HomeTab = createMaterialBottomTabNavigator();
 
 const HomeTapScreen = () => {
   const { userInfo } = useContext(AuthContext);
-  // let myTokenCrypted = userInfo.token;
-  // let myTokenDecrypted = jwt_decode(myTokenCrypted);
-  // let myRole = myTokenDecrypted.roles;
+  let myTokenCrypted = userInfo.token;
+  let myTokenDecrypted = jwt_decode(myTokenCrypted);
+  let myRole = myTokenDecrypted.roles;
 
   return (
     <HomeTab.Navigator

@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        //console.log("my userinfo", userInfo);
+        console.log("REGISTER P1 USERINFO", userInfo);
 
         navigation.navigate("CreateProfileJunior", {
           roles: userInfo.roles,
@@ -51,11 +51,12 @@ export const AuthProvider = ({ children }) => {
     expierrence,
     image,
     JwtToken,
-    roles,
     id
   ) => {
     const formdata = new FormData();
 
+    console.log('ProfilJunior JwtToken',JwtToken);
+    console.log('ProfilJunior id',id);
     formdata.append("telephone", phone ?? "");
     formdata.append("city", city ?? "");
     formdata.append("firstname", firstname ?? "");
@@ -139,8 +140,8 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
   const ProfileEnterprise = async (
-    address,
     name,
+    address,
     city,
     description,
     image,
@@ -177,6 +178,7 @@ export const AuthProvider = ({ children }) => {
       .then((userInfo) => {
         //console.log("userInfo", id);
         //console.log("Role", roles);
+        userInfo.token = JwtToken;
 
         setUserInfo(userInfo);
         setUserToken(userInfo);

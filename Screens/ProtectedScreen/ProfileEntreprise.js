@@ -492,14 +492,17 @@ const ProfileScreen = ({ navigation, route }) => {
   const [text, onChangeText] = React.useState("");
 
   const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [email, setEmail] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [city, setCity] = React.useState('');
+  const [description, setDescription] = React.useState('');
   const [image, setImage] = React.useState('');
+  const [id, setId] = useState(null);
+  const [email, setEmail] = React.useState('');
   
   const { logout, userInfo, userToken, setUserInfo} = React.useContext(AuthContext);
-  const [id, setId] = useState(null);
+
+  //console.log('TEST PROFILENTREPRISE USERINFO',userInfo.token);
+  //console.log('TEST PROFILENTREPRISE USERTOKEN',userToken);
 
   useEffect(()=> {
     axios.get(`${BASE_URL}/api/my`, {
@@ -523,7 +526,7 @@ const ProfileScreen = ({ navigation, route }) => {
         // console.log('NAME JR :', myInfo.profession.name);
       })
       .catch(err => {
-        console.log(`ERROR  GET INFO PROFIL CO. : ${err}`);
+        console.log(`ERROR  API/My : ${err}`);
       })
   });
 

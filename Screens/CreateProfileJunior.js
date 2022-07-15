@@ -24,8 +24,9 @@ const { width, height } = Dimensions.get("window");
 
 const CreateProfileJunior = ({ navigation, route }) => {
   const { ProfileJunior, userInfo, userToken } = useContext(AuthContext);
-  //console.log("CREATE PROFILE JUNIOR", userInfo);
-  //console.log("ROUTE PA", route.params);
+  console.log("CREATE PROFILE JUNIOR USERINFO", userInfo);
+  console.log("CREATE PROFILE JUNIOR USERTOKEN(JWT)", userToken);
+  console.log("CREATE PROFILE JUNIOR ROUTE PA", route.params);
   // console.log("CREATE PROFIL JR ", route.params.JwtToken);
   // const Token = route.params.JwtToken;
   // const id = route.params.id;
@@ -59,7 +60,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
   const DiplomcancelButtonIndex = 3;
 
   // Options Expirence
-  const MyExpierrence = ["1 an", "2 ans", "3 ans", "Cancel"];
+  const MyExpierrence = ["1 year", "2 years", "3 years", "Cancel"];
   const ExpirencedestructiveButtonIndex = 3;
   const ExpirencecancelButtonIndex = 3;
 
@@ -280,10 +281,9 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 diplom,
                 expierrence,
                 image,
-                userInfo.token ?? route.params.JwtToken,
-                userToken.roles ?? route.params.roles,
-                userToken.id ?? route.params.id
-                
+                route.params.JwtToken,
+                route.params.id,
+                // userToken.id ?? route.params.id
               ),navigation.pop();
             }}
           >

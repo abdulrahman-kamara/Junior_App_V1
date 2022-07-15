@@ -399,7 +399,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 </View>
                 <View style={styles.infoBox}>
                   <Icon name="book-outline" color="#FF6347" size={25} />
-                  <Title>{yearOfExperience} years</Title>
+                  <Title>{yearOfExperience}</Title>
                   <Caption>Experience</Caption>
                 </View>
               </View>

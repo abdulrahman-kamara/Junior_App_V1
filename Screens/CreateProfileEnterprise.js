@@ -206,8 +206,8 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
             onPress={() => {
               ProfileEnterprise(
                 name,
-                city,
                 address,
+                city,
                 description,
                 image,
                 userInfo.token ?? route.params.JwtToken,
