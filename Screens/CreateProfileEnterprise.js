@@ -21,91 +21,91 @@ const { width, height } = Dimensions.get("window");
 import { AuthContext } from "../Context/Context";
 
 const CreateProfileEnterprise = ({ navigation, route }) => {
-  const { ProfileEnterprise } = useContext(AuthContext);
+  const { ProfileEnterprise, userInfo, userToken } = useContext(AuthContext);
 
   // const Token = route.params.JwtToken;
   // const id = route.params.id;
   // my hooks with useState
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
   const [city, setCity] = useState();
   const [address, setAddress] = useState();
   const [description, setDescription] = useState();
-  const [image, setImage] = useState();
+  const [image, setImage] = useState(null);
   // My ActionBotoom Sheet with its options and its fuction
 
   // Options Profession
-  const MyProfession = [
-    "Developper Full-Stack",
-    "Developper Front",
-    "Developper Back",
-    "Cancel",
-  ];
-  const ProfessiondestructiveButtonIndex = 3;
-  const ProfessioncancelButtonIndex = 3;
+  // const MyProfession = [
+  //   "Developper Full-Stack",
+  //   "Developper Front",
+  //   "Developper Back",
+  //   "Cancel",
+  // ];
+  // const ProfessiondestructiveButtonIndex = 3;
+  // const ProfessioncancelButtonIndex = 3;
 
-  // Options Diploma
-  const MyDiplom = ["Bac+ 3", "Bac+ 2", "Bac+ 5", "Cancel"];
-  const DiplomdestructiveButtonIndex = 3;
-  const DiplomcancelButtonIndex = 3;
+  // // Options Diploma
+  // const MyDiplom = ["Bac+ 3", "Bac+ 2", "Bac+ 5", "Cancel"];
+  // const DiplomdestructiveButtonIndex = 3;
+  // const DiplomcancelButtonIndex = 3;
 
-  // Options Expirence
-  const MyExpierrence = ["1 an", "2 ans", "3 ans", "Cancel"];
-  const ExpirencedestructiveButtonIndex = 3;
-  const ExpirencecancelButtonIndex = 3;
+  // // Options Expirence
+  // const MyExpierrence = ["1 an", "2 ans", "3 ans", "Cancel"];
+  // const ExpirencedestructiveButtonIndex = 3;
+  // const ExpirencecancelButtonIndex = 3;
 
   // fucntion that handle the profession options
-  const HandleProfession = (props) => {
-    showActionSheetWithOptions(
-      {
-        options: MyProfession,
-        cancelButtonIndex: ProfessioncancelButtonIndex,
-        destructiveButtonIndex: ProfessiondestructiveButtonIndex,
-      },
-      (buttonIndex) => {
-        // Do something here depending on the button index selected
-        if (buttonIndex === 3) {
-          return;
-        }
-        setProfession(MyProfession[buttonIndex]);
-      }
-    );
-  };
+  // const HandleProfession = (props) => {
+  //   showActionSheetWithOptions(
+  //     {
+  //       options: MyProfession,
+  //       cancelButtonIndex: ProfessioncancelButtonIndex,
+  //       destructiveButtonIndex: ProfessiondestructiveButtonIndex,
+  //     },
+  //     (buttonIndex) => {
+  //       // Do something here depending on the button index selected
+  //       if (buttonIndex === 3) {
+  //         return;
+  //       }
+  //       setProfession(MyProfession[buttonIndex]);
+  //     }
+  //   );
+  // };
 
   // fucntion that handle the Diploma options
-  const HandleDiplom = (props) => {
-    showActionSheetWithOptions(
-      {
-        options: MyDiplom,
-        cancelButtonIndex: DiplomcancelButtonIndex,
-        destructiveButtonIndex: DiplomdestructiveButtonIndex,
-      },
-      (buttonIndex) => {
-        // Do something here depending on the button index selected
-        if (buttonIndex === 3) {
-          return;
-        }
-        setDiplom(MyDiplom[buttonIndex]);
-      }
-    );
-  };
+  // const HandleDiplom = (props) => {
+  //   showActionSheetWithOptions(
+  //     {
+  //       options: MyDiplom,
+  //       cancelButtonIndex: DiplomcancelButtonIndex,
+  //       destructiveButtonIndex: DiplomdestructiveButtonIndex,
+  //     },
+  //     (buttonIndex) => {
+  //       // Do something here depending on the button index selected
+  //       if (buttonIndex === 3) {
+  //         return;
+  //       }
+  //       setDiplom(MyDiplom[buttonIndex]);
+  //     }
+  //   );
+  // };
 
   // fucntion that handle the Expirence options
-  const HandleExpierence = (props) => {
-    showActionSheetWithOptions(
-      {
-        options: MyExpierrence,
-        cancelButtonIndex: ExpirencedestructiveButtonIndex,
-        destructiveButtonIndex: ExpirencecancelButtonIndex,
-      },
-      (buttonIndex) => {
-        // Do something here depending on the button index selected
-        if (buttonIndex === 3) {
-          return;
-        }
-        setExpierrence(MyExpierrence[buttonIndex]);
-      }
-    );
-  };
+  // const HandleExpierence = (props) => {
+  //   showActionSheetWithOptions(
+  //     {
+  //       options: MyExpierrence,
+  //       cancelButtonIndex: ExpirencedestructiveButtonIndex,
+  //       destructiveButtonIndex: ExpirencecancelButtonIndex,
+  //     },
+  //     (buttonIndex) => {
+  //       // Do something here depending on the button index selected
+  //       if (buttonIndex === 3) {
+  //         return;
+  //       }
+  //       setExpierrence(MyExpierrence[buttonIndex]);
+  //     }
+  //   );
+  // };
 
   // my hooks that recieve all the fucntion that handle the different options
   const { showActionSheetWithOptions } = useActionSheet();
@@ -193,7 +193,7 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
               },
             ]}
             autoCorrect={false}
-            placeholder="description_entreprise"
+            placeholder="Description entreprise"
             multiline
             value={description}
             onChangeText={(text) => setDescription(text)}
@@ -205,14 +205,17 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
             style={styles.commandButton}
             onPress={() => {
               ProfileEnterprise(
-                address,
-                city,
                 name,
+                city,
+                address,
                 description,
                 image,
-                route.params.JwtToken,
-                route.params.id
-              );
+                userInfo.token ?? route.params.JwtToken,
+                userToken.roles ?? route.params.roles,
+                userToken.id ?? route.params.id,
+                // route.params.JwtToken,
+                // route.params.id
+              ), navigation.pop();
             }}
           >
             <Text style={{ color: Colors.Secondry }}>Create</Text>

@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        console.log("my userinfo", userInfo);
+        //console.log("my userinfo", userInfo);
 
         navigation.navigate("CreateProfileJunior", {
           roles: userInfo.roles,
@@ -71,12 +71,12 @@ export const AuthProvider = ({ children }) => {
         name: "image.jpg",
       });
     }
-    console.log("IMAGE", image);
+    //console.log("IMAGE", image);
 
     setIsLoading(true);
     // console.log("token.id", id);
     // console.log("role", roles);
-    console.error(JwtToken);
+    //console.error(JwtToken);
     fetch(`${BASE_URL}/api/users/${id}`, {
       method: "POST",
       body: formdata,
@@ -89,7 +89,7 @@ export const AuthProvider = ({ children }) => {
         return res.json();
       })
       .then((userInfo) => {
-        console.log("USER INFO POST", userInfo);
+        //console.log("USER INFO POST", userInfo);
         userInfo.token = JwtToken;
 
         setUserInfo(userInfo);
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }) => {
         navigation.navigate("CreateProfileEnterprise", {
           roles: userInfo.roles,
           name,
-          JwtToken: userInfo.token,
+          JwtToken: userInfo.JwtToken,
           id: userInfo.id,
         });
 
@@ -175,13 +175,13 @@ export const AuthProvider = ({ children }) => {
         return res.json();
       })
       .then((userInfo) => {
-        console.log("userInfo", id);
-        console.log("Role", roles);
+        //console.log("userInfo", id);
+        //console.log("Role", roles);
 
         setUserInfo(userInfo);
         setUserToken(userInfo);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken");
+        AsyncStorage.setItem("userToken", JwtToken);
       })
       .catch((error) => {
         console.log("error", error);
@@ -210,7 +210,7 @@ export const AuthProvider = ({ children }) => {
         // console.log(userInfo);
         setUserInfo(userInfo);
         setUserToken(userInfo.token);
-        console.log("USER TOKEN", userToken);
+        //console.log("USER TOKEN", userToken);
 
         // const UserResult = await fetch("${BASE_URL}/api/me", {
         //   headers: {

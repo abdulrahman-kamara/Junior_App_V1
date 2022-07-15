@@ -15,6 +15,7 @@ import PickerImage from "../../Components/PickerImage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+
 const AboutTextInput = (props) => {
   return (
     <TextInput
@@ -34,9 +35,10 @@ const MissonTextInput = (props) => {
   );
 };
 
-const OffersScreen = ({ props, navigation }) => {
+const OffersScreen = ({ route, navigation }) => {
   const [value, onChangeText] = useState("About Job");
   const [mission, onChangeMission] = useState("Misson");
+  console.log('test', route);
   return (
     <SafeAreaView>
       <ScrollView>
@@ -53,12 +55,12 @@ const OffersScreen = ({ props, navigation }) => {
               }}
             >
               <Text style={{ fontSize: 25, color: Colors.Primary }}>
-                Developper Web
+             
               </Text>
             </View>
             <View style={styles.imagetext}>
               <Feather name="book" color={Colors.Primary} size={20} />
-              <Text>CDI</Text>
+              <Text> {route.params.last_name}</Text>
               <Feather name="map-pin" color={Colors.Primary} size={20} />
               <Text>Paris</Text>
               <Ionicons

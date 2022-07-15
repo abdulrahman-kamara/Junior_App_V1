@@ -24,8 +24,8 @@ const { width, height } = Dimensions.get("window");
 
 const CreateProfileJunior = ({ navigation, route }) => {
   const { ProfileJunior, userInfo, userToken } = useContext(AuthContext);
-  console.log("CREATE PROFILE JUNIOR", userInfo);
-  console.log("ROUTE PA", route.params);
+  //console.log("CREATE PROFILE JUNIOR", userInfo);
+  //console.log("ROUTE PA", route.params);
   // console.log("CREATE PROFIL JR ", route.params.JwtToken);
   // const Token = route.params.JwtToken;
   // const id = route.params.id;

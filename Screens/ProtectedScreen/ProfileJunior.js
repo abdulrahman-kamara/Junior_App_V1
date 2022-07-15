@@ -222,7 +222,7 @@
 // export default ProfileScreen;
 
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {
   View,
   StyleSheet,
@@ -256,7 +256,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { BASE_URL } from "../../config/api";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const ProfileScreen = ({ navigation, route }) => {
   const [text, onChangeText] = React.useState("");
@@ -286,7 +286,7 @@ const ProfileScreen = ({ navigation, route }) => {
   
       .then(res => {
         let myInfo = res.data;
-        console.log("MYINFO",myInfo);
+        //console.log("MYINFO",myInfo);
         setId(myInfo.id);
         setFirstname(myInfo.firstname);
         setLastname(myInfo.lastname);
@@ -306,7 +306,7 @@ const ProfileScreen = ({ navigation, route }) => {
         console.log(`ERROR  GET INFO PROFIL JR : ${err}`);
       })
 
-  })
+  });
   // console.log('MON USER TOKEN', userToken);
   // console.log('MON USER TOKEN', userInfo);
   
@@ -326,7 +326,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 >
                   <TouchableOpacity onPress={() => navigation.push("Junior", {JwtToken: userInfo.token, roles: userInfo.roles, id:id ?? userInfo.id})}>
                     <Avatar.Image
-                      source={require("../../assets/Image/logo.png")}
+                      // source={require(BASE_URL + image)}
                       size={80}
                     />
                   </TouchableOpacity>
