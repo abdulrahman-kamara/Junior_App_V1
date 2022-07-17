@@ -25,118 +25,7 @@ const COmpanySignup = ({ navigation }) => {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  // const [confirmpassword, setConfirmPassword] = useState(null);
-  // const [data, setData] = useState({
-  //   email: "",
-  //   password: "",
-  //   secureTextEntry: true,
-  //   check_textInputChange: false,
-  //   isValidEmail: true,
-  //   isValidPassword: true,
-  // });
 
-  // const textInputChange = (val) => {
-  //   if (val.trim().length >= 4) {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: true,
-  //       isValidEmail: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       email: val,
-  //       check_textInputChange: false,
-  //       isValidEmail: false,
-  //     });
-  //   }
-  // };
-
-  // const handleEmailChange = (val) => {
-  //   if (val.trim().length >= 4) {
-  //     setData({
-  //       ...data,
-  //       isValidEmail: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       isValidEmail: false,
-  //     });
-  //   }
-  // };
-
-  // const handlePasswordChange = (val) => {
-  //   if (val.trim().length >= 8) {
-  //     setData({
-  //       ...data,
-  //       password: val,
-  //       isValidPassword: true,
-  //     });
-  //   } else {
-  //     setData({
-  //       ...data,
-  //       password: val,
-  //       isValidPassword: false,
-  //     });
-  //   }
-  // };
-
-  // const updatepassworwEntry = () => {
-  //   setData({
-  //     ...data,
-  //     secureTextEntry: !data.secureTextEntry,
-  //   });
-  // };
-
-  // const LoginHandleFunction = (email, password) => {
-  //   signIn(email, password);
-  // };
-
-  // const submitLogin = function (email, password) {
-  //   props.object = JSON.stringify({
-  //     email: email,
-  // //     password: password,
-  // //   });
-
-  // };
-
-  // const loginHandler = (email, password) => {
-  //   // fetch(
-  //   //   "https://api.torea-patissier.students-laplateforme.io/authentication_token",
-  //   //   {
-  //   //     method: "POST",
-  //   //     headers: {
-  //   //       Accept: "application/json",
-  //   //       "Content-Type": "application/json",
-  //   //     },
-  //   //     body: object,
-  //   //   }
-  //   // )
-  //   //   .then((response) => response.json())
-  //   //   .then((json) => {
-  //   //     console.log(json.token);
-  //   //   });
-  //   const userAuth = Users.filter((item) => {
-  //     return email === item.email && password === item.password;
-  //   });
-  //   if (data.email.length == 0 || data.password.length == 0) {
-  //     Alert.alert("Wrong input", "email or password cannot be empty", [
-  //       { text: "Okey" },
-  //     ]);
-  //     return;
-  //   }
-
-  //   if (userAuth.length == 0) {
-  //     Alert.alert("Invalid user", "email or password is incorrect", [
-  //       { text: "Okey" },
-  //     ]);
-  //     return;
-  //   }
-  //   signIn(userAuth);
-
-  // };
   const { Enterprise, isLoading } = useContext(AuthContext);
 
   if (isLoading) {
@@ -155,13 +44,13 @@ const COmpanySignup = ({ navigation }) => {
       </View>
       <ScrollView>
         <Animatable.View style={styles.footer} animation="flipInY">
-          <Text style={styles.text_footer}>Name</Text>
+          <Text style={styles.text_footer}>Company name</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons name="account-circle" color={Colors.Primary} size={20} />
 
             <TextInput
               style={styles.textInput}
-              placeholder="Company Name"
+              placeholder="Enter your name"
               autoCapitalize="none"
               value={name}
               onChangeText={(text) => {
@@ -185,10 +74,10 @@ const COmpanySignup = ({ navigation }) => {
 
           <Text style={styles.text_footer}>Email</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons name="email" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.textInput}
-              placeholder="email"
+              placeholder="Enter your email"
               keyboardType="email-address"
               autoCapitalize="none"
               value={email}
@@ -211,14 +100,15 @@ const COmpanySignup = ({ navigation }) => {
             </Animatable.View>
           )} */}
 
-          <Text style={{ marginTop: 35 }}>Password</Text>
+          <Text style={{ marginTop: 20 }}>Password</Text>
           <View style={styles.action}>
             <MaterialIcons name="lock" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.textInput}
               // secureTextEntry={data.secureTextEntry ? true : false}
-              placeholder="Password"
+              placeholder="Enter your password"
               autoCapitalize="none"
+              // secureTextEntry
               secureTextEntry
               value={password}
               onChangeText={(text) => {
@@ -280,7 +170,7 @@ const COmpanySignup = ({ navigation }) => {
                 // (loginHandler(data.email, data.password),
               }
             >
-              <Text style={styles.textSign}>Sgin in</Text>
+              <Text style={styles.textSign}>Sign in</Text>
             </TouchableOpacity>
           </View>
         </Animatable.View>

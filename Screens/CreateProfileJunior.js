@@ -21,28 +21,22 @@ import { AuthContext } from "../Context/Context";
 
 const { width, height } = Dimensions.get("window");
 
-
 const CreateProfileJunior = ({ navigation, route }) => {
   const { ProfileJunior, userInfo, userToken } = useContext(AuthContext);
   console.log("CREATE PROFILE JUNIOR USERINFO", userInfo);
   console.log("CREATE PROFILE JUNIOR USERTOKEN(JWT)", userToken);
   console.log("CREATE PROFILE JUNIOR ROUTE PA", route.params);
-  // console.log("CREATE PROFIL JR ", route.params.JwtToken);
-  // const Token = route.params.JwtToken;
-  // const id = route.params.id;
 
   // my hooks with useState
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [phone, setPhone] = useState();
   const [city, setCity] = useState();
-  const [description, setDescription] = useState();
-  const [profession, setProfession] = useState("Profession");
-  const [diplom, setDiplom] = useState("Diploma");
-  const [expierrence, setExpierrence] = useState("Experience");
-  const [image, setImage] = useState(null);
-
-  // My ActionBotoom Sheet with its options and its fuction
+  const [description, setDescription] = useState(route.params.myDescription);
+  const [profession, setProfession] = useState(route.params.myProfession);
+  const [diplom, setDiplom] = useState(route.params.myDiploma ? route.params.myDiploma : 'Diploma');
+  const [expierrence, setExpierrence] = useState(route.params.myXp);
+  const [image, setImage] = useState('');
 
   // Options Profession
   const MyProfession = [
@@ -55,7 +49,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
   const ProfessioncancelButtonIndex = 3;
 
   // Options Diploma
-  const MyDiplom = ["Bac+ 3", "Bac+ 2", "Bac+ 5", "Cancel"];
+  const MyDiplom = [ "Bac+ 2","Bac+ 3","Bac+ 5", "Cancel"];
   const DiplomdestructiveButtonIndex = 3;
   const DiplomcancelButtonIndex = 3;
 
@@ -161,7 +155,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
             <TextInput
               style={[styles.textInput, { color: colors.text }]}
               autoCorrect={false}
-              placeholder="Phone"
+              placeholder={route.params.myPhone}
               keyboardType="number-pad"
               value={phone}
               onChangeText={(text) => setPhone(text)}
@@ -172,7 +166,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
             <TextInput
               style={[styles.textInput, { color: colors.text }]}
               autoCorrect={false}
-              placeholder="City"
+              placeholder={route.params.myCity}
               value={city}
               onChangeText={(text) => setCity(text)}
             />
@@ -182,7 +176,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
             <TextInput
               style={[styles.textInput, { color: colors.text }]}
               autoCorrect={false}
-              placeholder="Firstname"
+              placeholder={route.params.myFirstname}
               value={firstname}
               onChangeText={(text) => setFirstname(text)}
             />
@@ -192,7 +186,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
             <TextInput
               style={[styles.textInput, { color: colors.text }]}
               autoCorrect={false}
-              placeholder="Lastname"
+              placeholder={route.params.myLastName}
               value={lastname}
               onChangeText={(text) => setLastname(text)}
             />
@@ -224,7 +218,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
               size={20}
               padding={4}
             />
-            <Text>{diplom}</Text>
+            <Text>{diplom ? diplom : 'R'}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={HandleExpierence} style={{}}>
             <MaterialIcons
@@ -281,9 +275,9 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 diplom,
                 expierrence,
                 image,
-                route.params.JwtToken,
+                userInfo.token,
+                // route.params.JwtToken,
                 route.params.id,
-                // userToken.id ?? route.params.id
               ),navigation.pop();
             }}
           >

@@ -23,20 +23,12 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        console.log("REGISTER P1 USERINFO", userInfo);
-
-        navigation.navigate("CreateProfileJunior", {
-          roles: userInfo.roles,
-          firstname,
-          lastname,
-          JwtToken: userInfo.JwtToken,
-          id: userInfo.id,
-        });
+        console.log("REGISTER JR1 OK, USERINFO", userInfo);
+        navigation.pop(2);
       })
       .catch((err) => {
-        console.log(`login err ${err}`);
+        console.log(`REGISTER JR1 ERROR ${err}`);
       });
-
     setIsLoading(false);
   };
 
@@ -72,12 +64,7 @@ export const AuthProvider = ({ children }) => {
         name: "image.jpg",
       });
     }
-    //console.log("IMAGE", image);
-
     setIsLoading(true);
-    // console.log("token.id", id);
-    // console.log("role", roles);
-    //console.error(JwtToken);
     fetch(`${BASE_URL}/api/users/${id}`, {
       method: "POST",
       body: formdata,
@@ -90,7 +77,7 @@ export const AuthProvider = ({ children }) => {
         return res.json();
       })
       .then((userInfo) => {
-        //console.log("USER INFO POST", userInfo);
+        console.log("USER INFO POST", userInfo);
         userInfo.token = JwtToken;
 
         setUserInfo(userInfo);
@@ -117,28 +104,15 @@ export const AuthProvider = ({ children }) => {
       })
       .then((res) => {
         let userInfo = res.data;
-        // console.log("my userinfo", userInfo);
-
-        navigation.navigate("CreateProfileEnterprise", {
-          roles: userInfo.roles,
-          name,
-          JwtToken: userInfo.JwtToken,
-          id: userInfo.id,
-        });
-
-        // setUserInfo(userInfo);
-        // setUserToken(userInfo.token);
-        // console.log(userInfo);
-        // console.log("user Token" + userInfo.token);
-        // AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        // AsyncStorage.setItem("userToken", userInfo.token);
+        console.log("///REGISTER ENT OK =", userInfo);
+        navigation.pop(2);
       })
       .catch((err) => {
-        console.log(`login err ${err}`);
+        console.log(`///REGISTER ENT ERROR${err}`);
       });
-
     setIsLoading(false);
   };
+
   const ProfileEnterprise = async (
     name,
     address,
@@ -149,6 +123,8 @@ export const AuthProvider = ({ children }) => {
     id
   ) => {
     const formdata = new FormData();
+    // console.log('MON JWT_TOKEN PROFIL_ENTREPRISE',JwtToken);
+    console.log('PROFIL_ENTREPRISE USERINFO.token//',JwtToken);
     formdata.append("name", name ?? "");
     formdata.append("address", address ?? "");
     formdata.append("city", city ?? "");
@@ -162,7 +138,6 @@ export const AuthProvider = ({ children }) => {
       });
     }
     setIsLoading(true);
-
     fetch(`${BASE_URL}/api/entreprises/${id}`, {
       method: "POST",
       body: formdata,
@@ -175,19 +150,18 @@ export const AuthProvider = ({ children }) => {
         return res.json();
       })
       .then((userInfo) => {
-        //console.log("userInfo", id);
-        //console.log("Role", roles);
+        console.log("///register entreprise OK, userInfo =", userInfo);
         userInfo.token = JwtToken;
 
         setUserInfo(userInfo);
         setUserToken(userInfo);
+
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", JwtToken);
       })
       .catch((error) => {
-        console.log("error", error);
+        console.log("////register entreprise error = ", error);
       });
-
     setIsLoading(false);
   };
 
@@ -202,42 +176,19 @@ export const AuthProvider = ({ children }) => {
       })
       .then(async (res) => {
         let userInfo = res.data;
-        console.log("USER INFO", userInfo);
+        console.log("LOGIN OK, USER INFO =", userInfo);
         
-        let decoded = jwt_decode(userInfo.token);
-        //console.log("decoded", decoded);
-        userInfo.roles = decoded.roles;
+        // let decoded = jwt_decode(userInfo.token);
+        // userInfo.roles = decoded.roles;
         
-        // console.log(userInfo);
         setUserInfo(userInfo);
         setUserToken(userInfo.token);
-        //console.log("USER TOKEN", userToken);
-
-        // const UserResult = await fetch("${BASE_URL}/api/me", {
-        //   headers: {
-        //     authorization: `Bearer ${userInfo.token}`,
-        //     "Content-Type": "application/json",
-        //   },
-        // });
-        // const user = await UserResult.json();
-
-        // if (userInfo) {
-        //   console.log("User", user.roles);
-        //   await setAccessToken(userInfo.token, user);
-
-        //   console.log(user);
-        //   if (user && user.roles[0] == "ROLE_USER") {
-        //     console.log(userInfo);
-        //     setUserInfo(userInfo);
-        //     setUserToken(userInfo.token);
-        //   }
-        // }
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userInfo.token);
       })
       .catch((err) => {
-        console.log(`login erro ${err}`);
+        console.log(`LOGIN ERROR = ${err}`);
       });
 
     setIsLoading(false);
@@ -248,7 +199,10 @@ export const AuthProvider = ({ children }) => {
     setUserToken(null);
     AsyncStorage.removeItem("userInfo");
     AsyncStorage.removeItem("userToken");
+    // setUserInfo(null);
+    // setUserToken(null);
     setIsLoading(false);
+    console.log('LOGOUT OK');
   };
 
   const isLoggedIn = async () => {

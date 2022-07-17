@@ -23,6 +23,7 @@ import jwt_decode from "jwt-decode";
 
 const ProfileStack = createNativeStackNavigator();
 const FeedStack = createNativeStackNavigator();
+const HomeTab = createMaterialBottomTabNavigator();
 
 const ProfileStackScreen = () => {
   const { userInfo } = useContext(AuthContext);
@@ -33,7 +34,7 @@ const ProfileStackScreen = () => {
   return (
     <ProfileStack.Navigator>
 
-      {userInfo.roles == "ROLE_USER" ? (
+      {myRole == "ROLE_USER" ? (
         <ProfileStack.Screen name="ProfileJunior" component={ProfileJunior} />
       ) : (
         <ProfileStack.Screen
@@ -43,9 +44,9 @@ const ProfileStackScreen = () => {
 
       )}
 
-      {userInfo.roles == "ROLE_USER" ? (
+      {myRole == "ROLE_USER" ? (
         <ProfileStack.Screen
-          name="Junior"
+          name="Update profile"
           component={CreateProfileJunior}
           options={{ headerShown: true }}
         />
@@ -69,7 +70,7 @@ const FeedStackScreen = () => {
   //console.log("role", myRole);
   return (
     <FeedStack.Navigator>
-      {userInfo.roles == "ROLE_USER" ? (
+      {myRole == "ROLE_USER" ? (
         <FeedStack.Screen name="Junior" component={JuniorFeed} />
       ) : (
         <FeedStack.Screen name="Entreprise" component={EntrepriseFeed} />
@@ -88,9 +89,6 @@ const FeedStackScreen = () => {
     </FeedStack.Navigator>
   );
 };
-
-const HomeTab = createMaterialBottomTabNavigator();
-
 const HomeTapScreen = () => {
   const { userInfo } = useContext(AuthContext);
   let myTokenCrypted = userInfo.token;
@@ -118,11 +116,11 @@ const HomeTapScreen = () => {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
         />
-        {userInfo.roles == 'ROLE_ENTREPRISE' && <HomeTab.Screen
+        {myRole == 'ROLE_ENTREPRISE' && <HomeTab.Screen
         name="Offer"
         component={CreatOffersScreen}
         options={{

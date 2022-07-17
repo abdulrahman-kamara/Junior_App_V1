@@ -50,10 +50,10 @@ const Juniorsignup = ({ navigation }) => {
         <Animatable.View style={styles.footer} animation="flipInY">
           <Text style={styles.text_footer}>FirstName</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons name="account-circle" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.textInput}
-              placeholder="firstname"
+              placeholder="Enter your firstname"
               value={firstname}
               onChangeText={(text) => setFirstname(text)}
 
@@ -82,10 +82,10 @@ const Juniorsignup = ({ navigation }) => {
           )} */}
           <Text style={styles.text_footer}>Lastname</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons name="account-circle" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.textInput}
-              placeholder="Lastname"
+              placeholder="Enter your lastname"
               value={lastname}
               autoCapitalize="none"
               onChangeText={(text) => setLastname(text)}
@@ -111,10 +111,10 @@ const Juniorsignup = ({ navigation }) => {
 
           <Text style={styles.text_footer}>Email</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons name="email" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.input}
-              placeholder="Enter email address"
+              placeholder=" Enter your email address"
               onChangeText={(text) => setEmail(text)}
               keyboardType="email-address"
               value={email}
@@ -133,9 +133,10 @@ const Juniorsignup = ({ navigation }) => {
             <MaterialIcons name="lock" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.input}
-              placeholder="Enter password "
+              placeholder=" Enter your password "
               onChangeText={(text) => setPassword(text)}
               value={password}
+              secureTextEntry
             />
 
             {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
@@ -190,7 +191,7 @@ const Juniorsignup = ({ navigation }) => {
                 // (loginHandler(data.email, data.password),
               }
             >
-              <Text style={styles.textSign}>signUp</Text>
+              <Text style={styles.textSign}>Sign up</Text>
             </TouchableOpacity>
             {/* <TouchableOpacity
             onPress={() => navigation.navigate("Welcome")}

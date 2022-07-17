@@ -22,91 +22,15 @@ import { AuthContext } from "../Context/Context";
 
 const CreateProfileEnterprise = ({ navigation, route }) => {
   const { ProfileEnterprise, userInfo, userToken } = useContext(AuthContext);
-
-  // const Token = route.params.JwtToken;
-  // const id = route.params.id;
-  // my hooks with useState
-  console.log('TEST CREATEPROFILEENTREPRISE USERINFO',userInfo);
+  // console.log('TEST CREATE PROFILE ENTREPRISE USERINFO',userInfo);
+  // console.log('TEST CREATE PROFILE ENTREPRISE USER_TOKEN',userToken);
+  console.log('//createProfilEntreprise userInfo.token =//',userInfo.token);
+  console.log('//createProfilEntreprise route.params =//',route.params);
   const [name, setName] = useState("");
-  const [city, setCity] = useState();
-  const [address, setAddress] = useState();
-  const [description, setDescription] = useState();
-  const [image, setImage] = useState(null);
-  // My ActionBotoom Sheet with its options and its fuction
-
-  // Options Profession
-  // const MyProfession = [
-  //   "Developper Full-Stack",
-  //   "Developper Front",
-  //   "Developper Back",
-  //   "Cancel",
-  // ];
-  // const ProfessiondestructiveButtonIndex = 3;
-  // const ProfessioncancelButtonIndex = 3;
-
-  // // Options Diploma
-  // const MyDiplom = ["Bac+ 3", "Bac+ 2", "Bac+ 5", "Cancel"];
-  // const DiplomdestructiveButtonIndex = 3;
-  // const DiplomcancelButtonIndex = 3;
-
-  // // Options Expirence
-  // const MyExpierrence = ["1 an", "2 ans", "3 ans", "Cancel"];
-  // const ExpirencedestructiveButtonIndex = 3;
-  // const ExpirencecancelButtonIndex = 3;
-
-  // fucntion that handle the profession options
-  // const HandleProfession = (props) => {
-  //   showActionSheetWithOptions(
-  //     {
-  //       options: MyProfession,
-  //       cancelButtonIndex: ProfessioncancelButtonIndex,
-  //       destructiveButtonIndex: ProfessiondestructiveButtonIndex,
-  //     },
-  //     (buttonIndex) => {
-  //       // Do something here depending on the button index selected
-  //       if (buttonIndex === 3) {
-  //         return;
-  //       }
-  //       setProfession(MyProfession[buttonIndex]);
-  //     }
-  //   );
-  // };
-
-  // fucntion that handle the Diploma options
-  // const HandleDiplom = (props) => {
-  //   showActionSheetWithOptions(
-  //     {
-  //       options: MyDiplom,
-  //       cancelButtonIndex: DiplomcancelButtonIndex,
-  //       destructiveButtonIndex: DiplomdestructiveButtonIndex,
-  //     },
-  //     (buttonIndex) => {
-  //       // Do something here depending on the button index selected
-  //       if (buttonIndex === 3) {
-  //         return;
-  //       }
-  //       setDiplom(MyDiplom[buttonIndex]);
-  //     }
-  //   );
-  // };
-
-  // fucntion that handle the Expirence options
-  // const HandleExpierence = (props) => {
-  //   showActionSheetWithOptions(
-  //     {
-  //       options: MyExpierrence,
-  //       cancelButtonIndex: ExpirencedestructiveButtonIndex,
-  //       destructiveButtonIndex: ExpirencecancelButtonIndex,
-  //     },
-  //     (buttonIndex) => {
-  //       // Do something here depending on the button index selected
-  //       if (buttonIndex === 3) {
-  //         return;
-  //       }
-  //       setExpierrence(MyExpierrence[buttonIndex]);
-  //     }
-  //   );
-  // };
+  const [city, setCity] = useState('');
+  const [address, setAddress] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState('');
 
   // my hooks that recieve all the fucntion that handle the different options
   const { showActionSheetWithOptions } = useActionSheet();
@@ -211,14 +135,10 @@ const CreateProfileEnterprise = ({ navigation, route }) => {
                 city,
                 description,
                 image,
-                route.params.JwtToken,
+                userInfo.token,
                 route.params.id,
-                // userInfo.token ?? route.params.JwtToken,
-                // userToken.roles ?? route.params.roles,
-                // userToken.id ?? route.params.id,
-                // route.params.JwtToken,
-                // route.params.id
-              ), navigation.pop();
+                ), navigation.pop();
+              // );
             }}
           >
             <Text style={{ color: Colors.Secondry }}>Create</Text>

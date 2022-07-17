@@ -46,7 +46,7 @@ const SplashScreen = (props) => {
             },
           ]}
         >
-          Developer With Us!
+          Develop with us!
         </Text>
         <Text style={styles.text}>Sign in with account</Text>
         <View style={styles.button}>
