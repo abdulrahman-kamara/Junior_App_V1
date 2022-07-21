@@ -221,8 +221,7 @@
 
 // export default ProfileScreen;
 
-
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -230,6 +229,7 @@ import {
   TextInput,
   Pressable,
   ScrollView,
+  Image,
 } from "react-native";
 import axios from "axios";
 
@@ -261,30 +261,32 @@ import { BASE_URL } from "../../config/api";
 const ProfileScreen = ({ navigation, route }) => {
   const [text, onChangeText] = React.useState("");
 
-  const [firstname, setFirstname] = React.useState('');
-  const [lastname, setLastname] = React.useState('');
-  const [tel, setTel] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [profession, setProfession] = React.useState('');
-  const [yearOfExperience, setYearOfExperience] = React.useState('');
-  const [diploma, setDiploma] = React.useState('');
-  const [city, setCity] = React.useState('');
-  const [image, setImage] = React.useState('');
+  const [firstname, setFirstname] = React.useState("");
+  const [lastname, setLastname] = React.useState("");
+  const [tel, setTel] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [profession, setProfession] = React.useState("");
+  const [yearOfExperience, setYearOfExperience] = React.useState("");
+  const [diploma, setDiploma] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [avatar, setAvatar] = React.useState("");
 
-  const { logout, userToken, userInfo, setUserInfo } = React.useContext(AuthContext);
+  const { logout, userToken, userInfo, setUserInfo } =
+    React.useContext(AuthContext);
   const [id, setId] = useState(null);
 
-  useEffect(()=> {
+  useEffect(() => {
     //console.log("MON USER INFO OPOP", userInfo.roles);
 
-    axios.get(`${BASE_URL}/api/me`, {
-      headers: {
-        authorization: `Bearer ${userInfo.token}`
-      }
-    })
-  
-      .then(res => {
+    axios
+      .get(`${BASE_URL}/api/me`, {
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      })
+
+      .then((res) => {
         let myInfo = res.data;
         //console.log("MYINFO",myInfo);
         setId(myInfo.id);
@@ -296,21 +298,20 @@ const ProfileScreen = ({ navigation, route }) => {
         setProfession(myInfo.profession.name);
         setYearOfExperience(myInfo.year_of_experience);
         setDiploma(myInfo.diploma.name);
-        setCity(myInfo.city.name);
-        setImage(myInfo.photoFile);
+        setCity(myInfo.city);
+        setAvatar(myInfo.avatar);
         // setUserInfo(userInfo);
-        //console.log('GET INFO PROFIL JR :', myInfo);
-        // console.log('NAME JR :', myInfo.profession.name);
+        console.log("GET INFO PROFIL JR :", avatar);
+        console.log("image", `${BASE_URL}${avatar}`);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(`ERROR  GET INFO PROFIL JR : ${err}`);
-      })
-
+      });
   });
   // console.log('MON USER TOKEN', userToken);
   // console.log('MON USER TOKEN', userInfo);
-  
-//console.log(userInfo.roles);
+
+  //console.log(userInfo.roles);
   return (
     <ScrollView>
       {
@@ -321,17 +322,29 @@ const ProfileScreen = ({ navigation, route }) => {
                 <View
                   style={{
                     flexDirection: "row",
-                    marginLeft: 15,
+
+                    marginTop: 10,
                   }}
                 >
-                  <TouchableOpacity onPress={() => navigation.push("Junior", {JwtToken: userInfo.token, roles: userInfo.roles, id:id ?? userInfo.id})}>
-                    <Avatar.Image
-                      // source={require(BASE_URL + image)}
-                      size={80}
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.push("Junior", {
+                        JwtToken: userInfo.token,
+                        roles: userInfo.roles,
+                        id: id ?? userInfo.id,
+                      })
+                    }
+                  >
+                    <Image
+                      source={{ url: `${BASE_URL}${avatar}` }}
+                      style={styles.avater}
                     />
+                    {/* <Avatar source={ `${BASE_URL}${avatar}`} size={80} /> */}
                   </TouchableOpacity>
                   <View style={{ marginLeft: 20 }}>
-                    <Title style={styles.title}>{firstname} {lastname}</Title>
+                    <Title style={styles.title}>
+                      {firstname} {lastname}
+                    </Title>
                     <Caption style={styles.caption}>{profession}</Caption>
                   </View>
                 </View>
@@ -377,7 +390,7 @@ const ProfileScreen = ({ navigation, route }) => {
                   ]}
                 >
                   <Title>40.50</Title>
-                  <Caption>{image}</Caption>
+                  <Caption>{avatar}</Caption>
                 </View>
                 <View style={styles.infoBox}>
                   <Title>12</Title>
@@ -405,9 +418,7 @@ const ProfileScreen = ({ navigation, route }) => {
               </View>
 
               <View style={styles.menuWrapper}>
-                <Text>
-                  {description}
-                </Text>
+                <Text>{description}</Text>
               </View>
             </View>
 
@@ -423,7 +434,8 @@ const ProfileScreen = ({ navigation, route }) => {
               />
             </Drawer.Section>
           </SafeAreaView>
-        </SafeAreaProvider>}
+        </SafeAreaProvider>
+      }
     </ScrollView>
   );
 };
@@ -432,7 +444,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userInfoSection: {
-    paddingHorizontal: 30,
+    paddingHorizontal: 50,
     marginBottom: 25,
   },
   title: {
@@ -444,9 +456,17 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     fontWeight: "500",
   },
+  avater: {
+    borderWidth: 1,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    marginTop: 20,
+  },
   row: {
     flexDirection: "row",
     marginBottom: 10,
+    marginLeft: 15,
   },
   infoBoxWrapper: {
     borderBottomColor: "#dddddd",

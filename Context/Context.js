@@ -192,23 +192,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   const CreateOffer = async (
-    id,
     city,
     diploma,
     jobs,
     description,
     image,
     type_of_contract,
-    type_of_work
+    type_of_work,
+    id
   ) => {
     const formdata = new FormData();
 
-    console.log("ProfilJunior JwtToken", JwtToken);
-    console.log("ProfilJunior id", id);
-
+    // console.log("ProfilJunior JwtToken", JwtToken);
+    // console.log("ProfilJunior id", id);
     formdata.append("city", city ?? "");
-    formdata.append("Title", jobs ?? "");
-
+    formdata.append("jobs", jobs ?? "");
     formdata.append("description", description ?? "");
     formdata.append("diploma", diploma ?? "");
     formdata.append("contract", type_of_contract ?? "");
@@ -223,14 +221,12 @@ export const AuthProvider = ({ children }) => {
     //console.log("IMAGE", image);
 
     setIsLoading(true);
-    // console.log("token.id", id);
-    // console.log("role", roles);
-    //console.error(JwtToken);
+
     fetch(`${BASE_URL}/api/create_offer`, {
       method: "POST",
       body: formdata,
       headers: {
-        authorization: `Bearer ${JwtToken}`,
+        header: true,
         "Content-Type": "multipart/form-data",
       },
     })
@@ -239,13 +235,13 @@ export const AuthProvider = ({ children }) => {
       })
       .then((userInfo) => {
         console.log("USER INFO POST", userInfo);
-        userInfo.token = JwtToken;
+        // userInfo.token = JwtToken;
 
         setUserInfo(userInfo);
         setUserToken(userInfo);
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken", JwtToken);
+        AsyncStorage.setItem("userToken", userInfo.token);
       })
       .catch((error) => {
         console.log("error", error);

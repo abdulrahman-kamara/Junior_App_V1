@@ -150,7 +150,7 @@ const CreateProfileModal = ({ route, navigation }) => {
   const { showActionSheetWithOptions } = useActionSheet();
   const { colors } = useTheme();
   const { CreateOffer, userToken, userInfo } = useContext(AuthContext);
-  console.log("test", userInfo.token);
+  console.log("mytest", userInfo);
 
   return (
     <ScrollView>
@@ -386,10 +386,10 @@ const CreateProfileModal = ({ route, navigation }) => {
                 description,
                 diploma,
                 image,
-                userInfo.token,
-                id
-              ),
-                navigation.navigate("Dashboard");
+                userInfo?.token,
+                userInfo?.id,
+                userInfo?.role
+              );
             }}
           >
             <Text style={{ color: Colors.Secondry }}>Create</Text>
