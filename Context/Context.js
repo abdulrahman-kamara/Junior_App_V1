@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
         });
       })
       .catch((err) => {
-        console.log(`login err ${err}`);
+        console.log(`login errors ${err}`);
       });
 
     setIsLoading(false);
@@ -55,8 +55,8 @@ export const AuthProvider = ({ children }) => {
   ) => {
     const formdata = new FormData();
 
-    console.log('ProfilJunior JwtToken',JwtToken);
-    console.log('ProfilJunior id',id);
+    console.log("ProfilJunior JwtToken", JwtToken);
+    console.log("ProfilJunior id", id);
     formdata.append("telephone", phone ?? "");
     formdata.append("city", city ?? "");
     formdata.append("firstname", firstname ?? "");
@@ -191,10 +191,73 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
+  const CreateOffer = async (
+    id,
+    city,
+    diploma,
+    jobs,
+    description,
+    image,
+    type_of_contract,
+    type_of_work
+  ) => {
+    const formdata = new FormData();
+
+    console.log("ProfilJunior JwtToken", JwtToken);
+    console.log("ProfilJunior id", id);
+
+    formdata.append("city", city ?? "");
+    formdata.append("Title", jobs ?? "");
+
+    formdata.append("description", description ?? "");
+    formdata.append("diploma", diploma ?? "");
+    formdata.append("contract", type_of_contract ?? "");
+    formdata.append("workType", type_of_work ?? "");
+    if (image) {
+      formdata.append("photoFile", {
+        type: "image/jpeg",
+        uri: image,
+        name: "image.jpg",
+      });
+    }
+    //console.log("IMAGE", image);
+
+    setIsLoading(true);
+    // console.log("token.id", id);
+    // console.log("role", roles);
+    //console.error(JwtToken);
+    fetch(`${BASE_URL}/api/create_offer`, {
+      method: "POST",
+      body: formdata,
+      headers: {
+        authorization: `Bearer ${JwtToken}`,
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((userInfo) => {
+        console.log("USER INFO POST", userInfo);
+        userInfo.token = JwtToken;
+
+        setUserInfo(userInfo);
+        setUserToken(userInfo);
+
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        AsyncStorage.setItem("userToken", JwtToken);
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+
+    setIsLoading(false);
+  };
+
   const login = async (email, password, navigation) => {
     setIsLoading(true);
     console.log(email, password);
-    
+
     axios
       .post(`${BASE_URL}/authentication_token`, {
         email,
@@ -203,35 +266,15 @@ export const AuthProvider = ({ children }) => {
       .then(async (res) => {
         let userInfo = res.data;
         console.log("USER INFO", userInfo);
-        
+
         let decoded = jwt_decode(userInfo.token);
         //console.log("decoded", decoded);
         userInfo.roles = decoded.roles;
-        
+
         // console.log(userInfo);
         setUserInfo(userInfo);
         setUserToken(userInfo.token);
         //console.log("USER TOKEN", userToken);
-
-        // const UserResult = await fetch("${BASE_URL}/api/me", {
-        //   headers: {
-        //     authorization: `Bearer ${userInfo.token}`,
-        //     "Content-Type": "application/json",
-        //   },
-        // });
-        // const user = await UserResult.json();
-
-        // if (userInfo) {
-        //   console.log("User", user.roles);
-        //   await setAccessToken(userInfo.token, user);
-
-        //   console.log(user);
-        //   if (user && user.roles[0] == "ROLE_USER") {
-        //     console.log(userInfo);
-        //     setUserInfo(userInfo);
-        //     setUserToken(userInfo.token);
-        //   }
-        // }
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userInfo.token);
@@ -288,34 +331,10 @@ export const AuthProvider = ({ children }) => {
         Enterprise,
         ProfileJunior,
         ProfileEnterprise,
+        CreateOffer,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
-
-//   const Junior = (firstname, lastname, email, password) => {
-//     console.log(email, password);
-//     console.log("api", api);
-//     setIsLoading(true);
-//     axios
-//       .post(`${api}/api/users`, {
-//         firstname,
-//         lastname,
-//         email,
-//         password,
-//       })
-//       .then((res) => {
-//         let userInfo = res.data;
-//         setUserInfo(userInfo);
-//         console.log(userInfo);
-//         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-//         setIsLoading(false);
-//         console.log("userInfo", userInfo);
-//       })
-//       .catch((e) => {
-//         console.log(`registration fail ${e}`);
-//         setIsLoading(false);
-//       });
-//   };

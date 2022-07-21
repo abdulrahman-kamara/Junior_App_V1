@@ -1,345 +1,464 @@
-import * as React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   StyleSheet,
   Text,
+  SafeAreaView,
+  TouchableOpacity,
   TextInput,
   Dimensions,
-  Button,
   ScrollView,
 } from "react-native";
-import Colors from "../../Constants/Colors";
-import { useState } from "react";
+import { useActionSheet } from "@expo/react-native-action-sheet";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
+import Colors from "../../Constants/Colors";
 import PickerImage from "../../Components/PickerImage";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "react-native-paper";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+const { width, height } = Dimensions.get("window");
+import { AuthContext } from "../../Context/Context";
 
-const AboutTextInput = (props) => {
-  return (
-    <TextInput
-      {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
-      editable
-      maxLength={400}
-    />
-  );
-};
-const MissonTextInput = (props) => {
-  return (
-    <TextInput
-      {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
-      editable
-      maxLength={400}
-    />
-  );
-};
+const CreateProfileModal = ({ route, navigation }) => {
+  // my hooks with useState
+  const [diploma, setDiploma] = useState("Diploma");
+  const [jobs, setJobs] = useState();
+  const [description, setDescription] = useState();
+  const [city, setCity] = useState();
+  const [contract, setContract] = useState("Contract_Type");
+  const [workType, setWorkType] = useState("Work_Type");
+  const [image, setImage] = useState(null);
+  // const [profession, setProfession] = useState("Profession");
+  // const [expierrence, setExpierrence] = useState("Expierrence");
+  // const [Adress, setAdress] = useState();
+  // const [name, setName] = useState();
 
-const CreatOffersScreen = ({ props, navigation }) => {
-  const [value, onChangeText] = useState("About Job");
-  const [mission, onChangeMission] = useState("Misson");
-  return (
-    <SafeAreaView>
-      <ScrollView>
-        <View style={styles.container}>
-          {/* profile image */}
+  // My ActionBotoom Sheet with its options and its fuction
 
-          <View style={styles.imageContainer}>
-            <PickerImage />
+  // Options Profession
+  const MyContract = ["CDD", "CDI", "Alternance", "Stage", "Cancel"];
+  const ContractdestructiveButtonIndex = 4;
+  const ContractcancelButtonIndex = 4;
+
+  // Options Profession
+  const MyworkType = ["Distance", "Partime", "Remote", "Cancel"];
+  const WorkTypedestructiveButtonIndex = 3;
+  const WorkTypecancelButtonIndex = 3;
+
+  // Options Diploma
+  const MyDiplom = ["Bac+ 3", "Bac+ 2", "Bac+ 5", "Cancel"];
+  const DiplomdestructiveButtonIndex = 3;
+  const DiplomcancelButtonIndex = 3;
+
+  // // Options Expirence
+  // const MyExpierrence = ["1 an", "2 ans", "3 ans", "Cancel"];
+  // const ExpirencedestructiveButtonIndex = 3;
+  // const ExpirencecancelButtonIndex = 3;
+
+  // fucntion that handle the profession options
+  // const HandleProfession = (props) => {
+  //   showActionSheetWithOptions(
+  //     {
+  //       options: MyProfession,
+  //       cancelButtonIndex: ProfessioncancelButtonIndex,
+  //       destructiveButtonIndex: ProfessiondestructiveButtonIndex,
+  //     },
+  //     (buttonIndex) => {
+  //       // Do something here depending on the button index selected
+  //       if (buttonIndex === 3) {
+  //         return;
+  //       }
+  //       setProfession(MyProfession[buttonIndex]);
+  //     }
+  //   );
+  // };
+
+  // fucntion that handle the Diploma options
+  const HandleDiplom = (props) => {
+    showActionSheetWithOptions(
+      {
+        options: MyDiplom,
+        cancelButtonIndex: DiplomcancelButtonIndex,
+        destructiveButtonIndex: DiplomdestructiveButtonIndex,
+      },
+      (buttonIndex) => {
+        // Do something here depending on the button index selected
+        if (buttonIndex === 3) {
+          return;
+        }
+        setDiploma(MyDiplom[buttonIndex]);
+      }
+    );
+  };
+
+  // fucntion that handle the Expirence options
+  // const HandleExpierence = (props) => {
+  //   showActionSheetWithOptions(
+  //     {
+  //       options: MyExpierrence,
+  //       cancelButtonIndex: ExpirencedestructiveButtonIndex,
+  //       destructiveButtonIndex: ExpirencecancelButtonIndex,
+  //     },
+  //     (buttonIndex) => {
+  //       // Do something here depending on the button index selected
+  //       if (buttonIndex === 3) {
+  //         return;
+  //       }
+  //       setExpierrence(MyExpierrence[buttonIndex]);
+  //     }
+  //   );
+  // };
+
+  // fucntion that handle the Diploma options
+  const HandleWorkType = (props) => {
+    showActionSheetWithOptions(
+      {
+        options: MyworkType,
+        cancelButtonIndex: WorkTypecancelButtonIndex,
+        destructiveButtonIndex: WorkTypedestructiveButtonIndex,
+      },
+      (buttonIndex) => {
+        // Do something here depending on the button index selected
+        if (buttonIndex === 3) {
+          return;
+        }
+        setWorkType(MyworkType[buttonIndex]);
+      }
+    );
+  };
+
+  // fucntion that handle the Expirence options
+  const HandleContract = (props) => {
+    showActionSheetWithOptions(
+      {
+        options: MyContract,
+        cancelButtonIndex: ContractdestructiveButtonIndex,
+        destructiveButtonIndex: ContractcancelButtonIndex,
+      },
+      (buttonIndex) => {
+        // Do something here depending on the button index selected
+        if (buttonIndex === 4) {
+          return;
+        }
+        setContract(MyContract[buttonIndex]);
+      }
+    );
+  };
+
+  // my hooks that recieve all the fucntion that handle the different options
+  const { showActionSheetWithOptions } = useActionSheet();
+  const { colors } = useTheme();
+  const { CreateOffer, userToken, userInfo } = useContext(AuthContext);
+  console.log("test", userInfo.token);
+
+  return (
+    <ScrollView>
+      <SafeAreaView style={styles.container}>
+        <View
+          style={{
+            margin: 20,
+          }}
+        >
+          <View style={{}}>
             <View
               style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ fontSize: 25, color: Colors.Primary }}>
-                Developper Web
-              </Text>
-            </View>
-            {/* <View style={styles.imagetext}>
-              <Feather name="book" color={Colors.Primary} size={20} />
-              <Text>CDI</Text>
-              <Feather name="map-pin" color={Colors.Primary} size={20} />
-              <Text>Paris</Text>
-              <Ionicons
-                name="school-outline"
-                size={20}
-                color={Colors.Primary}
-              />
-              <Text>Bac+3</Text>
-              <Ionicons
-                name="school-outline"
-                size={20}
-                color={Colors.Primary}
-              />
-              <Text>1 an</Text>
-            </View> */}
-          </View>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center",
-              paddingBottom: 10,
-              padding: 10,
-            }}
-          >
-            <View
-              style={{
-                borderRadius: 30,
-                borderWidth: 2,
+                borderWidth: "1px",
+                width: "100%",
+                height: 150,
                 borderColor: Colors.Primary,
+                borderRadius: 15,
               }}
             >
-              <Text
+              <View
                 style={{
-                  padding: 5,
-                  fontSize: 20,
-
-                  backgroundColor: Colors.Secondry,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  alignSelf: "center",
+                  marginTop: 70,
                 }}
               >
-                Date of Publish
-              </Text>
+                <PickerImage setImage={setImage} image={image} />
+                <View style={styles.actionTitle}>
+                  <TextInput
+                    style={[styles.textInput, { color: Colors.Secondry }]}
+                    autoCorrect={false}
+                    placeholder="Title"
+                    value={jobs}
+                    onChangeText={(text) => setJobs(text)}
+                  />
+                </View>
+              </View>
             </View>
-
-            <Text
+            <View
               style={{
-                borderColor: Colors.Primary,
-                padding: 5,
-                fontSize: 20,
-                borderRadius: 10,
-                borderWidth: 2,
+                flex: 0,
+                justifyContent: "space-around",
+                flexDirection: "row",
+                alignItems: "center",
+                padding: 10,
+                marginTop: 10,
               }}
             >
-              City
-            </Text>
-            <Text
-              style={{
-                borderColor: Colors.Primary,
-                padding: 5,
-                fontSize: 20,
-                borderRadius: 10,
-                borderWidth: 2,
-              }}
-            >
-              Diplom
-            </Text>
-          </View>
+              <TouchableOpacity
+                onPress={HandleDiplom}
+                style={{
+                  borderWidth: 1,
+                  marginTop: 10,
+                  width: 150,
+                  padding: 10,
+                  borderRadius: 15,
+                  borderColor: Colors.Primary,
+                }}
+              >
+                <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+                <Text>{diploma}</Text>
+              </TouchableOpacity>
+              <View
+                style={{
+                  flex: 0,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 5,
+                  width: 150,
+                  height: 80,
+                }}
+              >
+                <TextInput
+                  style={[
+                    styles.textInput,
+                    {
+                      color: colors.text,
 
-          <View style={styles.aboutJob}>
-            <AboutTextInput
-              multiline
-              numberOfLines={10}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                fontSize: 20,
-                color: Colors.Primary,
-              }}
-            />
-          </View>
-          {/* select items here */}
-          <View style={styles.titleContainer}>{/* cities select here */}</View>
-
-          <View style={styles.aboutMission}>
-            <MissonTextInput
-              multiline
-              numberOfLines={10}
-              onChangeText={(text) => onChangeMission(text)}
-              value={mission}
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                fontSize: 20,
-                color: Colors.Primary,
-              }}
-            />
-          </View>
-          <View style={styles.loginButton}>
-            <Button
-              style={styles.logintext}
-              title="APPLY"
-              onPress={() => navigation.navigate("Apply")}
-            />
+                      borderWidth: 1,
+                      borderRadius: 15,
+                      borderColor: Colors.Primary,
+                      width: "95%",
+                      padding: 5,
+                      marginTop: 10,
+                    },
+                  ]}
+                  autoCorrect={false}
+                  placeholder="City"
+                  multiline
+                  value={city}
+                  onChangeText={(text) => setCity(text)}
+                />
+              </View>
+            </View>
           </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+        <View
+          style={{
+            flex: 0,
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 5,
+          }}
+        >
+          <TextInput
+            style={[
+              styles.textInput,
+              {
+                color: colors.text,
+                height: 100,
+                borderWidth: 1,
+                borderRadius: 15,
+                borderColor: Colors.Primary,
+                width: "95%",
+                padding: 5,
+                marginTop: 10,
+              },
+            ]}
+            autoCorrect={false}
+            placeholder="About Job"
+            multiline
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+        </View>
+        <View
+          style={{
+            flex: 0,
+            justifyContent: "space-around",
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 10,
+            marginTop: 10,
+          }}
+        >
+          <TouchableOpacity
+            onPress={HandleContract}
+            style={{
+              borderWidth: 1,
+              padding: 10,
+              borderRadius: 15,
+              borderColor: Colors.Primary,
+            }}
+          >
+            <MaterialIcons
+              name="lock"
+              color={Colors.Primary}
+              size={20}
+              padding={4}
+            />
+            <Text>{contract}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={HandleWorkType}
+            style={{
+              borderWidth: 1,
+              padding: 10,
+              borderRadius: 15,
+              borderColor: Colors.Primary,
+            }}
+          >
+            <MaterialIcons
+              name="lock"
+              color={Colors.Primary}
+              size={20}
+              padding={4}
+            />
+            <Text>{workType}</Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity
+            onPress={HandleExpierence}
+            style={{
+              borderWidth: 1,
+              padding: 10,
+              borderRadius: 15,
+              borderColor: Colors.Primary,
+            }}
+          >
+            <MaterialIcons
+              name="lock"
+              color={Colors.Primary}
+              size={20}
+              padding={4}
+            />
+            <Text>{expierrence}</Text>
+          </TouchableOpacity> */}
+        </View>
+        {/* <View style={styles.mainContainer}></View> */}
+        <View
+          style={{
+            flex: 0,
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 5,
+          }}
+        >
+          <TextInput
+            style={[
+              styles.textInput,
+              {
+                color: colors.text,
+                height: 100,
+                borderWidth: 1,
+                borderRadius: 15,
+                borderColor: Colors.Primary,
+                width: "95%",
+                padding: 5,
+                marginTop: 10,
+              },
+            ]}
+            autoCorrect={false}
+            placeholder="description_entreprise"
+            multiline
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+          />
+        </View>
+
+        <View style={styles.button}>
+          <TouchableOpacity
+            style={styles.commandButton}
+            onPress={() => {
+              CreateOffer(
+                contract,
+                workType,
+                jobs,
+                city,
+                description,
+                diploma,
+                image,
+                userInfo.token,
+                id
+              ),
+                navigation.navigate("Dashboard");
+            }}
+          >
+            <Text style={{ color: Colors.Secondry }}>Create</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  button: {
+    flex: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  commandButton: {
+    padding: 15,
+    borderRadius: 15,
     backgroundColor: Colors.Primary,
-    borderRadius: 30,
-
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-  },
-  companyname: {
-    justifyContent: "center",
-    alignSelf: "center",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
-
-  seclelement: {
-    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    margin: 10,
-    borderWidth: 2,
-    borderColor: Colors.Primary,
-    borderRadius: 30,
+    marginTop: 10,
+    marginBottom: 10,
+    width: "40%",
   },
-  aboutJob: {
-    marginBottom: 30,
-    width: "100%",
-    height: 140,
-    borderColor: Colors.Primary,
-    borderWidth: 1,
-    borderRadius: 10,
-    backgroundColor: Colors.Secondry,
-    paddingTop: 10,
-    padding: 10,
+  mainContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-  aboutMission: {
-    marginBottom: 30,
-    width: "100%",
-    height: 140,
-    borderColor: Colors.Primary,
+  action: {
+    flexDirection: "row",
+    marginBottom: 10,
     borderWidth: 1,
-    borderRadius: 10,
-    backgroundColor: Colors.Secondry,
-    paddingTop: 10,
-    padding: 10,
-  },
-  imageContainer: {
-    width: Dimensions.get("window").width * 0.98,
-    height: Dimensions.get("window").height * 0.2,
-    borderWidth: 3,
-    borderColor: "white",
-    overflow: "hidden",
-    alignSelf: "center",
-    justifyContent: "center",
-    marginVertical: Dimensions.get("window").height / 15,
-    backgroundColor: Colors.Secondry,
-    borderRadius: 10,
-    padding: 5,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    padding: 5,
-  },
-  text_container: {
-    borderWidth: 2,
     borderColor: Colors.Primary,
-    padding: 8,
-    marginVertical: 5,
-    fontSize: 12,
-    color: Colors.Primary,
-    borderRadius: 10,
-  },
-  text: {
-    borderWidth: 2,
-    borderColor: Colors.Secondry,
-    padding: 8,
-    marginVertical: 5,
-    fontSize: 12,
-    color: Colors.Secondry,
-    borderRadius: 10,
-  },
-  exdip: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    margin: 10,
-  },
-  abouttext: {
-    paddingLeft: 50,
-    paddingBottom: 5,
-    color: "white",
-  },
-  inputabout: {
-    borderWidth: 2,
+    borderRadius: 15,
+    paddingBottom: 10,
+    padding: 20,
     width: "90%",
-    height: 100,
-    borderRadius: 20,
-    borderColor: Colors.Primary,
-    shadowOpacity: 90,
     justifyContent: "center",
-    alignSelf: "center",
-    backgroundColor: Colors.Secondry,
-  },
-  titleContainer: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    padding: 5,
-  },
-  cities: {
-    height: 60,
-    marginBottom: 35,
-  },
-  name: {
-    flexDirection: "row",
-    paddingVertical: 30,
-    justifyContent: "space-around",
-  },
-  nameinput: {
-    width: 125,
-    padding: 15,
-    borderRadius: 30,
-    marginBottom: 10,
-    borderColor: Colors.Secondry,
-    shadowOpacity: 90,
-    borderWidth: 2,
-    color: Colors.Secondry,
-  },
-  input: {
-    flexDirection: "row",
-    paddingVertical: 30,
-    justifyContent: "space-around",
-  },
-  inputmail: {
-    color: Colors.Secondry,
-    borderWidth: 2,
-    width: 250,
-    padding: 15,
-    borderRadius: 30,
-    marginBottom: 10,
-    borderColor: Colors.Secondry,
-    shadowOpacity: 90,
-  },
-  input: {
-    flexDirection: "column",
     alignItems: "center",
   },
-  logintext: {
-    color: Colors.Secondry,
-  },
-  loginButton: {
-    borderWidth: 2,
-    backgroundColor: Colors.Secondry,
-    width: 150,
-    borderColor: Colors.Secondry,
-    borderRadius: 30,
-    alignSelf: "center",
-    padding: 5,
-    marginBottom: 30,
-  },
-  imagetext: {
-    display: "flex",
+  actionTitle: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderColor: Colors.Primary,
+    borderRadius: 15,
+    paddingBottom: 10,
+    padding: 20,
+    width: "60%",
+    justifyContent: "center",
     alignItems: "center",
+  },
+
+  textInput: {
+    flex: 1,
+    marginTop: Platform.OS === "ios" ? 0 : -12,
+    paddingLeft: 10,
+
+    color: "#05375a",
+  },
+  sheet: {
+    flex: 3,
+    height: 40,
   },
 });
-
-export default CreatOffersScreen;
+export default CreateProfileModal;

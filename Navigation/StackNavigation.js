@@ -20,7 +20,6 @@ import DrawerNavigation from "../Navigation/DrawerNavigation";
 import { AuthContext } from "../Context/Context";
 import jwt_decode from "jwt-decode";
 
-
 const ProfileStack = createNativeStackNavigator();
 const FeedStack = createNativeStackNavigator();
 
@@ -32,15 +31,13 @@ const ProfileStackScreen = () => {
   //console.log("role", userInfo);
   return (
     <ProfileStack.Navigator>
-
       {userInfo.roles == "ROLE_USER" ? (
         <ProfileStack.Screen name="ProfileJunior" component={ProfileJunior} />
       ) : (
         <ProfileStack.Screen
           name="ProfileEntreprise"
           component={ProfileEntreprise}
-          />
-
+        />
       )}
 
       {userInfo.roles == "ROLE_USER" ? (
@@ -56,7 +53,6 @@ const ProfileStackScreen = () => {
           options={{ headerShown: true }}
         />
       )}
-
     </ProfileStack.Navigator>
   );
 };
@@ -121,17 +117,19 @@ const HomeTapScreen = () => {
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
         }}
+      />
+      {userInfo.roles == "ROLE_ENTREPRISE" && (
+        <HomeTab.Screen
+          name="Offer"
+          component={CreatOffersScreen}
+          options={{
+            tabBarLabel: "Offer",
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="home" color={color} size={26} />
+            ),
+          }}
         />
-        {userInfo.roles == 'ROLE_ENTREPRISE' && <HomeTab.Screen
-        name="Offer"
-        component={CreatOffersScreen}
-        options={{
-          tabBarLabel: "Offer",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-        /> }
+      )}
     </HomeTab.Navigator>
   );
 };

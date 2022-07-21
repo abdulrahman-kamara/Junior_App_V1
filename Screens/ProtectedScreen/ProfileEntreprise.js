@@ -224,7 +224,6 @@
 
 // export default ProfileScreen;
 
-
 // import React from "react";
 // import {
 //   View,
@@ -451,8 +450,7 @@
 
 // export default ProfileScreen;
 
-
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -487,31 +485,32 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { BASE_URL } from "../../config/api";
 
-
 const ProfileScreen = ({ navigation, route }) => {
   const [text, onChangeText] = React.useState("");
 
-  const [name, setName] = React.useState('');
-  const [address, setAddress] = React.useState('');
-  const [city, setCity] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [image, setImage] = React.useState('');
+  const [name, setName] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [image, setImage] = React.useState("");
   const [id, setId] = useState(null);
-  const [email, setEmail] = React.useState('');
-  
-  const { logout, userInfo, userToken, setUserInfo} = React.useContext(AuthContext);
+  const [email, setEmail] = React.useState("");
+
+  const { logout, userInfo, userToken, setUserInfo } =
+    React.useContext(AuthContext);
 
   //console.log('TEST PROFILENTREPRISE USERINFO',userInfo.token);
   //console.log('TEST PROFILENTREPRISE USERTOKEN',userToken);
 
-  useEffect(()=> {
-    axios.get(`${BASE_URL}/api/my`, {
-      headers: {
-        authorization: `Bearer ${userInfo.token}`
-      }
-    })
-  
-      .then(res => {
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/api/my`, {
+        headers: {
+          authorization: `Bearer ${userInfo.token}`,
+        },
+      })
+
+      .then((res) => {
         let myInfo = res.data;
         //console.log("MYINFO",myInfo);
         setId(myInfo.id);
@@ -525,9 +524,9 @@ const ProfileScreen = ({ navigation, route }) => {
         //console.log('GET INFO PROFIL JR :', myInfo);
         // console.log('NAME JR :', myInfo.profession.name);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(`ERROR  API/My : ${err}`);
-      })
+      });
   });
 
   return (
@@ -543,7 +542,13 @@ const ProfileScreen = ({ navigation, route }) => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => navigation.push("Enterprise", {JwtToken: userInfo.token, roles: userInfo.roles, id: id ?? userInfo.id})}
+                  onPress={() =>
+                    navigation.push("Enterprise", {
+                      JwtToken: userInfo.token,
+                      roles: userInfo.roles,
+                      id: id ?? userInfo.id,
+                    })
+                  }
                 >
                   <Avatar.Image
                     // source={BASE_URL + image}
@@ -556,11 +561,11 @@ const ProfileScreen = ({ navigation, route }) => {
               </View>
             </View>
             <View style={styles.row}>
-                <Icon name="email" color={Colors.Primary} size={20} />
-                <Text style={{ color: "#777777", marginLeft: 20 }}>
-                  {address}
-                </Text>
-              </View>
+              <Icon name="email" color={Colors.Primary} size={20} />
+              <Text style={{ color: "#777777", marginLeft: 20 }}>
+                {address}
+              </Text>
+            </View>
             <View style={styles.userInfoSection}>
               <View style={styles.row}>
                 <Icon
@@ -568,11 +573,9 @@ const ProfileScreen = ({ navigation, route }) => {
                   color={Colors.Primary}
                   size={20}
                 />
-                <Text style={{ color: "#777777", marginLeft: 20 }}>
-                  {city}
-                </Text>
+                <Text style={{ color: "#777777", marginLeft: 20 }}>{city}</Text>
               </View>
-              
+
               <View style={styles.row}>
                 <Icon name="email" color={Colors.Primary} size={20} />
                 <Text style={{ color: "#777777", marginLeft: 20 }}>
@@ -581,9 +584,7 @@ const ProfileScreen = ({ navigation, route }) => {
               </View>
               <View style={styles.row}>
                 <Icon name="linkedin" color={Colors.Primary} size={20} />
-                <Text style={{ color: "#777777", marginLeft: 20 }}>
-                  {city}
-                </Text>
+                <Text style={{ color: "#777777", marginLeft: 20 }}>{city}</Text>
               </View>
             </View>
             <View style={styles.infoBoxWrapper}>
@@ -626,9 +627,7 @@ const ProfileScreen = ({ navigation, route }) => {
             </View>
 
             <View style={styles.menuWrapper}>
-              <Text>
-                {description}
-              </Text>
+              <Text>{description}</Text>
             </View>
           </View>
 
@@ -651,7 +650,7 @@ const ProfileScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "green",
+    // backgroundColor: "green",
   },
   userInfoSection: {
     paddingHorizontal: 30,
