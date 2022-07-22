@@ -230,6 +230,8 @@ import {
   TextInput,
   Pressable,
   ScrollView,
+  Image,
+  Avatar,
 } from "react-native";
 import axios from "axios";
 
@@ -237,7 +239,7 @@ import Colors from "../../Constants/Colors";
 import Divider from "react-native-divider";
 import { AuthContext } from "../../Context/Context";
 import {
-  Avatar,
+ 
   Text,
   Drawer,
   Paragraph,
@@ -298,8 +300,9 @@ const ProfileScreen = ({ navigation, route }) => {
         setDiploma(myInfo.diploma.name);
         setCity(myInfo.city.name);
         setImage(myInfo.photoFile);
+        // setAvatar(myInfo.avatar);
         // setUserInfo(userInfo);
-        //console.log('GET INFO PROFIL JR :', myInfo);
+        // console.log('GET INFO PROFIL JR :', myInfo.avatar);
         // console.log('NAME JR :', myInfo.profession.name);
       })
       .catch(err => {
@@ -325,10 +328,7 @@ const ProfileScreen = ({ navigation, route }) => {
                   }}
                 >
                   <TouchableOpacity onPress={() => navigation.push("Junior", {JwtToken: userInfo.token, roles: userInfo.roles, id:id ?? userInfo.id})}>
-                    <Avatar.Image
-                      // source={require(BASE_URL + image)}
-                      size={80}
-                    />
+                  <Image source={{ url: image  }} style={styles.avater} />
                   </TouchableOpacity>
                   <View style={{ marginLeft: 20 }}>
                     <Title style={styles.title}>{firstname} {lastname}</Title>
@@ -457,6 +457,12 @@ const styles = StyleSheet.create({
     height: 100,
   },
   input: {},
+  avater: {
+    backgroundColor: "rgba(0,0,0,06)",
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
 
   infoBox: {
     width: "50%",
