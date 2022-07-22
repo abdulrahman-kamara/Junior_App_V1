@@ -1,257 +1,11 @@
-// import React from "react";
-// import {
-//   View,
-//   StyleSheet,
-//   Dimensions,
-//   TextInput,
-//   Pressable,
-//   ScrollView,
-// } from "react-native";
-// import Colors from "../../Constants/Colors";
-// import Divider from "react-native-divider";
-// import { useState } from "react-native";
-// import { AuthContext } from "../../Context/Context";
-// import {
-//   Avatar,
-//   Text,
-//   Drawer,
-//   Paragraph,
-//   Title,
-//   Caption,
-//   Switch,
-//   TouchableRipple,
-//   Button,
-// } from "react-native-paper";
-// import {
-//   DrawerContentScrollView,
-//   DrawerItemList,
-//   DrawerItem,
-// } from "@react-navigation/drawer";
-// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-// import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-// import { TouchableOpacity } from "react-native-gesture-handler";
-
-// const ProfileScreen = ({ navigation, route }) => {
-//   const [text, onChangeText] = React.useState("");
-
-//   const { logout } = React.useContext(AuthContext);
-
-//   return (
-//     <ScrollView>
-//       <SafeAreaProvider>
-//         <SafeAreaView style={styles.container}>
-//           <View style={styles.drawerContent}>
-//             <View style={styles.userInfoSection}>
-//               <View
-//                 style={{
-//                   flexDirection: "row",
-//                   marginLeft: 15,
-//                 }}
-//               >
-//                 <TouchableOpacity onPress={() => navigation.navigate("Junior")}>
-//                   <Avatar.Image
-//                     source={require("../../assets/Image/logo.png")}
-//                     size={80}
-//                   />
-//                 </TouchableOpacity>
-//                 <View style={{ marginLeft: 20 }}>
-//                   <Title style={styles.title}>Kunta Kante</Title>
-//                   <Caption style={styles.caption}>Developper web</Caption>
-//                 </View>
-//               </View>
-//             </View>
-//             <View style={styles.userInfoSection}>
-//               <View style={styles.row}>
-//                 <Icon
-//                   name="map-marker-radius"
-//                   color={Colors.Primary}
-//                   size={20}
-//                 />
-//                 <Text style={{ color: "#777777", marginLeft: 20 }}>
-//                   Freetown, Sierra Leone
-//                 </Text>
-//               </View>
-//               <View style={styles.row}>
-//                 <Icon name="phone" color={Colors.Primary} size={20} />
-//                 <Text style={{ color: "#777777", marginLeft: 20 }}>
-//                   +3367804656
-//                 </Text>
-//               </View>
-//               <View style={styles.row}>
-//                 <Icon name="email" color={Colors.Primary} size={20} />
-//                 <Text style={{ color: "#777777", marginLeft: 20 }}>
-//                   rahmanraynkunta@gmail.com
-//                 </Text>
-//               </View>
-//               <View style={styles.row}>
-//                 <Icon name="linkedin" color={Colors.Primary} size={20} />
-//                 <Text style={{ color: "#777777", marginLeft: 20 }}>
-//                   Freetown, Sierra Leone
-//                 </Text>
-//               </View>
-//             </View>
-//             <View style={styles.infoBoxWrapper}>
-//               <View
-//                 style={[
-//                   styles.infoBox,
-//                   {
-//                     borderRightColor: "#dddddd",
-//                     borderRightWidth: 1,
-//                   },
-//                 ]}
-//               >
-//                 <Title>40.50</Title>
-//                 <Caption>Job Posted</Caption>
-//               </View>
-//               <View style={styles.infoBox}>
-//                 <Title>12</Title>
-//                 <Caption>Job</Caption>
-//               </View>
-//             </View>
-//             <View style={styles.infoBoxWrapper}>
-//               <View
-//                 style={[
-//                   styles.infoBox,
-//                   {
-//                     borderRightColor: "#dddddd",
-//                     borderRightWidth: 1,
-//                   },
-//                 ]}
-//               >
-//                 <Icon name="school-outline" color="#FF6347" size={25} />
-//                 <Title>Bac+3</Title>
-//                 <Caption>Concepteur Déveloper</Caption>
-//               </View>
-//               <View style={styles.infoBox}>
-//                 <Icon name="book-outline" color="#FF6347" size={25} />
-//                 <Title>2 years</Title>
-//                 <Caption>Experience</Caption>
-//               </View>
-//             </View>
-
-//             <View style={styles.menuWrapper}>
-//               <Text>
-//                 Lorem Ipsum is simply dummy text of the printing and typesetting
-//                 industry. Lorem Ipsum has been the industry's standard dummy
-//                 text ever since the 1500s, when an unknown printer took a galley
-//                 of type and scrambled it to make a type specimen book. It has
-//                 survived not only five centuries, but also the leap into
-//                 electronic typesetting, remaining essentially unchanged. It was
-//                 popularised in the 1960s with the release of Letraset sheets
-//                 containing Lorem Ipsum passages, and more recently with desktop
-//                 publishing software like Aldus PageMaker including versions of
-//                 Lorem Ipsum.
-//               </Text>
-//             </View>
-//           </View>
-
-//           <Drawer.Section style={styles.bottomDrawerSection}>
-//             <DrawerItem
-//               icon={({ color, size }) => (
-//                 <Icon name="exit-to-app" color={color} size={size} />
-//               )}
-//               label="Sign out"
-//               onPress={() => {
-//                 logout();
-//               }}
-//             />
-//           </Drawer.Section>
-//         </SafeAreaView>
-//       </SafeAreaProvider>
-//     </ScrollView>
-//   );
-// };
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   userInfoSection: {
-//     paddingHorizontal: 30,
-//     marginBottom: 25,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: "bold",
-//   },
-//   caption: {
-//     fontSize: 14,
-//     lineHeight: 14,
-//     fontWeight: "500",
-//   },
-//   row: {
-//     flexDirection: "row",
-//     marginBottom: 10,
-//   },
-//   infoBoxWrapper: {
-//     borderBottomColor: "#dddddd",
-//     borderBottomWidth: 1,
-//     borderTopColor: "#dddddd",
-//     borderTopWidth: 1,
-//     flexDirection: "row",
-//     height: 100,
-//   },
-//   input: {},
-
-//   infoBox: {
-//     width: "50%",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-//   menuWrapper: {
-//     marginTop: 20,
-//     padding: 20,
-//     borderWidth: 2,
-//     borderRadius: 15,
-//     marginBottom: 30,
-//     height: Dimensions.get("window").height * 0.15,
-//   },
-//   menuItem: {
-//     flexDirection: "row",
-//     paddingVertical: 15,
-//     paddingHorizontal: 30,
-//   },
-//   menuItemText: {
-//     color: "#777777",
-//     marginLeft: 20,
-//     fontWeight: "600",
-//     fontSize: 16,
-//     lineHeight: 26,
-//   },
-// });
-
-// export default ProfileScreen;
-
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TextInput,
-  Pressable,
-  ScrollView,
-  Image,
-} from "react-native";
+import { View, StyleSheet, ScrollView, Image } from "react-native";
 import axios from "axios";
-
 import Colors from "../../Constants/Colors";
 import Divider from "react-native-divider";
 import { AuthContext } from "../../Context/Context";
-import {
-  Avatar,
-  Text,
-  Drawer,
-  Paragraph,
-  Title,
-  Caption,
-  Switch,
-  TouchableRipple,
-  Button,
-} from "react-native-paper";
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+import { Text, Drawer, Title, Caption } from "react-native-paper";
+import { DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -259,8 +13,6 @@ import { BASE_URL } from "../../config/api";
 // import { useEffect } from "react";
 
 const ProfileScreen = ({ navigation, route }) => {
-  const [text, onChangeText] = React.useState("");
-
   const [firstname, setFirstname] = React.useState("");
   const [lastname, setLastname] = React.useState("");
   const [tel, setTel] = React.useState("");
@@ -276,9 +28,8 @@ const ProfileScreen = ({ navigation, route }) => {
     React.useContext(AuthContext);
   const [id, setId] = useState(null);
 
+  //useeffect qui prendre notre fuction fetch de notre profile
   useEffect(() => {
-    //console.log("MON USER INFO OPOP", userInfo.roles);
-
     axios
       .get(`${BASE_URL}/api/me`, {
         headers: {
@@ -288,7 +39,6 @@ const ProfileScreen = ({ navigation, route }) => {
 
       .then((res) => {
         let myInfo = res.data;
-        //console.log("MYINFO",myInfo);
         setId(myInfo.id);
         setFirstname(myInfo.firstname);
         setLastname(myInfo.lastname);
@@ -298,32 +48,27 @@ const ProfileScreen = ({ navigation, route }) => {
         setProfession(myInfo.profession.name);
         setYearOfExperience(myInfo.year_of_experience);
         setDiploma(myInfo.diploma.name);
-        setCity(myInfo.city);
+        setCity(myInfo.city.name);
         setAvatar(myInfo.avatar);
-        // setUserInfo(userInfo);
-        console.log("GET INFO PROFIL JR :", avatar);
+        console.log("GET INFO PROFIL JR :", myInfo);
         console.log("image", `${BASE_URL}${avatar}`);
       })
       .catch((err) => {
         console.log(`ERROR  GET INFO PROFIL JR : ${err}`);
       });
   });
-  // console.log('MON USER TOKEN', userToken);
-  // console.log('MON USER TOKEN', userInfo);
 
-  //console.log(userInfo.roles);
   return (
     <ScrollView>
       {
         <SafeAreaProvider>
           <SafeAreaView style={styles.container}>
             <View style={styles.drawerContent}>
-              <View style={styles.userInfoSection}>
+              <View style={styles.userInfoSectionHeader}>
                 <View
                   style={{
-                    flexDirection: "row",
-
-                    marginTop: 10,
+                    margin: 2,
+                    marginBottom: 90,
                   }}
                 >
                   <TouchableOpacity
@@ -334,19 +79,46 @@ const ProfileScreen = ({ navigation, route }) => {
                         id: id ?? userInfo.id,
                       })
                     }
+                    style={{}}
                   >
-                    <Image
-                      source={{ url: `${BASE_URL}${avatar}` }}
-                      style={styles.avater}
-                    />
-                    {/* <Avatar source={ `${BASE_URL}${avatar}`} size={80} /> */}
+                    <View
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignSelf: "center",
+                        borderWidth: "1px",
+                        width: 360,
+                        height: 150,
+                        borderColor: Colors.Primary,
+                        borderRadius: 15,
+                      }}
+                    >
+                      <View>
+                        <Image
+                          source={{ url: `${BASE_URL}${avatar}` }}
+                          style={styles.coverAvater}
+                        />
+                      </View>
+                      <View>
+                        <View style={{ marginTop: -50, marginLeft: 10 }}>
+                          <View>
+                            <Image
+                              source={{ url: `${BASE_URL}${avatar}` }}
+                              style={styles.avater}
+                            />
+                          </View>
+                          <View style={{ marginTop: 5, marginLeft: 20 }}>
+                            <Title style={styles.title}>
+                              {firstname} {lastname}
+                            </Title>
+                            <Caption style={styles.caption}>
+                              {profession}
+                            </Caption>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
                   </TouchableOpacity>
-                  <View style={{ marginLeft: 20 }}>
-                    <Title style={styles.title}>
-                      {firstname} {lastname}
-                    </Title>
-                    <Caption style={styles.caption}>{profession}</Caption>
-                  </View>
                 </View>
               </View>
               <View style={styles.userInfoSection}>
@@ -354,49 +126,47 @@ const ProfileScreen = ({ navigation, route }) => {
                   <Icon
                     name="map-marker-radius"
                     color={Colors.Primary}
-                    size={20}
+                    size={25}
                   />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
+                  <Text
+                    style={{
+                      color: "#777777",
+                      marginLeft: 10,
+                      fontSize: 17,
+                      fontWeight: "bold",
+                    }}
+                  >
                     {city}
                   </Text>
                 </View>
                 <View style={styles.row}>
-                  <Icon name="phone" color={Colors.Primary} size={20} />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
+                  <Icon name="phone" color={Colors.Primary} size={25} />
+                  <Text
+                    style={{
+                      color: "#777777",
+                      marginLeft: 10,
+                      fontSize: 17,
+                      fontWeight: "bold",
+                    }}
+                  >
                     {tel}
                   </Text>
                 </View>
                 <View style={styles.row}>
-                  <Icon name="email" color={Colors.Primary} size={20} />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
+                  <Icon name="email" color={Colors.Primary} size={25} />
+                  <Text
+                    style={{
+                      color: "#777777",
+                      marginLeft: 10,
+                      fontSize: 17,
+                      fontWeight: "bold",
+                    }}
+                  >
                     {email}
                   </Text>
                 </View>
-                <View style={styles.row}>
-                  <Icon name="linkedin" color={Colors.Primary} size={20} />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
-                    {city}
-                  </Text>
-                </View>
               </View>
-              <View style={styles.infoBoxWrapper}>
-                <View
-                  style={[
-                    styles.infoBox,
-                    {
-                      borderRightColor: "#dddddd",
-                      borderRightWidth: 1,
-                    },
-                  ]}
-                >
-                  <Title>40.50</Title>
-                  <Caption>{avatar}</Caption>
-                </View>
-                <View style={styles.infoBox}>
-                  <Title>12</Title>
-                  <Caption>Job</Caption>
-                </View>
-              </View>
+
               <View style={styles.infoBoxWrapper}>
                 <View
                   style={[
@@ -421,18 +191,28 @@ const ProfileScreen = ({ navigation, route }) => {
                 <Text>{description}</Text>
               </View>
             </View>
-
-            <Drawer.Section style={styles.bottomDrawerSection}>
-              <DrawerItem
-                icon={({ color, size }) => (
-                  <Icon name="exit-to-app" color={color} size={size} />
-                )}
-                label="Sign out"
-                onPress={() => {
-                  logout();
-                }}
-              />
-            </Drawer.Section>
+            <View style={styles.bottomDrawerSection}>
+              <Drawer.Section style={{ color: Colors.Secondry }}>
+                <DrawerItem
+                  icon={({ color, size }) => (
+                    <Icon
+                      name="exit-to-app"
+                      color={Colors.Primary}
+                      size={size}
+                    />
+                  )}
+                  label="Sign out"
+                  labelStyle={{
+                    color: Colors.Primary,
+                    fontSize: 13,
+                    fontWeight: "bold",
+                  }}
+                  onPress={() => {
+                    logout();
+                  }}
+                />
+              </Drawer.Section>
+            </View>
           </SafeAreaView>
         </SafeAreaProvider>
       }
@@ -443,25 +223,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  userInfoSection: {
-    paddingHorizontal: 50,
-    marginBottom: 25,
+  userInfoSectionHeader: {
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    marginBottom: 40,
   },
+  userInfoSection: {
+    flex: 1,
+    justifyContent: "center",
+    margin: "auto",
+    paddingHorizontal: 20,
+    marginBottom: 25,
+    width: "100%",
+  },
+
   title: {
     fontSize: 24,
     fontWeight: "bold",
   },
   caption: {
-    fontSize: 14,
-    lineHeight: 14,
+    marginTop: 2,
+    fontSize: 16,
     fontWeight: "500",
+    color: Colors.Primary,
+    marginLeft: 5,
+    marginBottom: 10,
   },
   avater: {
     borderWidth: 1,
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     borderRadius: 50,
-    marginTop: 20,
+    // marginTop: 80,
+  },
+  coverAvater: {
+    marginTop: 125,
+    width: 360,
+    height: 150,
+    backgroundColor: "rgba(0,0,0,06)",
+    borderRadius: 15,
   },
   row: {
     flexDirection: "row",
@@ -484,12 +285,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   menuWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignSelf: "center",
     marginTop: 20,
     padding: 20,
     borderWidth: 2,
-    borderRadius: 15,
     marginBottom: 30,
-    height: Dimensions.get("window").height * 0.15,
+    width: 360,
+    height: 150,
+
+    borderRadius: 15,
+    borderColor: "#dddddd",
   },
   menuItem: {
     flexDirection: "row",
@@ -502,6 +309,15 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
     lineHeight: 26,
+  },
+  bottomDrawerSection: {
+    marginLeft: 10,
+    width: "50%",
+    borderWidth: 2,
+    backgroundColor: Colors.Secondry,
+    borderColor: "#dddddd",
+    borderRadius: 15,
+    marginBottom: 10,
   },
 });
 
