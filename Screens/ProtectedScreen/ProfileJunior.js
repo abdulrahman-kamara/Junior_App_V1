@@ -121,28 +121,28 @@ const ProfileScreen = ({ navigation, route }) => {
                 <View style={styles.row}>
                   <Icon
                     name="map-marker-radius"
-                    color={Colors.Primary}
+                    color={Colors.Secondry}
                     size={20}
                   />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
+                  <Text style={{ color: Colors.Secondry, marginLeft: 20 }}>
                     {city}
                   </Text>
                 </View>
                 <View style={styles.row}>
-                  <Icon name="phone" color={Colors.Primary} size={20} />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
+                  <Icon name="phone" color={Colors.Secondry} size={20} />
+                  <Text style={{ color: Colors.Secondry, marginLeft: 20 }}>
                     {tel}
                   </Text>
                 </View>
                 <View style={styles.row}>
-                  <Icon name="email" color={Colors.Primary} size={20} />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
+                  <Icon name="email" color={Colors.Secondry} size={20} />
+                  <Text style={{ color: Colors.Secondry, marginLeft: 20 }}>
                     {email}
                   </Text>
                 </View>
                 {/* <View style={styles.row}>
-                  <Icon name="linkedin" color={Colors.Primary} size={20} />
-                  <Text style={{ color: "#777777", marginLeft: 20 }}>
+                  <Icon name="linkedin" color={Colors.Secondry} size={20} />
+                  <Text style={{ color: Colors.Secondry, marginLeft: 20 }}>
                     {city}
                   </Text>
                 </View> */}
@@ -157,37 +157,20 @@ const ProfileScreen = ({ navigation, route }) => {
                     },
                   ]}
                 >
-                  <Title>40.50</Title>
-                  <Caption>{image}</Caption>
-                </View>
-                <View style={styles.infoBox}>
-                  <Title>12</Title>
-                  <Caption>Job</Caption>
-                </View>
-              </View>
-              <View style={styles.infoBoxWrapper}>
-                <View
-                  style={[
-                    styles.infoBox,
-                    {
-                      borderRightColor: "#dddddd",
-                      borderRightWidth: 1,
-                    },
-                  ]}
-                >
-                  <Icon name="school-outline" color="#FF6347" size={25} />
-                  <Title>{diploma}</Title>
-                  <Caption>Diploma</Caption>
-                </View>
-                <View style={styles.infoBox}>
-                  <Icon name="book-outline" color="#FF6347" size={25} />
-                  <Title>{yearOfExperience}</Title>
-                  <Caption>Experience</Caption>
-                </View>
-              </View>
 
+                  <Icon name="school-outline" color={Colors.Secondry} size={25} />
+                  <Title style={{ color:Colors.Secondry }}>{diploma}</Title>
+                  <Caption style={{ color:Colors.Secondry }}>Diploma</Caption>
+                </View>
+                <View style={styles.infoBox}>
+                  <Icon name="book-outline" color={Colors.Secondry} size={25} />
+                  <Title style={{ color:Colors.Secondry }}>{yearOfExperience}</Title>
+                  <Caption style={{ color:Colors.Secondry }}>Experience</Caption>
+                </View>
+              </View> 
+                  <Text style={styles.textDescription}>Description:</Text>
               <View style={styles.menuWrapper}>
-                <Text>
+                <Text style={{ color:'black' }}>
                   {description}
                 </Text>
               </View>
@@ -195,9 +178,10 @@ const ProfileScreen = ({ navigation, route }) => {
 
             <Drawer.Section style={styles.bottomDrawerSection}>
               <DrawerItem
-                icon={({ color, size }) => (
-                  <Icon name="exit-to-app" color={color} size={size} />
+                icon={() => (
+                  <Icon name="exit-to-app" color={Colors.Secondry} size={20} />
                 )}
+                style={{ marginLeft: 20 }}
                 label="Sign out"
                 onPress={() => {
                   logout();
@@ -212,19 +196,23 @@ const ProfileScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor:Colors.Primary
   },
   userInfoSection: {
     paddingHorizontal: 30,
     marginBottom: 25,
+    marginTop:20
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color:Colors.Secondry,
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
     fontWeight: "500",
+    color:Colors.Secondry,
   },
   row: {
     flexDirection: "row",
@@ -237,6 +225,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     flexDirection: "row",
     height: 100,
+    marginTop:30,
   },
   input: {},
 
@@ -245,13 +234,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  //Texte description
+  textDescription:{
+    color:Colors.Secondry,
+    marginTop:30,
+    marginHorizontal:10,
+    fontWeight:"bold",
+    fontSize:20,
+    marginLeft: 20,
+  },
+  //Description
   menuWrapper: {
     marginTop: 20,
     padding: 20,
-    borderWidth: 2,
-    borderRadius: 15,
+    borderWidth: 1,
+    borderRadius: 20,
     marginBottom: 30,
+    borderColor:Colors.Secondry,
     height: Dimensions.get("window").height * 0.15,
+    backgroundColor:Colors.Secondry,
+    marginHorizontal:20,
   },
   menuItem: {
     flexDirection: "row",
@@ -259,7 +261,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   menuItemText: {
-    color: "#777777",
+    color: 'red',
     marginLeft: 20,
     fontWeight: "600",
     fontSize: 16,

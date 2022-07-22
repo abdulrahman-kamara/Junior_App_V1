@@ -76,7 +76,6 @@ const ProfileScreen = ({ navigation, route }) => {
   });
 
   return (
-    <ScrollView>
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
           <View style={styles.drawerContent}>
@@ -92,6 +91,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 >
                   <Avatar.Image
                     size={80}
+                    style={{ marginTop:10 }}
                   />
                 </TouchableOpacity>
                 <View style={{ marginLeft: 20 }}>
@@ -100,8 +100,8 @@ const ProfileScreen = ({ navigation, route }) => {
               </View>
             </View>
             {/* <View style={styles.row}>
-                <Icon name="email" color={Colors.Primary} size={20} />
-                <Text style={{ color: "#777777", marginLeft: 20 }}>
+                <Icon name="email" color={Colors.Primary} size={22} />
+                <Text style={styles.InfoPerso}>
                   {address}
                 </Text>
               </View> */}
@@ -109,23 +109,23 @@ const ProfileScreen = ({ navigation, route }) => {
               <View style={styles.row}>
                 <Icon
                   name="map-marker-radius"
-                  color={Colors.Primary}
-                  size={20}
+                  color={Colors.Secondry}
+                  size={22}
                 />
-                <Text style={{ color: "#777777", marginLeft: 20 }}>
+                <Text style={styles.InfoPerso}>
                  City : {city}
                 </Text>
               </View>
               
               <View style={styles.row}>
-                <Icon name="email" color={Colors.Primary} size={20} />
-                <Text style={{ color: "#777777", marginLeft: 20 }}>
+                <Icon name="email" color={Colors.Secondry} size={22} />
+                <Text style={styles.InfoPerso}>
                   Email : {email}
                 </Text>
               </View>
               <View style={styles.row}>
-                <Icon name="home" color={Colors.Primary} size={20} />
-                <Text style={{ color: "#777777", marginLeft: 20 }}>
+                <Icon name="home" color={Colors.Secondry} size={22} />
+                <Text style={styles.InfoPerso}>
                   Address : {address}
                 </Text>
               </View>
@@ -135,13 +135,13 @@ const ProfileScreen = ({ navigation, route }) => {
                 style={[
                   styles.infoBox,
                   {
-                    borderRightColor: "#dddddd",
+                    borderRightColor: Colors.Secondry,
                     borderRightWidth: 1,
                   },
                 ]}
               >
-                <Title>40.50</Title>
-                <Caption>Job Posted</Caption>
+                <Title>4</Title>
+                <Caption>Offers Posted</Caption>
               </View>
               <View style={styles.infoBox}>
                 <Title>12</Title>
@@ -153,7 +153,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 style={[
                   styles.infoBox,
                   {
-                    borderRightColor: "#dddddd",
+                    borderRightColor: Colors.Secondry,
                     borderRightWidth: 1,
                   },
                 ]}
@@ -168,33 +168,39 @@ const ProfileScreen = ({ navigation, route }) => {
                 <Caption>Experience</Caption>
               </View>
             </View> */}
-
+<Text style={styles.textDescription}>Description :</Text>
             <View style={styles.menuWrapper}>
-              <Text>
+              <Text style={{ color : '#000' }}>
                 {description}
               </Text>
             </View>
           </View>
 
-          <Drawer.Section style={styles.bottomDrawerSection}>
+          <Drawer.Section>
+            {/* <Text style={{ color:Colors.Secondry }}>Log out</Text> */}
             <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="exit-to-app" color={color} size={size} />
-              )}
-              label="Sign out"
-              onPress={() => {
-                logout();
-              }}
+              icon={() => (
+                <Icon name="exit-to-app" color={Colors.Secondry} size={22} />
+                )}
+                label='Sign out'
+                onPress={() => {
+                  logout();
+                }}
             />
           </Drawer.Section>
         </SafeAreaView>
       </SafeAreaProvider>
-    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.Primary
+  },
+  //City Email Home
+  InfoPerso:{
+    color: Colors.Secondry,
+    marginLeft: 20
   },
   userInfoSection: {
     paddingHorizontal: 30,
@@ -203,6 +209,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
+    color:'#ffff',
+    marginTop:10,
   },
   caption: {
     fontSize: 14,
@@ -214,27 +222,41 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   infoBoxWrapper: {
-    borderBottomColor: "#dddddd",
-    borderBottomWidth: 1,
-    borderTopColor: "#dddddd",
-    borderTopWidth: 1,
+    borderBottomColor: Colors.Secondry,
+    borderWidth: 2,
+    borderTopColor: Colors.Secondry,
+    borderTopWidth: 2,
     flexDirection: "row",
-    height: 100,
+    height: 120,
+    marginTop:10,
   },
-  input: {},
-
   infoBox: {
     width: "50%",
     alignItems: "center",
     justifyContent: "center",
+    
   },
+  //Texte description
+  textDescription:{
+    color:Colors.Secondry,
+    marginTop:50,
+    marginHorizontal:10,
+    fontWeight:"bold",
+    fontSize:20,
+    marginLeft: 20,
+  },
+  //Description
   menuWrapper: {
     marginTop: 20,
-    padding: 20,
-    borderWidth: 2,
-    borderRadius: 15,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginHorizontal:20,
+    backgroundColor:Colors.Secondry,
     marginBottom: 30,
+    borderColor: Colors.Secondry,
     height: Dimensions.get("window").height * 0.15,
+    marginLeft: 20,
   },
   menuItem: {
     flexDirection: "row",
@@ -242,7 +264,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
   },
   menuItemText: {
-    color: "#777777",
+    color: Colors.Secondry,
     marginLeft: 20,
     fontWeight: "600",
     fontSize: 16,

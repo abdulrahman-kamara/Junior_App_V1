@@ -47,7 +47,7 @@ const Juniorsignup = ({ navigation }) => {
       <ScrollView>
         {/* <Text>{val}</Text> */}
 
-        <Animatable.View style={styles.footer} animation="flipInY">
+        <Animatable.View style={styles.footer}>
           <Text style={styles.text_footer}>FirstName</Text>
           <View style={styles.action}>
             <MaterialIcons name="account-circle" color={Colors.Primary} size={20} />

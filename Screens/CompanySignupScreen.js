@@ -43,7 +43,7 @@ const COmpanySignup = ({ navigation }) => {
         <Text style={styles.text_header}>Join Us!</Text>
       </View>
       <ScrollView>
-        <Animatable.View style={styles.footer} animation="flipInY">
+        <Animatable.View style={styles.footer}>
           <Text style={styles.text_footer}>Company name</Text>
           <View style={styles.action}>
             <MaterialIcons name="account-circle" color={Colors.Primary} size={20} />

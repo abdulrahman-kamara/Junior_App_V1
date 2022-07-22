@@ -98,13 +98,13 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Welcome to Junior !</Text>
       </View>
       {/* <Text>{val}</Text> */}
-      <Animatable.View style={styles.footer} animation="flipInX">
+      <Animatable.View style={styles.footer}>
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <MaterialIcons name="email" color={Colors.Primary} size={20} />
           <TextInput
             style={styles.textInput}
-            placeholder="email"
+            placeholder="Enter your email"
             keyboardType="email-address"
             autoCapitalize="none"
             value={email}
@@ -131,7 +131,7 @@ const LoginScreen = ({ navigation }) => {
           <TextInput
             style={styles.textInput}
             secureTextEntry={data.secureTextEntry ? true : false}
-            placeholder="Password"
+            placeholder="Enter your password"
             autoCapitalize="none"
             value={password}
             onChangeText={(text) => setPassword(text)}
@@ -265,38 +265,3 @@ const styles = StyleSheet.create({
 });
 
 export default LoginScreen;
-
-// const loginHandler = (email, password) => {
-//   fetch(
-//     `${api}/authentication_token`,
-//     {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       body: object,
-//     }
-//   )
-//     .then((response) => response.json())
-//     .then((json) => {
-//       console.log(json.token);
-//     });
-
-// const userAuth = Users.filter((item) => {
-//   return email === item.email && password === item.password;
-// });
-// if (data.email.length == 0 || data.password.length == 0) {
-//   Alert.alert("Wrong input", "email or password cannot be empty", [
-//     { text: "Okey" },
-//   ]);
-//   return;
-// }
-
-// if (userAuth.length == 0) {
-//   Alert.alert("Invalid user", "email or password is incorrect", [
-//     { text: "Okey" },
-//   ]);
-//   return;
-// }
-// signIn(userAuth);

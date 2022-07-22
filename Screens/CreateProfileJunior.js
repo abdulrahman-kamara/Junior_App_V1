@@ -117,8 +117,10 @@ const CreateProfileJunior = ({ navigation, route }) => {
   const { colors } = useTheme();
 
   return (
-    <ScrollView>
-      <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}
+    scrollEnabled={false}
+    >
+      <SafeAreaView>
         <View
           style={{
             margin: 20,
@@ -129,13 +131,17 @@ const CreateProfileJunior = ({ navigation, route }) => {
               style={{
                 height: 100,
                 width: 100,
-                borderRadius: 15,
+                borderRadius: 10,
                 justifyContent: "center",
                 alignItems: "center",
-                marginTop: 10,
+                top: 30,
               }}
             >
-              <PickerImage setImage={setImage} image={image} />
+              <PickerImage setImage={setImage} image={image}
+              />
+              {/* <Text style={styles.textPicture}>Add a picture </Text> */}
+            {/* <FontAwesome name="plus" size={20} color={Colors.Secondry} /> */}
+
             </View>
             <Text
               style={{
@@ -149,6 +155,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
             </Text>
           </View>
         </View>
+      <View style={styles.test}>
         <View style={styles.mainContainer}>
           <View style={styles.action}>
             <FontAwesome name="phone" size={20} color={Colors.Primary} />
@@ -209,7 +216,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
               size={20}
               padding={4}
             />
-            <Text>{profession}</Text>
+            <Text style={styles.textDropDown}>{profession}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={HandleDiplom} style={{}}>
             <MaterialIcons
@@ -218,7 +225,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
               size={20}
               padding={4}
             />
-            <Text>{diplom ? diplom : 'R'}</Text>
+            <Text  style={styles.textDropDown}>{diplom ? diplom : 'R'}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={HandleExpierence} style={{}}>
             <MaterialIcons
@@ -227,7 +234,7 @@ const CreateProfileJunior = ({ navigation, route }) => {
               size={20}
               padding={4}
             />
-            <Text>{expierrence}</Text>
+            <Text  style={styles.textDropDown}>{expierrence}</Text>
           </TouchableOpacity>
         </View>
 
@@ -244,13 +251,15 @@ const CreateProfileJunior = ({ navigation, route }) => {
               styles.textInput,
               {
                 color: colors.text,
-                height: 100,
+                height: 80,
                 borderWidth: 1,
-                borderRadius: 15,
+                borderRadius: 10,
                 borderColor: Colors.Primary,
-                width: "95%",
-                padding: 5,
-                marginTop: 10,
+                width: "92%",
+                padding: 13,
+                marginHorizontal:20,
+                marginTop:5,
+                backgroundColor: Colors.Secondry,
               },
             ]}
             autoCorrect={false}
@@ -276,14 +285,14 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 expierrence,
                 image,
                 userInfo.token,
-                // route.params.JwtToken,
                 route.params.id,
               ),navigation.pop();
             }}
           >
-            <Text style={{ color: Colors.Secondry }}>Create</Text>
+            <Text style={styles.textButton}>Update</Text>
           </TouchableOpacity>
         </View>
+      </View>
       </SafeAreaView>
     </ScrollView>
   );
@@ -292,39 +301,50 @@ const CreateProfileJunior = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.Primary,
+    width:'100%',
+  },
+  //Text button
+  textButton : {
+    fontWeight:'bold',
+    color: Colors.Secondry,
   },
   button: {
     flex: 0,
     justifyContent: "center",
     alignItems: "center",
   },
+  //DropDownText
+  textDropDown:{
+    color:Colors.Primary
+  },
   commandButton: {
     padding: 15,
-    borderRadius: 15,
+    borderRadius: 10,
     backgroundColor: Colors.Primary,
     alignItems: "center",
-    marginTop: 10,
+    // marginTop: 10,
     marginBottom: 10,
-    width: "40%",
+    width: "90%",
   },
   mainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-
+  //Input
   action: {
     flexDirection: "row",
-    marginTop: 10,
     marginBottom: 10,
     borderWidth: 1,
     borderColor: Colors.Primary,
-    borderRadius: 15,
-    paddingBottom: 10,
-    padding: 20,
-    width: "90%",
+    borderRadius: 10,
+    padding: 13,
+    marginHorizontal:20,
     justifyContent: "center",
     alignItems: "center",
+    marginTop:5,
+    backgroundColor: Colors.Secondry,
   },
   actionError: {
     flexDirection: "row",
@@ -344,5 +364,15 @@ const styles = StyleSheet.create({
     flex: 3,
     height: 40,
   },
+  test:{
+    backgroundColor: Colors.Secondry,
+    borderRadius:20,
+    paddingBottom:30,
+    paddingTop:10,
+  },
+  textPicture: {
+    // color : Colors.Primary
+    fontSize:15
+  }
 });
 export default CreateProfileJunior;

@@ -11,13 +11,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import Colors from "../../Constants/Colors";
 import Card from "../../UI/Card";
 import Header from "../../Components/Header";
 import { Ionicons } from "@expo/vector-icons";
 import { useState, useEffect, useContext } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { AuthContext } from "../../Context/Context";
+import Colors from "../../Constants/Colors";
 
 const DashboardScreen = ({ navigation }) => {
   const [search, setSearch] = useState("");
@@ -104,7 +104,7 @@ const DashboardScreen = ({ navigation }) => {
         <View>
           <TextInput
             style={styles.input}
-            placeholder="search job here"
+            placeholder="Search Junior here"
             onChangeText={(text) => searchFilter(text)}
             value={search}
             color="black"
@@ -133,7 +133,7 @@ const DashboardScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   dashboard: {
-    backgroundColor: "red",
+    backgroundColor: Colors.Primary,
     borderRadius: Dimensions.get("window").width * 0.05,
     height: "100%",
   },

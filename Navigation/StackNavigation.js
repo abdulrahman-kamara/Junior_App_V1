@@ -121,12 +121,12 @@ const HomeTapScreen = () => {
         }}
         />
         {myRole == 'ROLE_ENTREPRISE' && <HomeTab.Screen
-        name="Offer"
+        name="Offers"
         component={CreatOffersScreen}
         options={{
-          tabBarLabel: "Offer",
+          tabBarLabel: "Offers",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <MaterialCommunityIcons name="plus-box" color={color} size={26} />
           ),
         }}
         /> }

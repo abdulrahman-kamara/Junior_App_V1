@@ -22,7 +22,6 @@ const SplashScreen = (props) => {
       <StatusBar backgroundColor={Colors.Primary} barStyle="light-content" />
       <View style={styles.header}>
         <Animatable.Image
-          animation="flipInY"
           duraton="1500"
           source={require("../assets/Image/logo.png")}
           style={styles.logo}
