@@ -19,99 +19,76 @@ import { useTheme } from "react-native-paper";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 const { width, height } = Dimensions.get("window");
 import { AuthContext } from "../../Context/Context";
+import axios from "axios";
+import { BASE_URL } from "../../config/api";
 
 const CreateProfileModal = ({ route, navigation }) => {
-  // my hooks with useState
-  const [diploma, setDiploma] = useState("Diploma");
-  const [jobs, setJobs] = useState();
-  const [description, setDescription] = useState();
-  const [city, setCity] = useState();
-  const [contract, setContract] = useState("Contract_Type");
-  const [workType, setWorkType] = useState("Work_Type");
-  const [image, setImage] = useState(null);
-  // const [profession, setProfession] = useState("Profession");
-  // const [expierrence, setExpierrence] = useState("Expierrence");
-  // const [Adress, setAdress] = useState();
-  // const [name, setName] = useState();
+  const { userInfo } = useContext(AuthContext);
+  const url = "http://10.0.3.232:8000/api/offers";
 
-  // My ActionBotoom Sheet with its options and its fuction
+  const myCity = 1;
+  const myDiploma = 1;
+  const myEntreprise = 1;
 
-  // Options Profession
+  const [jobs, setJobs] = useState(""); // OK
+  const [description, setDescription] = useState(""); //OK
+  const [typeOfContract, setTypeOfContract] = useState('Type of contract');//OK
+  const [typeOfWork, setTypeOfWork] = useState('Work type');// OK
+
+  const TestOffer = () => {
+    axios({
+      method: "post",
+      url: url,
+      data: {
+        jobs: jobs,
+        description: description,
+        typeOfContract: typeOfContract,
+        typeOfWork: typeOfWork,
+        city: `/api/cities/${myCity}`,
+        entreprise: `/api/entreprises/${myEntreprise}`,
+        diploma: `/api/diplomas/${myDiploma}`,
+      },
+    })
+      .then(function (response) {
+        console.log("OFFER OK", response);
+      })
+      .catch(function (error) {
+        console.log("OFFER ERROR", error);
+      });
+  };
+
+  const { showActionSheetWithOptions } = useActionSheet();
+
+  //CONTRAT TYPE OPTIONS
   const MyContract = ["CDD", "CDI", "Internship", "Cancel"];
   const ContractdestructiveButtonIndex = 4;
   const ContractcancelButtonIndex = 4;
-
-  // Options Profession
-  const MyworkType = ["Distance", "Partime", "Remote", "Cancel"];
-  const WorkTypedestructiveButtonIndex = 3;
-  const WorkTypecancelButtonIndex = 3;
-
-  // Options Diploma
-  const MyDiplom = [ "Bac+ 2", "Bac+ 3", "Bac+ 5", "Cancel"];
-  const DiplomdestructiveButtonIndex = 3;
-  const DiplomcancelButtonIndex = 3;
-
-  // // Options Expirence
-  // const MyExpierrence = ["1 an", "2 ans", "3 ans", "Cancel"];
-  // const ExpirencedestructiveButtonIndex = 3;
-  // const ExpirencecancelButtonIndex = 3;
-
-  // fucntion that handle the profession options
-  // const HandleProfession = (props) => {
-  //   showActionSheetWithOptions(
-  //     {
-  //       options: MyProfession,
-  //       cancelButtonIndex: ProfessioncancelButtonIndex,
-  //       destructiveButtonIndex: ProfessiondestructiveButtonIndex,
-  //     },
-  //     (buttonIndex) => {
-  //       // Do something here depending on the button index selected
-  //       if (buttonIndex === 3) {
-  //         return;
-  //       }
-  //       setProfession(MyProfession[buttonIndex]);
-  //     }
-  //   );
-  // };
-
-  // fucntion that handle the Diploma options
-  const HandleDiplom = (props) => {
+  // fucntion that handle the Expirence options
+  const HandleContract = () => {
     showActionSheetWithOptions(
       {
-        options: MyDiplom,
-        cancelButtonIndex: DiplomcancelButtonIndex,
-        destructiveButtonIndex: DiplomdestructiveButtonIndex,
+        options: MyContract,
+        cancelButtonIndex: ContractdestructiveButtonIndex,
+        destructiveButtonIndex: ContractcancelButtonIndex,
       },
       (buttonIndex) => {
         // Do something here depending on the button index selected
-        if (buttonIndex === 3) {
+        if (buttonIndex === 4) {
           return;
         }
-        setDiploma(MyDiplom[buttonIndex]);
+        // setContract(2);
+        setTypeOfContract(MyContract[buttonIndex]);
       }
     );
   };
+  //CONTRAT TYPE OPTIONS
 
-  // fucntion that handle the Expirence options
-  // const HandleExpierence = (props) => {
-  //   showActionSheetWithOptions(
-  //     {
-  //       options: MyExpierrence,
-  //       cancelButtonIndex: ExpirencedestructiveButtonIndex,
-  //       destructiveButtonIndex: ExpirencecancelButtonIndex,
-  //     },
-  //     (buttonIndex) => {
-  //       // Do something here depending on the button index selected
-  //       if (buttonIndex === 3) {
-  //         return;
-  //       }
-  //       setExpierrence(MyExpierrence[buttonIndex]);
-  //     }
-  //   );
-  // };
-
-  // fucntion that handle the Diploma options
-  const HandleWorkType = (props) => {
+  //CONTRAT OF WORKS OPTIONS
+    const MyworkType = ["In office", "Part time", "Remote", "Cancel"];
+    const WorkTypedestructiveButtonIndex = 4;
+    const WorkTypecancelButtonIndex = 4;
+      // fucntion that handle the Diploma options
+  const HandleWorkType = () => {
     showActionSheetWithOptions(
       {
         options: MyworkType,
@@ -123,226 +100,27 @@ const CreateProfileModal = ({ route, navigation }) => {
         if (buttonIndex === 3) {
           return;
         }
-        setWorkType(MyworkType[buttonIndex]);
+        // setWorkType(2);
+        setTypeOfWork(MyworkType[buttonIndex]);
       }
     );
   };
-
-  // fucntion that handle the Expirence options
-  const HandleContract = (props) => {
-    showActionSheetWithOptions(
-      {
-        options: MyContract,
-        cancelButtonIndex: ContractdestructiveButtonIndex,
-        destructiveButtonIndex: ContractcancelButtonIndex,
-      },      (buttonIndex) => {
-        // Do something here depending on the button index selected
-        if (buttonIndex === 4) {
-          return;
-        }
-        setContract(MyContract[buttonIndex]);
-      }
-    );
-  };
-
-  // my hooks that recieve all the fucntion that handle the different options
-  const { showActionSheetWithOptions } = useActionSheet();
-  const { colors } = useTheme();
-  const { CreateOffer, userToken, userInfo } = useContext(AuthContext);
-  console.log("test", userInfo.token);
+  //CONTRAT OF WORKS OPTIONS
 
   return (
     <ScrollView>
       <SafeAreaView style={styles.container}>
-        <View
-          style={{
-            margin: 20,
-          }}
-        >
-          <View style={{}}>
-            <View
-              style={{
-                borderWidth: "1px",
-                width: "100%",
-                height: 150,
-                borderColor: Colors.Primary,
-                borderRadius: 15,
-              }}
-            >
-              <View
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  alignSelf: "center",
-                  marginTop: 70,
-                }}
-              >
-                <PickerImage setImage={setImage} image={image} />
-                <View style={styles.actionTitle}>
-                  <TextInput
-                    style={[styles.textInput, { color: Colors.Secondry }]}
-                    autoCorrect={false}
-                    placeholder="Title"
-                    value={jobs}
-                    onChangeText={(text) => setJobs(text)}
-                  />
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flex: 0,
-                justifyContent: "space-around",
-                flexDirection: "row",
-                alignItems: "center",
-                padding: 10,
-                marginTop: 10,
-              }}
-            >
-              <TouchableOpacity
-                onPress={HandleDiplom}
-                style={{
-                  borderWidth: 1,
-                  marginTop: 10,
-                  width: 150,
-                  padding: 10,
-                  borderRadius: 15,
-                  borderColor: Colors.Primary,
-                }}
-              >
-                <MaterialIcons name="lock" color={Colors.Primary} size={20} />
-                <Text>{diploma}</Text>
-              </TouchableOpacity>
-              <View
-                style={{
-                  flex: 0,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 5,
-                  width: 150,
-                  height: 80,
-                }}
-              >
-                <TextInput
-                  style={[
-                    styles.textInput,
-                    {
-                      color: colors.text,
-
-                      borderWidth: 1,
-                      borderRadius: 15,
-                      borderColor: Colors.Primary,
-                      width: "95%",
-                      padding: 5,
-                      marginTop: 10,
-                    },
-                  ]}
-                  autoCorrect={false}
-                  placeholder="City"
-                  multiline
-                  value={city}
-                  onChangeText={(text) => setCity(text)}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <View
-          style={{
-            flex: 0,
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 5,
-          }}
-        >
+        {/* TITRE */}
+        <View style={styles.actionTitle}>
           <TextInput
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-                height: 100,
-                borderWidth: 1,
-                borderRadius: 15,
-                borderColor: Colors.Primary,
-                width: "95%",
-                padding: 5,
-                marginTop: 10,
-              },
-            ]}
-            autoCorrect={false}
-            placeholder="About Job"
-            multiline
-            value={description}
-            onChangeText={(text) => setDescription(text)}
+            value={jobs}
+            placeholder="Enter Title"
+            onChangeText={(text) => setJobs(text)}
           />
         </View>
-        <View
-          style={{
-            flex: 0,
-            justifyContent: "space-around",
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 10,
-            marginTop: 10,
-          }}
-        >
-          <TouchableOpacity
-            onPress={HandleContract}
-            style={{
-              borderWidth: 1,
-              padding: 10,
-              borderRadius: 15,
-              borderColor: Colors.Primary,
-            }}
-          >
-            <MaterialIcons
-              name="lock"
-              color={Colors.Primary}
-              size={20}
-              padding={4}
-            />
-            <Text>{contract}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={HandleWorkType}
-            style={{
-              borderWidth: 1,
-              padding: 10,
-              borderRadius: 15,
-              borderColor: Colors.Primary,
-            }}
-          >
-            <MaterialIcons
-              name="lock"
-              color={Colors.Primary}
-              size={20}
-              padding={4}
-            />
-            <Text>{workType}</Text>
-          </TouchableOpacity>
-          {/* <TouchableOpacity
-            onPress={HandleExpierence}
-            style={{
-              borderWidth: 1,
-              padding: 10,
-              borderRadius: 15,
-              borderColor: Colors.Primary,
-            }}
-          >
-            <MaterialIcons
-              name="lock"
-              color={Colors.Primary}
-              size={20}
-              padding={4}
-            />
-            <Text>{expierrence}</Text>
-          </TouchableOpacity> */}
-        </View>
-        {/* <View style={styles.mainContainer}></View> */}
+        {/* TITRE */}
+
+        {/* DESCRIPTION */}
         <View
           style={{
             flex: 0,
@@ -355,7 +133,6 @@ const CreateProfileModal = ({ route, navigation }) => {
             style={[
               styles.textInput,
               {
-                color: colors.text,
                 height: 100,
                 borderWidth: 1,
                 borderRadius: 15,
@@ -372,23 +149,53 @@ const CreateProfileModal = ({ route, navigation }) => {
             onChangeText={(text) => setDescription(text)}
           />
         </View>
+        {/* DESCRIPTION */}
+
+        {/* TYPE_OF_CONTRACT */}
+        <TouchableOpacity
+          onPress={HandleContract}
+          style={{
+            borderWidth: 1,
+            padding: 10,
+            borderRadius: 15,
+            borderColor: Colors.Primary,
+          }}
+        >
+          <MaterialIcons
+            name="lock"
+            color={Colors.Primary}
+            size={20}
+            padding={4}
+          />
+          <Text>{typeOfContract}</Text>
+        </TouchableOpacity>
+        {/* TYPE_OF_CONTRACT */}
+
+        {/* WORK TYPE */}
+        <TouchableOpacity
+            onPress={HandleWorkType}
+            style={{
+              borderWidth: 1,
+              padding: 10,
+              borderRadius: 15,
+              borderColor: Colors.Primary,
+            }}
+          >
+            <MaterialIcons
+              name="lock"
+              color={Colors.Primary}
+              size={20}
+              padding={4}
+            />
+            <Text>{typeOfWork}</Text>
+          </TouchableOpacity>
+        {/* WORK TYPE */}
 
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.commandButton}
             onPress={() => {
-              CreateOffer(
-                contract,
-                workType,
-                jobs,
-                city,
-                description,
-                diploma,
-                image,
-                userInfo.token,
-                id
-              ),
-                navigation.navigate("Dashboard");
+              TestOffer();
             }}
           >
             <Text style={{ color: Colors.Secondry }}>Create</Text>
