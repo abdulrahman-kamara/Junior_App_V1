@@ -464,3 +464,154 @@ const styles = StyleSheet.create({
   },
 });
 export default CreateProfileModal;
+
+
+
+
+<ScrollView>
+<SafeAreaView style={styles.container}>
+  {/* TITRE */}
+  <View style={styles.actionTitle}>
+    <TextInput
+      value={jobs}
+      placeholder="Enter Title"
+      onChangeText={(text) => setJobs(text)}
+    />
+  </View>
+  {/* TITRE */}
+
+  {/* DESCRIPTION */}
+  <View
+    style={{
+      flex: 0,
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 5,
+    }}
+  >
+    <TextInput
+      style={[
+        styles.textInput,
+        {
+          height: 100,
+          borderWidth: 1,
+          borderRadius: 15,
+          borderColor: Colors.Primary,
+          width: "95%",
+          padding: 5,
+          marginTop: 10,
+        },
+      ]}
+      autoCorrect={false}
+      placeholder="description_entreprise"
+      multiline
+      value={description}
+      onChangeText={(text) => setDescription(text)}
+    />
+  </View>
+  {/* DESCRIPTION */}
+
+  {/* TYPE_OF_CONTRACT */}
+  <TouchableOpacity
+    onPress={HandleContract}
+    style={{
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 15,
+      borderColor: Colors.Primary,
+    }}
+  >
+    <MaterialIcons
+      name="lock"
+      color={Colors.Primary}
+      size={20}
+      padding={4}
+    />
+    <Text>{typeOfContract}</Text>
+  </TouchableOpacity>
+  {/* TYPE_OF_CONTRACT */}
+
+  {/* WORK TYPE */}
+  <TouchableOpacity
+    onPress={HandleWorkType}
+    style={{
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 15,
+      borderColor: Colors.Primary,
+    }}
+  >
+    <MaterialIcons
+      name="lock"
+      color={Colors.Primary}
+      size={20}
+      padding={4}
+    />
+    <Text>{typeOfWork}</Text>
+  </TouchableOpacity>
+  {/* WORK TYPE */}
+
+  {/* IMAGE */}
+  {/* <View
+    style={{
+      flex: 1,
+      alignItems: "center",
+      marginTop: 10,
+    }}
+  >
+    <PickerImage setImage={setImage} image={image} />
+  </View> */}
+  {/* IMAGE */}
+
+  {/* TEST */}
+  <View
+    style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+  >
+    <Button title="Pick an image from camera roll" onPress={pickImage} />
+    {image && (
+      <Image
+        source={{ uri: image }}
+        style={{ width: 200, height: 200 }}
+      />
+    )}
+  </View>
+  {/* TEST */}
+
+  <View style={{  }}>
+  {/* DIPLOMA */}
+  <DropDownPicker
+    open={openDiploma}
+    value={valueDiploma}
+    items={itemsDiploma}
+    setValue={setValueDiploma}
+    setItems={setItemsDiploma}
+    setOpen={setOpenDiploma}
+  />
+  {/* DIPLOMA */}
+
+  {/* CITY */}
+  <DropDownPicker
+    open={openCity}
+    value={valueCity}
+    items={itemsCity}
+    setValue={setValueCity}
+    setItems={setItemsCity}
+    setOpen={setOpenCity}
+  />
+  {/* CITY */}
+  </View>
+
+
+  <View style={styles.button}>
+    <TouchableOpacity
+      style={styles.commandButton}
+      onPress={() => {
+        //   console.log('MY IMAGE',image);
+        TestOffer();
+      }}
+    >
+      <Text style={{ color: Colors.Secondry }}>Create</Text>
+    </TouchableOpacity>
+  </View>
+</SafeAreaView>
+</ScrollView>

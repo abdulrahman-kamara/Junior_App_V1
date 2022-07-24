@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // export const BASE_URL = "https://api.torea-patissier.students-laplateforme.io";
-export const BASE_URL = "http://10.0.3.232:8000";
+export const BASE_URL = "http://10.0.3.105:8000";
 
 export const setAccessToken = async (JwtToken, user) => {
   //console.log("JwtToken", JwtToken);
