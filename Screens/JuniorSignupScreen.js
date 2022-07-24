@@ -50,68 +50,38 @@ const Juniorsignup = ({ navigation }) => {
         <Animatable.View style={styles.footer} animation="flipInY">
           <Text style={styles.text_footer}>FirstName</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons
+              name="account-circle"
+              color={Colors.Primary}
+              size={20}
+            />
             <TextInput
               style={styles.textInput}
               placeholder="firstname"
               value={firstname}
               onChangeText={(text) => setFirstname(text)}
-
-              // onChangeText={(val) => {
-              //   textInputChange(val);
-              // }}
-              // onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
             />
-            {/* {data.check_textInputChange ? (
-              <Animatable.View animation="flipInY">
-                <Feather name="check-circle" color={Colors.Primary} size={20} />
-              </Animatable.View>
-            ) : null} */}
           </View>
-          {/* {data.isValidEmail ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>
-                the mail should have a format email
-              </Text>
-            </Animatable.View>
-          )} */}
-          {/* {data.isValidEmail ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>this filed is required</Text>
-            </Animatable.View>
-          )} */}
+
           <Text style={styles.text_footer}>Lastname</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons
+              name="account-circle"
+              color={Colors.Primary}
+              size={20}
+            />
             <TextInput
               style={styles.textInput}
               placeholder="Lastname"
               value={lastname}
               autoCapitalize="none"
               onChangeText={(text) => setLastname(text)}
-              // onChangeText={(text) => {
-              //   setLastname(text);
-              // }}
-              // onChangeText={(val) => {
-              //   textInputChange(val);
-              // }}
-              // onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
             />
-            {/* {data.check_textInputChange ? (
-              <Animatable.View animation="flipInY">
-                <Feather name="check-circle" color={Colors.Primary} size={20} />
-              </Animatable.View>
-            ) : null} */}
           </View>
-          {/* {data.isValidEmail ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>this filed is required</Text>
-            </Animatable.View>
-          )} */}
 
           <Text style={styles.text_footer}>Email</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons name="email" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.input}
               placeholder="Enter email address"
@@ -120,12 +90,6 @@ const Juniorsignup = ({ navigation }) => {
               value={email}
               autoCapitalize="none"
             />
-
-            {/* {data.check_textInputChange ? (
-              <Animatable.View animation="flipInY">
-                <Feather name="check-circle" color={Colors.Primary} size={20} />
-              </Animatable.View>
-            ) : null} */}
           </View>
 
           <Text style={{ marginTop: 35 }}>Password</Text>
@@ -137,74 +101,17 @@ const Juniorsignup = ({ navigation }) => {
               onChangeText={(text) => setPassword(text)}
               value={password}
             />
-
-            {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
-            {/* {data.secureTextEntry ? (
-                <Feather name="eye-off" color="gray" size={20} />
-              ) : (
-                <Feather name="eye" color="gray" size={20} />
-              )} */}
-            {/* </TouchableOpacity> */}
           </View>
-          {/* {data.isValidPassword ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>
-                the password should have atleast 8 characters{" "}
-              </Text>
-            </Animatable.View>
-          )} */}
-          {/* <Text style={{ marginTop: 35 }}>ConfirmePassword</Text> */}
-          {/* <View style={styles.action}> */}
-          {/* <MaterialIcons name="lock" color={Colors.Primary} size={20} />
-            <TextInput
-              style={styles.input}
-              placeholder="Enter password "
-              onChangeText={(text) => setPassword(text)}
-              value={password}
-            /> */}
-
-          {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
-          {/* {data.secureTextEntry ? (
-                <Feather name="eye-off" color="gray" size={20} />
-              ) : (
-                <Feather name="eye" color="gray" size={20} />
-              )} */}
-          {/* </TouchableOpacity> */}
-          {/* </View> */}
-          {/* {data.isValidPassword ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>
-                the password should have atleast 8 characters{" "}
-              </Text>
-            </Animatable.View>
-          )} */}
 
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.signin}
-              onPress={
-                () => {
-                  Junior(firstname, lastname, email, password, navigation);
-                }
-
-                // (loginHandler(data.email, data.password),
-              }
+              onPress={() => {
+                Junior(firstname, lastname, email, password, navigation);
+              }}
             >
               <Text style={styles.textSign}>signUp</Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-            onPress={() => navigation.navigate("Welcome")}
-            style={[
-              styles.signOut,
-              {
-                borderColor: Colors.Primary,
-                borderWidth: 1,
-                marginTop: 15,
-              },
-            ]}
-          >
-            <Text style={styles.textOut}>Sigin Up</Text>
-          </TouchableOpacity> */}
           </View>
         </Animatable.View>
       </ScrollView>

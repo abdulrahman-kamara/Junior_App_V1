@@ -101,7 +101,7 @@ const LoginScreen = ({ navigation }) => {
       <Animatable.View style={styles.footer} animation="flipInX">
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
-          <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+          <MaterialIcons name="email" color={Colors.Primary} size={20} />
           <TextInput
             style={styles.textInput}
             placeholder="email"

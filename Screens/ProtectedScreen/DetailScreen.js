@@ -36,7 +36,7 @@ const MissonTextInput = (props) => {
   );
 };
 
-const OffersScreen = ({ route, navigation }) => {
+const DetailScreen = ({ route, navigation, item }) => {
   const [value, onChangeText] = useState("About Job");
   const [mission, onChangeMission] = useState("Misson");
   console.log("test", route.params.avatar);
@@ -333,4 +333,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OffersScreen;
+export default DetailScreen;

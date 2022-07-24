@@ -16,6 +16,7 @@ import CreateProfileEnterprise from "../Screens/CreateProfileEnterprise";
 import CreateProfileJunior from "../Screens/CreateProfileJunior";
 import CreateOffers from "../Screens/CreateOffers";
 import OffersScreen from "../Screens/ProtectedScreen/OffersScreen";
+import DetailScreen from "../Screens/ProtectedScreen/DetailScreen";
 import DrawerNavigation from "../Navigation/DrawerNavigation";
 import { AuthContext } from "../Context/Context";
 import jwt_decode from "jwt-decode";
@@ -70,12 +71,20 @@ const FeedStackScreen = () => {
       ) : (
         <FeedStack.Screen name="Entreprise" component={EntrepriseFeed} />
       )}
+      {userInfo.roles == "ROLE_ENTREPRISE" ? (
+        <FeedStack.Screen
+          name="DetailJunior"
+          component={DetailScreen}
+          options={{ headerShown: true }}
+        />
+      ) : (
+        <FeedStack.Screen
+          name="Detail"
+          component={OffersScreen}
+          options={{ headerShown: true }}
+        />
+      )}
 
-      <FeedStack.Screen
-        name="Detail"
-        component={OffersScreen}
-        options={{ headerShown: true }}
-      />
       <FeedStack.Screen
         name="Apply"
         component={ApplyScreen}
@@ -114,7 +123,7 @@ const HomeTapScreen = () => {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
       />
@@ -125,7 +134,7 @@ const HomeTapScreen = () => {
           options={{
             tabBarLabel: "Offer",
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
+              <MaterialCommunityIcons name="plus-box" color={color} size={26} />
             ),
           }}
         />

@@ -157,7 +157,11 @@ const COmpanySignup = ({ navigation }) => {
         <Animatable.View style={styles.footer} animation="flipInY">
           <Text style={styles.text_footer}>Name</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons
+              name="account-circle"
+              color={Colors.Primary}
+              size={20}
+            />
 
             <TextInput
               style={styles.textInput}
@@ -167,25 +171,12 @@ const COmpanySignup = ({ navigation }) => {
               onChangeText={(text) => {
                 setName(text);
               }}
-              // onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
             />
-            {/* {data.check_textInputChange ? (
-              <Animatable.View animation="flipInY">
-                <Feather name="check-circle" color={Colors.Primary} size={20} />
-              </Animatable.View>
-            ) : null} */}
           </View>
-          {/* {data.isValidEmail ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>
-                the mail should have a format email
-              </Text>
-            </Animatable.View>
-          )} */}
 
           <Text style={styles.text_footer}>Email</Text>
           <View style={styles.action}>
-            <MaterialIcons name="lock" color={Colors.Primary} size={20} />
+            <MaterialIcons name="email" color={Colors.Primary} size={20} />
             <TextInput
               style={styles.textInput}
               placeholder="email"
@@ -195,21 +186,8 @@ const COmpanySignup = ({ navigation }) => {
               onChangeText={(text) => {
                 setEmail(text);
               }}
-              // onEndEditing={(e) => handleEmailChange(e.nativeEvent.text)}
             />
-            {/* {data.check_textInputChange ? (
-              <Animatable.View animation="flipInY">
-                <Feather name="check-circle" color={Colors.Primary} size={20} />
-              </Animatable.View>
-            ) : null} */}
           </View>
-          {/* {data.isValidEmail ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>
-                the mail should have a format email
-              </Text>
-            </Animatable.View>
-          )} */}
 
           <Text style={{ marginTop: 35 }}>Password</Text>
           <View style={styles.action}>
@@ -225,60 +203,12 @@ const COmpanySignup = ({ navigation }) => {
                 setPassword(text);
               }}
             />
-            {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
-            {/* {data.secureTextEntry ? (
-                <Feather name="eye-off" color="gray" size={20} />
-              ) : (
-                <Feather name="eye" color="gray" size={20} />
-              )} */}
-            {/* </TouchableOpacity> */}
           </View>
-          {/* {data.isValidPassword ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>
-                the password should have atleast 8 characters{" "}
-              </Text>
-            </Animatable.View>
-          )} */}
-          {/* <Text style={{ marginTop: 35 }}>ConfirmPassword</Text> */}
-          {/* <View style={styles.action}> */}
-          {/* <MaterialIcons name="lock" color={Colors.Primary} size={20} /> */}
-          {/* <TextInput
-              style={styles.textInput}
-              // secureTextEntry={data.secureTextEntry ? true : false}
-              placeholder="Password"
-              autoCapitalize="none"
-              secureTextEntry
-              value={confirmpassword}
-              onChangeText={(text) => {
-                setConfirmPassword(text);
-              }}
-            /> */}
-          {/* <TouchableOpacity onPress={updatepassworwEntry}> */}
-          {/* {data.secureTextEntry ? (
-                <Feather name="eye-off" color="gray" size={20} />
-              ) : (
-                <Feather name="eye" color="gray" size={20} />
-              )} */}
-          {/* </TouchableOpacity> */}
-          {/* </View> */}
-          {/* {data.isValidPassword ? null : (
-            <Animatable.View animation="flipInY" duration={500}>
-              <Text style={styles.errorMsg}>
-                the password should have atleast 8 characters{" "}
-              </Text>
-            </Animatable.View>
-          )} */}
 
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.signin}
-              onPress={
-                // () => getApi(data.email, data.password)
-                () => Enterprise(name, email, password, navigation)
-
-                // (loginHandler(data.email, data.password),
-              }
+              onPress={() => Enterprise(name, email, password, navigation)}
             >
               <Text style={styles.textSign}>Sgin in</Text>
             </TouchableOpacity>
