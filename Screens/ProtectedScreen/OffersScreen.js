@@ -22,7 +22,7 @@ const AboutTextInput = (props) => {
     <TextInput
       {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
       editable
-      maxLength={400}
+      maxLength={800}
     />
   );
 };
@@ -31,7 +31,7 @@ const MissonTextInput = (props) => {
     <TextInput
       {...props} // Inherit any props passed to it; e.g., multiline, numberOfLines below
       editable
-      maxLength={400}
+      maxLength={800}
     />
   );
 };
@@ -59,7 +59,7 @@ const OffersScreen = ({ route, navigation }) => {
             </View>
             <View>
               <Image
-                source={{ uri: `${BASE_URL}` + route.params.avatar }}
+                source={{ uri: `${BASE_URL}` + route.params.image }}
                 style={styles.coverAvater}
               />
             </View>
@@ -73,19 +73,15 @@ const OffersScreen = ({ route, navigation }) => {
                 size={20}
                 color={Colors.Primary}
               />
-              <Text>{route.params.diploma}</Text>
-              <Ionicons
-                name="school-outline"
-                size={20}
-                color={Colors.Primary}
-              />
-              <Text>{route.params.year_of_experience}</Text>
+              <Text>{route.params.diploma.name}</Text>
+              <Ionicons name="contract" size={20} color={Colors.Primary} />
+              <Text>{route.params.type_of_work}</Text>
             </View>
           </View>
           <View
             style={{
               borderWidth: 1,
-              width: 250,
+              width: 350,
               height: 50,
               justifyContent: "center",
               alignSelf: "center",
@@ -102,7 +98,7 @@ const OffersScreen = ({ route, navigation }) => {
                 alignSelf: "center",
               }}
             >
-              {route.params.name}
+              {route.params.jobs}
             </Text>
           </View>
           <View style={styles.aboutJob}>
@@ -140,13 +136,13 @@ const OffersScreen = ({ route, navigation }) => {
               }}
             /> */}
           </View>
-          {/* <View style={styles.loginButton}>
+          <View style={styles.loginButton}>
             <Button
               style={styles.logintext}
               title="APPLY"
               onPress={() => navigation.navigate("Apply")}
             />
-          </View> */}
+          </View>
         </View>
       </SafeAreaView>
     </ScrollView>

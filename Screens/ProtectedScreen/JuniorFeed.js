@@ -30,7 +30,7 @@ const DashboardScreen = ({ navigation }) => {
 
   // we get our feed here with our fetch function and handle the refresh with our useeffect function
   useEffect(() => {
-    const URL = `${BASE_URL}/api/entreprises`;
+    const URL = `${BASE_URL}/api/offers`;
 
     fetch(URL, {
       headers: {
@@ -41,6 +41,7 @@ const DashboardScreen = ({ navigation }) => {
       .then((res) => res.json())
       .then((res) => {
         const data = res;
+        console.log("data", data);
         setFeed(data);
         setFilterData(data);
       });
@@ -80,8 +81,8 @@ const DashboardScreen = ({ navigation }) => {
   }
 
   const resderItem = ({ item }) => {
-    console.log("item", item.description);
-    console.log("image", `${BASE_URL}${item.avatar}`);
+    console.log("item", item.jobs);
+    console.log("image", `${BASE_URL}${item.image}`);
     return (
       <View>
         <TouchableOpacity
@@ -98,7 +99,7 @@ const DashboardScreen = ({ navigation }) => {
             <View style={styles.userProfile}>
               <View style={styles.avaterView}>
                 <Image
-                  source={{ url: `${BASE_URL}${item.avatar}` }}
+                  source={{ url: `${BASE_URL}${item.image}` }}
                   style={styles.avater}
                 />
 
@@ -124,7 +125,12 @@ const DashboardScreen = ({ navigation }) => {
                     </Text> */}
                   </View>
 
-                  <Text style={{ fontSize: 11 }}>{item.profession}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                    {item.jobs}
+                  </Text>
+                  <Text style={{ fontSize: 15, marginTop: 10 }}>
+                    {item.type_of_contract}
+                  </Text>
                 </View>
               </View>
               <View>
@@ -141,7 +147,7 @@ const DashboardScreen = ({ navigation }) => {
             }}
           >
             <Image
-              source={{ url: `${BASE_URL}${item.avatar}` }}
+              source={{ url: `${BASE_URL}${item.image}` }}
               style={styles.coverAvater}
             />
             <View
@@ -164,7 +170,7 @@ const DashboardScreen = ({ navigation }) => {
                 style={{
                   fontSize: 15,
                   marginTop: 10,
-
+                  height: 30,
                   justifyContent: "center",
                   alignContent: "center",
                 }}
@@ -197,9 +203,7 @@ const DashboardScreen = ({ navigation }) => {
           ) : (
             <FlatList
               data={filterData}
-              keyExtractor={(item, index) => {
-                return item.id.toFixed();
-              }}
+              keyExtractor={(item) => item.id}
               renderItem={resderItem}
             />
           )}
