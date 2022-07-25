@@ -79,15 +79,14 @@ const FeedStackScreen = () => {
         />
       ) : (
         <FeedStack.Screen
-          name="Detail"
-          component={OffersScreen}
+          name="Apply"
+          component={ApplyScreen}
           options={{ headerShown: true }}
         />
       )}
-
       <FeedStack.Screen
-        name="Apply"
-        component={ApplyScreen}
+        name="Detail"
+        component={OffersScreen}
         options={{ headerShown: true }}
       />
     </FeedStack.Navigator>

@@ -30,7 +30,7 @@ const DashboardScreen = ({ navigation }) => {
 
   // we get our feed here with our fetch function and handle the refresh with our useeffect function
   useEffect(() => {
-    const URL = "http://10.0.3.200:8000/api/entreprises";
+    const URL = `${BASE_URL}/api/entreprises`;
 
     fetch(URL, {
       headers: {

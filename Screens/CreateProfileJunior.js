@@ -21,7 +21,6 @@ import { AuthContext } from "../Context/Context";
 
 const { width, height } = Dimensions.get("window");
 
-
 const CreateProfileJunior = ({ navigation, route }) => {
   const { ProfileJunior, userInfo, userToken } = useContext(AuthContext);
   console.log("CREATE PROFILE JUNIOR USERINFO", userInfo);
@@ -128,9 +127,22 @@ const CreateProfileJunior = ({ navigation, route }) => {
         <View
           style={{
             margin: 20,
+            marginTop: 70,
+            justifyContent: "center",
+            alignSelf: "center",
           }}
         >
-          <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              borderWidth: 1,
+              borderRadius: 15,
+              borderColor: "gray",
+              height: 100,
+              width: 330,
+            }}
+          >
             <View
               style={{
                 height: 100,
@@ -282,9 +294,10 @@ const CreateProfileJunior = ({ navigation, route }) => {
                 expierrence,
                 image,
                 route.params.JwtToken,
-                route.params.id,
+                route.params.id
                 // userToken.id ?? route.params.id
-              ),navigation.pop();
+              ),
+                navigation.pop();
             }}
           >
             <Text style={{ color: Colors.Secondry }}>Create</Text>

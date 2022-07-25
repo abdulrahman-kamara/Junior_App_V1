@@ -30,7 +30,7 @@ const DashboardScreen = ({ navigation }) => {
 
   // we get our feed here with our fetch function and handle the refresh with our useeffect function
   useEffect(() => {
-    const URL = "http://10.0.3.200:8000/api/users";
+    const URL = `${BASE_URL}/api/users`;
 
     fetch(URL, {
       headers: {
@@ -85,7 +85,7 @@ const DashboardScreen = ({ navigation }) => {
     return (
       <View>
         <TouchableOpacity
-          onPress={() => navigation.push("DetailJunior", item)}
+          onPress={() => navigation.navigate("Detail", item)}
           style={{
             borderWidth: 1,
             margin: 10,

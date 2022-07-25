@@ -59,7 +59,7 @@ const OffersScreen = ({ route, navigation }) => {
             </View>
             <View>
               <Image
-                source={{ uri: "http://10.0.3.200:8000" + route.params.avatar }}
+                source={{ uri: `${BASE_URL}` + route.params.avatar }}
                 style={styles.coverAvater}
               />
             </View>
@@ -73,7 +73,7 @@ const OffersScreen = ({ route, navigation }) => {
                 size={20}
                 color={Colors.Primary}
               />
-              <Text>{route.params.diploma.name}</Text>
+              <Text>{route.params.diploma}</Text>
               <Ionicons
                 name="school-outline"
                 size={20}
@@ -102,7 +102,7 @@ const OffersScreen = ({ route, navigation }) => {
                 alignSelf: "center",
               }}
             >
-              {route.params.profession.name}
+              {route.params.name}
             </Text>
           </View>
           <View style={styles.aboutJob}>
@@ -124,7 +124,7 @@ const OffersScreen = ({ route, navigation }) => {
                 Email : {route.params.email}
               </Text>
               <Text style={{ fontSize: 18, marginTop: 10 }}>
-                Tel: {route.params.telephone}
+                Address : {route.params.address}
               </Text>
             </View>
             {/* <MissonTextInput
@@ -140,13 +140,13 @@ const OffersScreen = ({ route, navigation }) => {
               }}
             /> */}
           </View>
-          <View style={styles.loginButton}>
+          {/* <View style={styles.loginButton}>
             <Button
               style={styles.logintext}
               title="APPLY"
               onPress={() => navigation.navigate("Apply")}
             />
-          </View>
+          </View> */}
         </View>
       </SafeAreaView>
     </ScrollView>

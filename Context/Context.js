@@ -253,7 +253,6 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password, navigation) => {
     setIsLoading(true);
     console.log(email, password);
-
     axios
       .post(`${BASE_URL}/authentication_token`, {
         email,
@@ -264,13 +263,10 @@ export const AuthProvider = ({ children }) => {
         console.log("USER INFO", userInfo);
 
         let decoded = jwt_decode(userInfo.token);
-        //console.log("decoded", decoded);
         userInfo.roles = decoded.roles;
 
-        // console.log(userInfo);
         setUserInfo(userInfo);
         setUserToken(userInfo.token);
-        //console.log("USER TOKEN", userToken);
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userInfo.token);
